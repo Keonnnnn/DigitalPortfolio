@@ -1,0 +1,106 @@
+/* Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  height: 100vh;
+  text-align: center;
+  padding: 0 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Main Heading Style */
+.hero h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  line-height: 1.2;
+  max-width: 800px;
+}
+
+/* Paragraph Style */
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  max-width: 800px;
+  color: #666;
+}
+
+/* Button Styling */
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.btn {
+  background-color: #eaeaea;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: #ff5a5f;
+  color: white;
+}
+
+/* Projects Section */
+.projects-section {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.projects-section p {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Arrow Style */
+.arrow {
+  font-size: 3rem;
+  margin-top: 10px;
+  color: #333;
+  animation: bounce 1.5s infinite;
+}
+
+/* Bouncing Arrow Animation */
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+/* Responsive Styling */
+@media screen and (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .projects-section p {
+    font-size: 1.8rem;
+  }
+
+  .arrow {
+    font-size: 2.5rem;
+  }
+}
