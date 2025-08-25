@@ -3,61 +3,111 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;               /* full screen height */
-  text-align: center;
-  padding: 0 20px;
+  justify-content: flex-start;
+  min-height: 100vh;
   font-family: 'Open Sans', sans-serif;
   animation: fadeIn 3s ease-out;
 
-  /* Sky blue gradient background */
   background: radial-gradient(ellipse at bottom, #d9f1ff 0%, #a6d4ff 100%);
-  overflow: hidden;                /* keep stars inside */
+  overflow: hidden;
+
+  /* push content below header */
+  padding-top: 100px;
 }
 
-/* ===== Hero Content ===== */
+/* ===== Row: image (left) + text (right) ===== */
+.hero-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px 40px;
+
+  /* keep row centered and constrained */
+  max-width: 1100px;
+  margin: 0 auto;
+  z-index: 1; /* above the stars */
+}
+
+/* ===== Hero Image ===== */
+.hero-image img {
+  width: 320px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+/* ===== Hero Content (right column) ===== */
 .hero-content {
-  position: relative;
-  z-index: 1;       /* above stars */
-  padding-top: 120px; /* add spacing so text doesn’t overlap header */
+  max-width: 600px;
+  text-align: left;
 }
 
-/* Fade-in Animation for hero section */
+.hero h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  line-height: 1.2;
+  animation: fadeInText 2s ease-out forwards;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #444;
+  animation: fadeInText 2s ease-out 0.5s forwards;
+}
+
+/* ===== Player below both columns, centered ===== */
+.hero-player {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 40px;
+  margin-top: 12px;
+}
+
+.hero-player > * {
+  width: 100%;
+  max-width: 600px; /* matches your player’s ideal width */
+}
+
+/* ===== Fade-in Animations ===== */
 @keyframes fadeIn {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Heading Style ===== */
-.hero h1 {
-  font-family: 'Dancing Script', cursive;
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  color: #333; /* dark text for contrast against light background */
-  line-height: 1.2;
-  max-width: 800px;
-  animation: fadeInText 2s ease-out forwards;
-}
-
-/* ===== Paragraph Style ===== */
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 0;
-  max-width: 800px;
-  color: #444; /* softer than heading */
-  animation: fadeInText 2s ease-out 0.5s forwards;
-}
-
-/* Fade-in Text Animation */
 @keyframes fadeInText {
   0% { opacity: 0; transform: translateY(15px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Responsive Styling ===== */
-@media screen and (max-width: 768px) {
+/* ===== Responsive ===== */
+@media screen and (max-width: 992px) {
+  .hero-layout {
+    flex-direction: column;  /* stack on small screens */
+    text-align: center;
+    gap: 24px;
+    padding-top: 60px;
+  }
+
+  .hero-image img {
+    width: 220px;
+    height: 260px;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
   .hero h1 { font-size: 2.5rem; }
   .hero p { font-size: 1rem; }
-  .hero-content { padding-top: 100px; } /* slightly less space on small screens */
+
+  .hero-player {
+    padding: 0 16px;
+  }
 }
