@@ -1,46 +1,35 @@
-/* src/App.css */
+/* Global Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background: #fff;   /* plain white (no blue strip) */
+  min-height: 100%;   /* let page grow naturally */
 }
 
-header {
-  background-color: #4CAF50;
-  color: white;
-  text-align: center;
-  padding: 20px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin: 0 10px;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
-}
-
-section {
-  padding: 20px;
-  background-color: #f9f9f9;
-  margin: 20px;
-}
-
-.project-list {
+/* App Wrapper */
+.App {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  min-height: 100vh;  /* page takes full viewport height */
 }
 
-.project {
-  width: 45%;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Section Styling (Common Styles for All Sections) */
+section {
+  padding: 60px 20px;   /* more breathing space */
+  background-color: #fff; /* solid background (no transparency) */
+  margin: 0;            /* remove margins between sections */
+  border-radius: 0;     /* no rounded corners */
+  box-shadow: none;     /* remove subtle shadow */
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .App {
+    flex-direction: column;
+  }
+
+  section {
+    padding: 40px 15px;
+  }
 }

@@ -1,0 +1,67 @@
+/* src/components/Projects.css */
+
+/* General Styles for Projects Section */
+.projects-section {
+  background-color: #f9f9f9;
+  padding: 40px;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.projects-section h2 {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.project-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.project {
+  width: 45%;
+  background: linear-gradient(45deg, #ff5a5f, #6a4c93, #4e9aaf);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite; /* Gradient animation */
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.project h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.project p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Keyframes for gradient animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* For smaller screens */
+@media screen and (max-width: 768px) {
+  .project {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

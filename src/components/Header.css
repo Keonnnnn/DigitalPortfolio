@@ -1,59 +1,60 @@
-/* Header styles */
+/* Thinner pill-shaped header */
 .header {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 15px; /* Further reduced padding for a smaller header */
-  background-color: rgb(233, 237, 231);
-  font-family: 'Open Sans', sans-serif;
+
+  width: min(900px, calc(100% - 40px));
+  padding: 6px 18px;              /* MUCH smaller padding */
+
+  background: #1d1f23;
+  color: #fff;
+  border-radius: 9999px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: saturate(1.2) blur(6px);
 }
 
+/* Logo */
 .logo h1 {
   font-family: 'Dancing Script', cursive;
-  font-size: 1.5rem; /* Smaller font size for logo */
-  color: #8d3d3d;
+  font-size: 1.2rem;  /* smaller */
   margin: 0;
+  color: #fff;
 }
 
+/* Right section (email) */
 .header-right {
   display: flex;
   align-items: center;
 }
 
 .email {
-  color: #333;
+  color: #e5e7eb;
   text-decoration: none;
-  font-size: 1rem; /* Slightly smaller font size */
-  font-family: 'Roboto', sans-serif; /* Changed to a more professional font */
-  margin-right: 20px; /* Space between email and logo */
-  transition: color 0.3s ease;
-  letter-spacing: 0.5px; /* Slight letter-spacing for elegance */
-  font-weight: 400; /* Lighter weight for professional look */
+  font-size: 0.85rem;   /* smaller font */
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.3px;
+  transition: opacity .2s ease, transform .2s ease;
+  white-space: nowrap;
 }
 
 .email:hover {
-  color: #ff5a5f; /* Color change on hover */
-  text-decoration: underline; /* Underline on hover */
+  opacity: 0.85;
+  transform: translateY(-1px);
 }
 
-/* Responsive styling for smaller screens */
+/* Mobile tweaks */
 @media screen and (max-width: 768px) {
   .header {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 5px 14px;
+    width: calc(100% - 24px);
   }
-
-  .logo h1 {
-    font-size: 1.4rem; /* Even smaller font size on mobile */
-  }
-
-  .header-right {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 5px; /* Reduced margin for mobile */
-  }
-
-  .email {
-    margin-bottom: 5px; /* Reduced margin on mobile */
-  }
+  .logo h1 { font-size: 1rem; }
+  .email { font-size: 0.8rem; }
 }
