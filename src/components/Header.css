@@ -1,17 +1,19 @@
+/* src/components/Header.css */
+
 /* Thinner pill-shaped header */
 .header {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  top: calc(20px + env(safe-area-inset-top, 0px)); /* space from top + safe area */
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 1000;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   width: min(900px, calc(100% - 40px));
-  padding: 6px 18px;              /* MUCH smaller padding */
+  padding: 6px 18px;              /* compact padding */
 
   background: #1d1f23;
   color: #fff;
@@ -37,7 +39,7 @@
 .email {
   color: #e5e7eb;
   text-decoration: none;
-  font-size: 0.85rem;   /* smaller font */
+  font-size: 0.85rem;   /* compact font */
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.3px;
   transition: opacity .2s ease, transform .2s ease;
@@ -52,9 +54,14 @@
 /* Mobile tweaks */
 @media screen and (max-width: 768px) {
   .header {
+    top: calc(12px + env(safe-area-inset-top, 0px)); /* slightly tighter top spacing */
     padding: 5px 14px;
     width: calc(100% - 24px);
   }
-  .logo h1 { font-size: 1rem; }
-  .email { font-size: 0.8rem; }
+  .logo h1 {
+    font-size: 1rem;
+  }
+  .email {
+    font-size: 0.8rem;
+  }
 }

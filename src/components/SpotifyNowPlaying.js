@@ -1,6 +1,7 @@
 // src/components/SpotifyNowPlaying.js
 import React, { useEffect, useMemo, useState } from "react";
 import "./SpotifyNowPlaying.css";
+import vinylPlaceholder from "../assets/vinyl1.png"; // first vinyl image
 
 /** mm:ss formatter */
 const fmt = (ms) => {
@@ -12,8 +13,9 @@ const fmt = (ms) => {
 };
 
 export default function SpotifyNowPlaying() {
-  const [data, setData] = useState(null);     // latest payload from server
-  const [tick, setTick] = useState(0);        // local 1s ticker
+  const [data, setData] = useState(null);      // latest payload from server
+  const [updatedAt, setUpdatedAt] = useState(0); // when we last updated `data`
+  const [heartbeat, setHeartbeat] = useState(0); // renders every second for smooth UI
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
 
@@ -22,12 +24,12 @@ export default function SpotifyNowPlaying() {
 
     const fetchNowPlaying = async () => {
       try {
-        // thanks to CRA proxy, this hits http://localhost:5001/now-playing
         const res = await fetch("/now-playing", { cache: "no-store" });
         const json = await res.json();
         if (!mounted) return;
 
         setData(json);
+        setUpdatedAt(Date.now());  // capture when this payload arrived
         setErr(null);
       } catch (e) {
         if (!mounted) return;
@@ -39,8 +41,8 @@ export default function SpotifyNowPlaying() {
     };
 
     fetchNowPlaying();
-    const poll = setInterval(fetchNowPlaying, 25000); // refresh every 25s
-    const timer = setInterval(() => setTick((t) => t + 1000), 1000); // smooth bar
+    const poll = setInterval(fetchNowPlaying, 25000);       // refresh every 25s
+    const timer = setInterval(() => setHeartbeat((h) => h + 1), 1000); // redraw
 
     return () => {
       mounted = false;
@@ -59,38 +61,44 @@ export default function SpotifyNowPlaying() {
     durationMs = 0,
   } = data || {};
 
-  // advance progress locally between polls so the bar moves smoothly
+  // advance progress based on real elapsed time since last payload
   const liveProgress = useMemo(() => {
     if (!isPlaying || !durationMs) return 0;
-    return Math.min(progressMs + tick, durationMs);
-  }, [isPlaying, progressMs, durationMs, tick]);
+    const elapsed = Math.max(0, Date.now() - updatedAt); // ms since we set data
+    const base = Math.max(0, Math.min(progressMs, durationMs));
+    return Math.min(base + elapsed, durationMs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying, durationMs, progressMs, updatedAt, heartbeat]);
 
   const pct = durationMs ? (liveProgress / durationMs) * 100 : 0;
 
-  // --- Loading / error / idle states
+  // --- Loading
   if (loading) {
     return (
       <div className="np-card">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <div className="np-cover np-cover--placeholder" />
+            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
           </div>
           <div className="np-meta">
             <h3 className="np-title">Loading Spotify…</h3>
             <p className="np-artist">Fetching current track</p>
-            <div className="np-track"><div className="np-track-fill" style={{ width: "20%" }} /></div>
+            <div className="np-track">
+              <div className="np-track-fill" style={{ width: "20%" }} />
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
+  // --- Error
   if (err) {
     return (
       <div className="np-card paused">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <div className="np-cover np-cover--placeholder" />
+            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
           </div>
           <div className="np-meta">
             <h3 className="np-title">Spotify unavailable</h3>
@@ -101,27 +109,31 @@ export default function SpotifyNowPlaying() {
     );
   }
 
+  // --- Not playing: show vinyl and zeros
   if (!isPlaying) {
     return (
       <div className="np-card paused">
         <div className="np-media">
           <div className="np-cover-wrap">
-            {albumImageUrl ? (
-              <img className="np-cover" src={albumImageUrl} alt="Album cover" />
-            ) : (
-              <div className="np-cover np-cover--placeholder" />
-            )}
+            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
           </div>
           <div className="np-meta">
             <h3 className="np-title">Not playing right now</h3>
             <p className="np-artist">Spotify is paused</p>
+            <div className="np-times">
+              <span>{fmt(0)}</span>
+              <span>{fmt(0)}</span>
+            </div>
+            <div className="np-track" aria-hidden="true">
+              <div className="np-track-fill" style={{ width: "0%" }} />
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  // --- Playing state
+  // --- Playing
   return (
     <a
       className="np-card playing"
@@ -135,7 +147,7 @@ export default function SpotifyNowPlaying() {
           {albumImageUrl ? (
             <img className="np-cover" src={albumImageUrl} alt="Album cover" />
           ) : (
-            <div className="np-cover np-cover--placeholder" />
+            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
           )}
           {/* tiny equalizer overlay */}
           <div className="np-eq on">
@@ -155,7 +167,13 @@ export default function SpotifyNowPlaying() {
             <span>{fmt(durationMs)}</span>
           </div>
 
-          <div className="np-track" role="progressbar" aria-valuemin={0} aria-valuemax={durationMs} aria-valuenow={liveProgress}>
+          <div
+            className="np-track"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={durationMs}
+            aria-valuenow={liveProgress}
+          >
             <div className="np-track-fill" style={{ width: `${pct}%` }} />
           </div>
         </div>

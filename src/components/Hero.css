@@ -4,24 +4,25 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 100vh;
   font-family: 'Open Sans', sans-serif;
   animation: fadeIn 3s ease-out;
 
   background: radial-gradient(ellipse at bottom, #d9f1ff 0%, #a6d4ff 100%);
   overflow: hidden;
 
-  /* push content below header */
+  /* spacing */
   padding-top: 100px;
+  padding-bottom: 56px;                 /* a little breathing room at the bottom */
+  min-height: clamp(720px, 88vh, 980px);/* softer than 100vh but not cramped */
 }
 
 /* ===== Row: image (left) + text (right) ===== */
 .hero-layout {
   display: flex;
-  align-items: center;
+  align-items: flex-start;   /* align tops */
   justify-content: center;
   gap: 40px;
-  padding: 20px 40px;
+  padding: 20px 40px 16px;   /* modest bottom padding */
 
   /* keep row centered and constrained */
   max-width: 1100px;
@@ -29,7 +30,15 @@
   z-index: 1; /* above the stars */
 }
 
-/* ===== Hero Image ===== */
+/* ===== Hero Image Column (portrait + My projects) ===== */
+.hero-image-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+}
+
 .hero-image img {
   width: 320px;
   height: 380px;
@@ -39,12 +48,58 @@
   user-select: none;
 }
 
-/* ===== Hero Content (right column) ===== */
+/* ===== Hero Content Column (text + player) ===== */
 .hero-content {
   max-width: 600px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
+/* --- Small greeting (typewriter on first load) --- */
+.hero-greeting {
+  margin: 0 0 10px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.greet-type {
+  display: inline-block;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  color: #4b5563;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 1px solid #4b5563;
+  animation:
+    typing 1.8s steps(14, end) forwards,
+    blink 0.9s step-end 1.8s 2,
+    caretOff 0.01s linear 3.6s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .greet-type {
+    animation: none;
+    border-right: 0;
+  }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to   { width: 14ch; }
+}
+
+@keyframes blink {
+  0%, 100% { border-color: transparent; }
+  50%      { border-color: #4b5563; }
+}
+
+@keyframes caretOff {
+  to { border-color: transparent; }
+}
+
+/* ===== Big headline & body ===== */
 .hero h1 {
   font-family: 'Dancing Script', cursive;
   font-size: 3.5rem;
@@ -56,23 +111,81 @@
 
 .hero p {
   font-size: 1.2rem;
-  margin: 0;
+  margin: 0 0 24px;  /* gap before player */
   color: #444;
   animation: fadeInText 2s ease-out 0.5s forwards;
 }
 
-/* ===== Player below both columns, centered ===== */
+/* ===== Projects callout button ===== */
+.projects-callout {
+  display: flex;
+  flex-direction: column; /* text above arrow */
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  color: #111827;
+  transition: transform 0.25s ease;
+
+  margin-top: 64px; /* breathing room below image */
+}
+
+.projects-callout:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+
+/* Cursive, elegant "My projects" */
+.projects-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: 0.4px;
+  text-shadow: 0 1px 4px rgba(0,0,0,.12);
+}
+
+/* Arrow styling */
+.projects-arrow {
+  width: 50px;
+  height: 50px;
+  transform-origin: center;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.15));
+}
+.projects-arrow path {
+  stroke: #111827;
+  stroke-width: 3.25;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  stroke-dasharray: 140;
+  stroke-dashoffset: 140;
+  animation: arrowDraw 1.2s ease forwards, arrowBob 1.5s ease-in-out 1.2s infinite;
+}
+
+@keyframes arrowDraw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes arrowBob {
+  0%, 100% { transform: translateY(0); opacity: .8; }
+  50%      { transform: translateY(10px); opacity: 1; }
+}
+
+/* ===== Spotify player box ===== */
 .hero-player {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
-  padding: 0 40px;
-  margin-top: 12px;
+  max-width: 600px;
+  margin-top: 40px;   /* a bit more space above the player */
 }
 
 .hero-player > * {
   width: 100%;
-  max-width: 600px; /* matches your player’s ideal width */
+  max-width: 600px;
 }
 
 /* ===== Fade-in Animations ===== */
@@ -88,11 +201,17 @@
 
 /* ===== Responsive ===== */
 @media screen and (max-width: 992px) {
+  .hero {
+    min-height: auto;          /* let content height drive on small screens */
+    padding-bottom: 28px;
+  }
+
   .hero-layout {
-    flex-direction: column;  /* stack on small screens */
+    flex-direction: column;
     text-align: center;
     gap: 24px;
     padding-top: 60px;
+    padding-bottom: 16px;
   }
 
   .hero-image img {
@@ -100,14 +219,27 @@
     height: 260px;
   }
 
+  .hero-image-column {
+    gap: 16px;
+    margin-top: 16px;
+  }
+
   .hero-content {
     text-align: center;
   }
 
+  .hero-greeting {
+    justify-content: center;
+    height: 18px;
+  }
+
   .hero h1 { font-size: 2.5rem; }
-  .hero p { font-size: 1rem; }
+  .hero p  { font-size: 1rem; margin-bottom: 20px; }
+
+  .projects-callout { margin-top: 28px; }
 
   .hero-player {
-    padding: 0 16px;
+    justify-content: center;
+    margin-top: 22px;  /* tighter above player on mobile */
   }
 }

@@ -1,67 +1,91 @@
 /* src/components/Projects.css */
 
-/* General Styles for Projects Section */
+/* Section container */
 .projects-section {
-  background-color: #f9f9f9;
-  padding: 40px;
-  margin: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  scroll-margin-top: 100px;       /* so anchor scroll isn’t hidden under header */
+  padding: 60px 24px;
+  background: transparent;        /* keep consistent with Hero background */
 }
 
+/* Section heading */
 .projects-section h2 {
-  font-size: 2rem;
-  color: #333;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.4rem;
   text-align: center;
-  margin-bottom: 30px;
+  color: #2f3640;
+  margin-bottom: 40px;
 }
 
+/* Grid layout */
 .project-list {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
 }
 
+/* Project card */
 .project {
-  width: 45%;
-  background: linear-gradient(45deg, #ff5a5f, #6a4c93, #4e9aaf);
-  background-size: 400% 400%;
-  animation: gradient 10s ease infinite; /* Gradient animation */
+  position: relative;
   padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  border-radius: 8px;
-  text-align: center;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ff5a5f, #6a4c93, #4e9aaf);
+  background-size: 250% 250%;
+  color: #fff; /* ensure text stands out */
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.1);
+  transition: transform .25s ease, box-shadow .25s ease, background-position 1s ease;
+  animation: cardIn .7s ease both;
 }
 
+/* Slight stagger for entry */
+.project:nth-child(1) { animation-delay: .05s; }
+.project:nth-child(2) { animation-delay: .12s; }
+.project:nth-child(3) { animation-delay: .18s; }
+.project:nth-child(4) { animation-delay: .24s; }
+
+.project:hover {
+  transform: translateY(-6px);
+  background-position: 100% 0%;
+  box-shadow:
+    0 18px 36px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.2);
+}
+
+/* Project text */
 .project h3 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: #fff;
 }
 
 .project p {
-  font-size: 1rem;
-  color: #666;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+  color: rgba(255,255,255,.92);
 }
 
-/* Keyframes for gradient animation */
+/* Animations */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(10px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Background gradient pulse */
 @keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* For smaller screens */
-@media screen and (max-width: 768px) {
-  .project {
-    width: 100%;
-    margin-bottom: 20px;
-  }
+/* Smaller screens */
+@media (max-width: 768px) {
+  .projects-section { padding: 44px 16px; }
+  .projects-section h2 { font-size: 2rem; margin-bottom: 24px; }
+  .project-list { gap: 16px; }
 }
