@@ -6,6 +6,8 @@ import "./Projects.css";
 import RobotIcon from "../assets/robot.png";
 import SingapuraIcon from "../assets/Singapura.png";
 import EcotureIcon from "../assets/ECOTURE.png";
+import IllumiaIcon from "../assets/illumia.png";
+import MakanLahIcon from "../assets/MakanLah.png";
 
 const PROJECTS = [
   {
@@ -23,6 +25,30 @@ const PROJECTS = [
   },
   {
     id: "p2",
+    title: "Ecoture",
+    category: "School Project",
+    since: "2025",
+    builtAt: "Nanyang Polytechnic (NYP)",
+    description:
+      "Full Stack web app. Our very own version of a Retail E-commerce platform.",
+    icon: EcotureIcon,
+    stack: ["HTML5", "CSS", "JavaScript", "C#", "MySQL"],
+    url: "https://github.com/Keonnnnn/Ecoture",
+  },
+  {
+    id: "p2w",
+    title: "Ecoture (Wireframes)",
+    category: "School Project",
+    since: "2025",
+    builtAt: "Nanyang Polytechnic (NYP)",
+    description:
+      "High fidelity prototype created for the Ecoture project before development. Designed to visualize flows and layouts.",
+    icon: EcotureIcon,
+    stack: ["Figma", "UI/UX"],
+    url: "https://www.figma.com/proto/vKeBfXlKQHdrFshLoUiHbm/Ecoture---High-Fidelity-Prototype?node-id=887-5198&t=TlS87QQiRBAWFR7Y-1&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=845%3A3805",
+  },
+  {
+    id: "p3",
     title: "Singapura CC",
     category: "School Project",
     since: "2024",
@@ -34,17 +60,43 @@ const PROJECTS = [
     url: "https://github.com/Keonnnnn/singapura-cc-app",
   },
   {
-    id: "p3",
-    title: "Ecoture",
+    id: "p3w",
+    title: "Singapura CC (Wireframes)",
     category: "School Project",
-    since: "2025",
+    since: "2024",
     builtAt: "Nanyang Polytechnic (NYP)",
     description:
-      "Full Stack web app. Our very own version of a Retail E-commerce platform.",
-    icon: EcotureIcon,
-    stack: ["HTML5", "CSS", "JavaScript", "C#", "MySQL"],
-    url: "https://github.com/Keonnnnn/Ecoture",
-  }
+      "Wireframes created to outline the user experience and features of the Singapura CC portal.",
+    icon: SingapuraIcon,
+    stack: ["Figma", "UI/UX"],
+    url: "https://www.figma.com/design/A6x153odr5Cm0Z7WZ4xHHg/Singapura-CC-Wireframes?node-id=0-1&t=t0PWWN755B44LOOr-1",
+  },
+
+  // ------- Remaining projects --------
+  {
+    id: "p4",
+    title: "Illumia",
+    category: "School Project",
+    since: "2024",
+    builtAt: "Nanyang Polytechnic (NYP)",
+    description:
+      "High fidelity prototype of a Hotel Booking System designed for UI/UX coursework.",
+    icon: IllumiaIcon,
+    stack: ["Figma", "UI/UX"],
+    url: "https://www.figma.com/proto/iiJICqnHx9HeG47QLq0jKI/Illumia---High-Fidelity-Prototype?node-id=3-5&t=HuPJvBjTuRsxYN2e-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=3%3A5",
+  },
+  {
+    id: "p5",
+    title: "Makan Lah",
+    category: "School Project",
+    since: "2023",
+    builtAt: "Nanyang Polytechnic (NYP)",
+    description:
+      "Wireframes of a sustainable food delivery web app designed for app development coursework.",
+    icon: MakanLahIcon,
+    stack: ["Figma", "UI/UX"],
+    url: "https://www.figma.com/design/i8GUBWMzQZn4bsOesVUwg5/Makan-Lah---Wireframes?node-id=0-1&t=t5LGME28o2zx7qlW-1",
+  },
 ];
 
 /* --- 3D tilt (uses CSS vars) --- */
@@ -75,7 +127,6 @@ function onLeave(e) {
   card.style.setProperty("--py", `50%`);
 }
 
-/* --- inline sizing so titles can wrap to 2 lines --- */
 const GRID_WIDE_STYLE = {
   gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
   gap: 28,
@@ -104,15 +155,16 @@ export default function Projects() {
       <div className="pr-grid" role="list" style={GRID_WIDE_STYLE}>
         {PROJECTS.map((p) => {
           const CardTag = p.url ? "a" : "div";
+
+          // ✅ No "Since " prefix
           const metaChips = [
-            p.since ? `Since ${p.since}` : null,
+            p.since ? p.since : null,
             p.builtAt ? p.builtAt : p.audience ? `For ${p.audience}` : null,
           ].filter(Boolean);
 
-          // Per-card logo scale
-          let scale = 0.92;              // default
-          if (p.id === "p1") scale = 0.80;       // robot slightly smaller
-          if (p.id === "p2" || p.id === "p3") scale = 1.02; // small boost for these two
+          let scale = 0.92;
+          if (p.id === "p1") scale = 0.8;
+          if (p.id === "p2" || p.id === "p3" || p.id.endsWith("w")) scale = 1.02;
 
           const logoWrapperStyle = { overflow: "hidden" };
           const logoImgStyle = {
@@ -121,7 +173,11 @@ export default function Projects() {
             objectFit: "contain",
             transform: `scale(${scale})`,
           };
-          const emojiStyle = { fontSize: "22px", lineHeight: 1, transform: "scale(0.92)" };
+          const emojiStyle = {
+            fontSize: "22px",
+            lineHeight: 1,
+            transform: "scale(0.92)",
+          };
 
           return (
             <CardTag
@@ -202,6 +258,14 @@ export default function Projects() {
             </CardTag>
           );
         })}
+
+        {/* 🚀 Extra "Coming Soon" Card — sits in the blank space */}
+        <div className="pr-card coming-soon" role="listitem" aria-label="More projects coming soon">
+          <div className="cs-content">
+            <span className="cs-emoji">✨</span>
+            <p className="cs-text">More exciting projects<br />coming soon…</p>
+          </div>
+        </div>
       </div>
     </section>
   );

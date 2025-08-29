@@ -151,6 +151,76 @@
   50% { transform: scaleY(1); }
 }
 
+/* ---------- Status chips ---------- */
+/* Base chip styles used by all statuses (kept minimal for non-live states) */
+.np-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 999px;
+  line-height: 1;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(6px);
+}
+
+/* Live chip — the only section that got a visual upgrade */
+.np-chip--live {
+  position: relative;
+  color: #0b766d; /* teal-ish text for contrast */
+  background:
+    linear-gradient(#ffffffb3, #ffffffa6) padding-box,
+    linear-gradient(90deg, #22d3ee, #6366f1) border-box;
+  border: 1px solid transparent;
+  box-shadow:
+    0 8px 18px rgba(2,6,23,.08),
+    inset 0 1px 0 rgba(255,255,255,.6);
+  isolation: isolate;
+}
+.np-chip--live .np-chip-icon { opacity: .95; }
+
+/* soft glow behind the chip */
+.np-chip--live .np-chip-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: radial-gradient(60% 80% at 20% 50%, rgba(34,211,238,.20), transparent 70%),
+              radial-gradient(60% 80% at 80% 50%, rgba(99,102,241,.18), transparent 70%);
+  filter: blur(10px);
+  z-index: -1;
+}
+
+/* tiny equalizer bars at the end of the chip */
+.np-chip--live .np-chip-bars {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 4px;
+}
+.np-chip--live .np-chip-bars i {
+  width: 3px;
+  height: 10px;
+  border-radius: 1px;
+  background: linear-gradient(180deg, #22d3ee, #6366f1);
+  transform-origin: bottom;
+  animation: chipBar 1s ease-in-out infinite;
+}
+.np-chip--live .np-chip-bars i:nth-child(2) { animation-delay: .12s; height: 12px; }
+.np-chip--live .np-chip-bars i:nth-child(3) { animation-delay: .24s; height: 8px; }
+
+@keyframes chipBar {
+  0%,100% { transform: scaleY(.35); }
+  50%     { transform: scaleY(1); }
+}
+
+/* Other states remain simple (unchanged visually) */
+.np-chip--paused  { color: #6b7280; }
+.np-chip--loading { color: #334155; }
+.np-chip--error   { color: #b91c1c; }
+
 /* Responsive */
 @media (max-width: 640px) {
   .np-media {
@@ -163,4 +233,5 @@
   }
   .np-title { font-size: 1.25rem; }
   .np-artist { font-size: 0.9rem; }
+  .np-chip { font-size: .74rem; padding: 4px 10px; margin-bottom: 8px; }
 }
