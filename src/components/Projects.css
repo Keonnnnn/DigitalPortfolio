@@ -228,3 +228,43 @@
   .pr-meta { font-size: 0.92rem; }
   .pr-desc { font-size: 0.98rem; }
 }
+
+/* ---------------- Coming Soon card (new) ---------------- */
+.coming-soon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border: 2px dashed #d1d5db;
+  text-align: center;
+  animation: csPulse 2.2s infinite ease-in-out;
+}
+
+.cs-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-emoji {
+  font-size: 2rem;
+  animation: csFloat 2.6s infinite ease-in-out;
+}
+
+.cs-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Animations */
+@keyframes csFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes csPulse {
+  0%, 100% { border-color: #d1d5db; }
+  50% { border-color: #9ca3af; }
+}
