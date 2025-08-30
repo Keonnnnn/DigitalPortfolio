@@ -9,22 +9,21 @@
   background: radial-gradient(ellipse at bottom, #d9f1ff 0%, #a6d4ff 100%);
   overflow: hidden;
 
-  padding-top: 100px;
-  padding-bottom: 56px;               
-  min-height: clamp(720px, 88vh, 980px);
+  padding-top: 80px; /* reduced from 100px */
+  padding-bottom: 48px;
+  min-height: clamp(640px, 90vh, 980px);
 }
 
 .hero-layout {
   display: flex;
-  align-items: flex-start;   
+  align-items: flex-start;
   justify-content: center;
-  gap: 40px;
-  padding: 20px 40px 16px;   
+  gap: clamp(16px, 4vw, 40px);
+  padding: 20px clamp(16px, 5vw, 40px) 16px;
 
- 
   max-width: 1100px;
   margin: 0 auto;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .hero-image-column {
@@ -36,14 +35,14 @@
 }
 
 .hero-image img {
-  width: 320px;
-  height: 380px;
+  width: min(65vw, 320px);
+  height: auto;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: 20px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
   user-select: none;
 }
-
 
 .hero-content {
   max-width: 600px;
@@ -51,7 +50,6 @@
   display: flex;
   flex-direction: column;
 }
-
 
 .hero-greeting {
   margin: 0 0 10px;
@@ -85,37 +83,34 @@
   from { width: 0; }
   to   { width: 14ch; }
 }
-
 @keyframes blink {
   0%, 100% { border-color: transparent; }
   50%      { border-color: #4b5563; }
 }
-
 @keyframes caretOff {
   to { border-color: transparent; }
 }
 
-
 .hero h1 {
   font-family: 'Dancing Script', cursive;
-  font-size: 3.5rem;
-  margin-bottom: 20px;
+  font-size: clamp(1.9rem, 6vw, 3.5rem);
+  margin-bottom: clamp(12px, 2.5vw, 20px);
   color: #333;
   line-height: 1.2;
   animation: fadeInText 2s ease-out forwards;
+  text-wrap: balance;
 }
 
 .hero p {
-  font-size: 1.2rem;
-  margin: 0 0 24px;  
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  margin: 0 0 clamp(16px, 3vw, 24px);
   color: #444;
   animation: fadeInText 2s ease-out 0.5s forwards;
 }
 
-
 .projects-callout {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
   gap: 12px;
   cursor: pointer;
@@ -125,8 +120,7 @@
   padding: 0;
   color: #111827;
   transition: transform 0.25s ease;
-
-  margin-top: 64px; 
+  margin-top: 48px;
 }
 
 .projects-callout:hover {
@@ -135,7 +129,7 @@
 
 .projects-text {
   font-family: 'Dancing Script', cursive;
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 4.5vw, 2rem);
   font-weight: 600;
   color: #111827;
   letter-spacing: 0.4px;
@@ -143,8 +137,8 @@
 }
 
 .projects-arrow {
-  width: 50px;
-  height: 50px;
+  width: clamp(32px, 7vw, 50px);
+  height: clamp(32px, 7vw, 50px);
   transform-origin: center;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,.15));
 }
@@ -168,26 +162,22 @@
   50%      { transform: translateY(10px); opacity: 1; }
 }
 
-
 .hero-player {
   display: flex;
   justify-content: flex-start;
   width: 100%;
   max-width: 600px;
-  margin-top: 40px;  
+  margin-top: clamp(18px, 4vw, 40px);
 }
-
 .hero-player > * {
   width: 100%;
   max-width: 600px;
 }
 
-
 @keyframes fadeIn {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fadeInText {
   0% { opacity: 0; transform: translateY(15px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -196,44 +186,40 @@
 
 @media screen and (max-width: 992px) {
   .hero {
-    min-height: auto;          
+    min-height: auto;
+    padding-top: 64px;
     padding-bottom: 28px;
   }
 
   .hero-layout {
     flex-direction: column;
     text-align: center;
-    gap: 24px;
-    padding-top: 60px;
-    padding-bottom: 16px;
+    gap: 20px;
+    padding-top: 52px;
+    padding-bottom: 12px;
   }
 
   .hero-image img {
     width: 220px;
-    height: 260px;
+    aspect-ratio: 4 / 5;
   }
 
-  .hero-image-column {
-    gap: 16px;
-    margin-top: 16px;
+  .hero-image-column { gap: 14px; margin-top: 8px; }
+  .hero-content { text-align: center; max-width: 680px; }
+  .hero-greeting { justify-content: center; height: 18px; }
+
+  .projects-callout { margin-top: 22px; }
+  .hero-player { justify-content: center; }
+}
+
+@media screen and (max-width: 480px) {
+  .hero { padding-top: 56px; }
+
+  .greet-type {
+    animation: none !important;
+    border-right: 0 !important;
+    white-space: normal;
   }
 
-  .hero-content {
-    text-align: center;
-  }
-
-  .hero-greeting {
-    justify-content: center;
-    height: 18px;
-  }
-
-  .hero h1 { font-size: 2.5rem; }
-  .hero p  { font-size: 1rem; margin-bottom: 20px; }
-
-  .projects-callout { margin-top: 28px; }
-
-  .hero-player {
-    justify-content: center;
-    margin-top: 22px;  
-  }
+  .hero-image-column { gap: 12px; }
 }
