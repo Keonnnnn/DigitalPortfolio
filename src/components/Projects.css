@@ -1,4 +1,3 @@
-/* Section heading */
 .pr-heading {
   font-family: 'Dancing Script', cursive;
   font-size: 2.6rem;
@@ -7,24 +6,24 @@
   color: #1f2937;
 }
 
-/* Grid (wider container + larger cards) */
+
 .pr-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); /* bigger min width */
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
   gap: 28px;
-  max-width: 1240px;   /* wider row like the reference */
+  max-width: 1240px;   
   padding: 0 16px;
   margin: 0 auto;
 }
 
-/* --- 3D Card ------------------------------------------------------------ */
+
 .pr-card {
-  /* 3D state (JS writes these) */
+
   --rX: 0deg;
   --rY: 0deg;
   --px: 50%;
   --py: 50%;
-  /* pop-out controls (changed only on hover class) */
+
   --tz: 0px;
   --sc: 1;
 
@@ -33,18 +32,18 @@
   flex-direction: column;
   background: #fff;
   border: 1px solid #e5e7eb;
-  border-radius: 20px;             /* chunkier radius like reference */
-  padding: 22px 22px 18px;         /* larger padding */
+  border-radius: 20px;            
+  padding: 22px 22px 18px;         
   text-decoration: none;
   color: inherit;
   transform-origin: center;
 
-  /* base depth/lighting (subtle) */
+
   box-shadow:
     0 10px 18px rgba(0,0,0,.06),
     inset 0 1px 0 rgba(255,255,255,.6);
 
-  /* 3D transform – perspective on the element */
+
   transform:
     perspective(1000px)
     rotateX(var(--rX)) rotateY(var(--rY))
@@ -57,52 +56,52 @@
     border-color .18s ease,
     filter .23s ease;
   will-change: transform;
-  overflow: hidden; /* mask any inner overflow, incl. tilt glow if added later */
+  overflow: hidden; 
 }
 
-/* Glow disabled */
+
 .pr-card::before {
   content: "";
   display: none;
 }
 
-/* Hover via JS class only: pop out + slight scale, no shadow */
+
 .pr-card.is-hovered {
   --tz: 28px;
   --sc: 1.035;
 
   border-color: #d1d5db;
-  box-shadow: none;   /* no hover shadow */
+  box-shadow: none;  
   filter: saturate(1.02);
   z-index: 2;
 }
 
-/* Keyboard focus: show outline, do NOT scale/pop */
+
 .pr-card:focus-visible {
-  outline: 2px solid #c7d2fe; /* soft indigo focus ring */
+  outline: 2px solid #c7d2fe; 
   outline-offset: 4px;
   --tz: 0px;
   --sc: 1;
   box-shadow: none;
 }
 
-/* Slight parallax for inner elements */
+
 .pr-logo      { transform: translateZ(24px); }
 .pr-titleWrap { transform: translateZ(18px); }
 .pr-meta      { transform: translateZ(12px); }
 .pr-desc      { transform: translateZ(14px); }
 .pr-foot      { transform: translateZ(16px); }
 
-/* Header: logo + title row */
+
 .pr-head {
   display: grid;
-  grid-template-columns: 56px 1fr; /* bigger avatar column */
+  grid-template-columns: 56px 1fr; 
   gap: 14px;
   align-items: center;
   margin-bottom: 8px;
 }
 
-/* Round icon container */
+
 .pr-logo {
   width: 56px;
   height: 56px;
@@ -112,16 +111,16 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  overflow: hidden;                 /* <-- keep image inside the circle */
+  overflow: hidden;               
 }
 
-/* Emoji fallback size */
+
 .pr-logo span {
   font-size: 26px;
   line-height: 1;
 }
 
-/* Image icon sizing (e.g., robot.png) */
+
 .pr-logo-img {
   width: 72%;
   height: 72%;
@@ -129,7 +128,7 @@
   display: block;
 }
 
-/* Title + chip */
+
 .pr-titleWrap {
   display: flex;
   align-items: baseline;
@@ -138,7 +137,7 @@
 }
 .pr-title {
   margin: 0;
-  font-size: 1.375rem;  /* ≈22px */
+  font-size: 1.375rem;  
   line-height: 1.25;
   font-weight: 700;
   color: #111827;
@@ -159,34 +158,37 @@
   white-space: nowrap;
 }
 
-/* Meta row */
+
 .pr-meta {
   display: flex;
   align-items: center;
   gap: 10px;
   color: #6b7280;
-  font-size: 0.95rem;   /* slightly larger */
+  font-size: 0.95rem;   
   margin: 6px 0 10px;
 }
 .pr-dot { opacity: .7; }
 
-/* Description (3-line clamp) */
+
 .pr-desc {
   color: #374151;
-  font-size: 1rem;      /* larger body text */
+  font-size: 1rem;    
   line-height: 1.55;
   margin: 0 0 16px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Footer */
+
 .pr-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;  
+  gap: 10px;
 }
 .pr-badge {
   display: inline-flex;
@@ -204,7 +206,29 @@
 }
 .pr-open { color: #9ca3af; font-size: 1rem; }
 
-/* Touch/reduced motion fallbacks */
+
+.pr-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  line-height: 1;
+  background: #fff7ed;        
+  color: #9a3412;           
+  border: 1px dashed #fdba74; 
+  cursor: pointer;
+  text-decoration: none;
+}
+.pr-cta:hover { filter: saturate(1.05) brightness(0.98); }
+.pr-cta:focus-visible {
+  outline: 2px solid #fed7aa;
+  outline-offset: 3px;
+}
+.pr-cta .pr-cta-text { white-space: nowrap; }
+
+
 @media (hover: none) {
   .pr-card { transform: none !important; }
   .pr-card::before { display: none; }
@@ -214,7 +238,6 @@
   .pr-card { transition: box-shadow .23s ease, border-color .18s ease; }
 }
 
-/* Responsive tweaks */
 @media (max-width: 992px) {
   .pr-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 }
@@ -229,7 +252,6 @@
   .pr-desc { font-size: 0.98rem; }
 }
 
-/* ---------------- Coming Soon card (new) ---------------- */
 .coming-soon {
   display: flex;
   align-items: center;

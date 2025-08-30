@@ -1,13 +1,12 @@
-// server.js
 require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const fetch = require("node-fetch"); // v2 for CommonJS
+const fetch = require("node-fetch"); 
 
 const app = express();
 
-/* ---------------- CORS (React dev) ---------------- */
+
 app.use(
   cors({
     origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
@@ -15,14 +14,14 @@ app.use(
 );
 app.use(express.json());
 
-/* ---------------- ENV ---------------- */
+
 const {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
-  SPOTIFY_REFRESH_TOKEN, // fill after first /login -> /callback
-  REDIRECT_URI = "http://127.0.0.1:5001/callback", // keep in sync with Spotify Dashboard
+  SPOTIFY_REFRESH_TOKEN, 
+  REDIRECT_URI = "http://127.0.0.1:5001/callback", 
   SERVER_PORT,
-  PORT, // fallback if you used PORT before
+  PORT,
 } = process.env;
 
 const LISTEN_PORT = Number(SERVER_PORT || PORT || 5001);
@@ -33,7 +32,7 @@ if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
   );
 }
 
-/* ---------------- Spotify helpers ---------------- */
+
 const BASIC = Buffer.from(
   `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
 ).toString("base64");
@@ -68,7 +67,7 @@ async function getAccessToken(refreshToken) {
   return json.access_token;
 }
 
-/* ---------------- OAuth routes ---------------- */
+
 app.get("/login", (_req, res) => {
   const url = new URL("https://accounts.spotify.com/authorize");
   url.searchParams.set("client_id", SPOTIFY_CLIENT_ID);
@@ -123,7 +122,7 @@ app.get("/callback", async (req, res) => {
   }
 });
 
-/* ---------------- API: now playing ---------------- */
+
 app.get("/now-playing", async (_req, res) => {
   if (!SPOTIFY_REFRESH_TOKEN) {
     return res.status(400).json({ error: "missing_refresh_token" });
@@ -139,7 +138,7 @@ app.get("/now-playing", async (_req, res) => {
       }
     );
 
-    // Nothing playing
+    
     if (nowRes.status === 204 || nowRes.status === 202) {
       return res
         .set("Cache-Control", "no-store")
@@ -165,7 +164,7 @@ app.get("/now-playing", async (_req, res) => {
         artist: item?.artists?.map((a) => a.name).join(", ") || null,
         albumImageUrl: item?.album?.images?.[0]?.url || null,
         songUrl: item?.external_urls?.spotify || null,
-        // timing for your UI progress bar
+       
         progressMs: payload?.progress_ms ?? 0,
         durationMs: item?.duration_ms ?? 0,
       });
@@ -178,10 +177,10 @@ app.get("/now-playing", async (_req, res) => {
   }
 });
 
-/* ---------------- Health ---------------- */
+
 app.get("/", (_req, res) => res.send("OK"));
 
-/* ---------------- Start ---------------- */
+
 app.listen(LISTEN_PORT, () => {
   console.log(`Local server running at http://localhost:${LISTEN_PORT}`);
   console.log(`1) Visit http://localhost:${LISTEN_PORT}/login to authorize`);

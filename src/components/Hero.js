@@ -1,5 +1,3 @@
-// src/components/Hero.js
-import React from "react";
 import "./Hero.css";
 import ShootingStars from "./ShootingStars";
 import Header from "./Header";
@@ -14,15 +12,15 @@ const Hero = () => {
 
   return (
     <section className="hero">
-      {/* Fixed header at the top */}
+    
       <Header />
 
-      {/* Background shooting stars */}
+    
       <ShootingStars count={20} />
 
-      {/* Two-column layout: image left, text right */}
+      
       <div className="hero-layout">
-        {/* Left column: portrait + My projects callout */}
+        
         <div className="hero-image-column">
           <div className="hero-image">
             <img src={MeImage} alt="Keon portrait" />
@@ -34,7 +32,7 @@ const Hero = () => {
             aria-label="Scroll to projects"
           >
             <span className="projects-text">My projects</span>
-            {/* Downward arrow */}
+          
             <svg
               className="projects-arrow"
               viewBox="0 0 64 64"
@@ -52,7 +50,7 @@ const Hero = () => {
           </button>
         </div>
 
-        {/* Right column: text + Spotify player */}
+       
         <div className="hero-content">
           <div className="hero-greeting" aria-label="Hello, I'm Keon">
             <span className="greet-type">Hello, I&apos;m Keon</span>
@@ -66,7 +64,7 @@ const Hero = () => {
             but also resonate with users.
           </p>
 
-          {/* Spotify player now directly below the text */}
+  
           <div className="hero-player">
             <SpotifyNowPlaying />
           </div>
