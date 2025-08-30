@@ -1,29 +1,27 @@
-/* Global Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #fff;   /* plain white (no blue strip) */
-  min-height: 100%;   /* let page grow naturally */
+  background: #fff;   
+  min-height: 100%;  
 }
 
-/* App Wrapper */
+
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;  /* page takes full viewport height */
+  min-height: 100vh;  
 }
 
-/* Section Styling (Common Styles for All Sections) */
+
 section {
-  padding: 60px 20px;   /* more breathing space */
-  background-color: #fff; /* solid background (no transparency) */
-  margin: 0;            /* remove margins between sections */
-  border-radius: 0;     /* no rounded corners */
-  box-shadow: none;     /* remove subtle shadow */
+  padding: 60px 20px;  
+  background-color: #fff; 
+  margin: 0;           
+  border-radius: 0;    
+  box-shadow: none;    
 }
 
-/* Responsive Styles */
 @media screen and (max-width: 768px) {
   .App {
     flex-direction: column;

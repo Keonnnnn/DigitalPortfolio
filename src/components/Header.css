@@ -1,9 +1,6 @@
-/* src/components/Header.css */
-
-/* Thinner pill-shaped header */
 .header {
   position: fixed;
-  top: calc(20px + env(safe-area-inset-top, 0px)); /* space from top + safe area */
+  top: calc(20px + env(safe-area-inset-top, 0px)); 
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -13,7 +10,7 @@
   align-items: center;
 
   width: min(900px, calc(100% - 40px));
-  padding: 6px 18px;              /* compact padding */
+  padding: 6px 18px;             
 
   background: #1d1f23;
   color: #fff;
@@ -22,15 +19,14 @@
   backdrop-filter: saturate(1.2) blur(6px);
 }
 
-/* Logo */
+
 .logo h1 {
   font-family: 'Dancing Script', cursive;
-  font-size: 1.2rem;  /* smaller */
+  font-size: 1.2rem; 
   margin: 0;
   color: #fff;
 }
 
-/* Right section (email) */
 .header-right {
   display: flex;
   align-items: center;
@@ -39,7 +35,7 @@
 .email {
   color: #e5e7eb;
   text-decoration: none;
-  font-size: 0.85rem;   /* compact font */
+  font-size: 0.85rem;   
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.3px;
   transition: opacity .2s ease, transform .2s ease;
@@ -54,7 +50,7 @@
 /* Mobile tweaks */
 @media screen and (max-width: 768px) {
   .header {
-    top: calc(12px + env(safe-area-inset-top, 0px)); /* slightly tighter top spacing */
+    top: calc(12px + env(safe-area-inset-top, 0px)); 
     padding: 5px 14px;
     width: calc(100% - 24px);
   }

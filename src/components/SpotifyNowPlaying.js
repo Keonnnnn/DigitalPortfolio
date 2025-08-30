@@ -1,9 +1,8 @@
-// src/components/SpotifyNowPlaying.js
 import React, { useEffect, useMemo, useState } from "react";
 import "./SpotifyNowPlaying.css";
-import vinylPlaceholder from "../assets/vinyl1.png"; // fallback image
+import vinylPlaceholder from "../assets/vinyl1.png"; 
 
-/** mm:ss formatter */
+
 const fmt = (ms) => {
   if (!ms || ms < 0) return "0:00";
   const s = Math.floor(ms / 1000);
@@ -61,18 +60,18 @@ export default function SpotifyNowPlaying() {
     durationMs = 0,
   } = data || {};
 
-  // live progress advances between polls
+  
   const liveProgress = useMemo(() => {
     if (!isPlaying || !durationMs) return 0;
     const elapsed = Math.max(0, Date.now() - updatedAt);
     const base = Math.max(0, Math.min(progressMs, durationMs));
     return Math.min(base + elapsed, durationMs);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [isPlaying, durationMs, progressMs, updatedAt, heartbeat]);
 
   const pct = durationMs ? (liveProgress / durationMs) * 100 : 0;
 
-  // Spotify icon (for the chip)
+ 
   const SpotifyIcon = () => (
     <svg
       aria-hidden="true"
@@ -86,13 +85,12 @@ export default function SpotifyNowPlaying() {
     </svg>
   );
 
-  // --- Loading
   if (loading) {
     return (
       <div className="np-card">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
+            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
           </div>
           <div className="np-meta" role="status" aria-live="polite">
             <span className="np-chip np-chip--loading">
@@ -112,13 +110,13 @@ export default function SpotifyNowPlaying() {
     );
   }
 
-  // --- Error
+
   if (err) {
     return (
       <div className="np-card paused">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
+            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
           </div>
           <div className="np-meta" role="status" aria-live="polite">
             <span className="np-chip np-chip--error">
@@ -134,13 +132,13 @@ export default function SpotifyNowPlaying() {
     );
   }
 
-  // --- Not playing
+
   if (!isPlaying) {
     return (
       <div className="np-card paused">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
+            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
           </div>
           <div className="np-meta" role="status" aria-live="polite">
             <span className="np-chip np-chip--paused">
@@ -149,7 +147,7 @@ export default function SpotifyNowPlaying() {
             </span>
 
             <h3 className="np-title">Not playing right now</h3>
-            <p className="np-artist">Spotify is paused</p>
+            <p className="np-artist">Keon's Spotify is paused</p>
 
             <div className="np-times">
               <span>{fmt(0)}</span>
@@ -164,7 +162,7 @@ export default function SpotifyNowPlaying() {
     );
   }
 
-  // --- Playing
+
   return (
     <a
       className="np-card playing"
@@ -178,16 +176,15 @@ export default function SpotifyNowPlaying() {
           {albumImageUrl ? (
             <img className="np-cover" src={albumImageUrl} alt="Album cover" />
           ) : (
-            <img className="np-cover np-cover--art" src={vinylPlaceholder} alt="Vinyl" />
+            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
           )}
-          {/* tiny equalizer overlay */}
+         
           <div className="np-eq on">
             <span /><span /><span /><span />
           </div>
         </div>
 
         <div className="np-meta" role="status" aria-live="polite">
-          {/* >>> ONLY THING CHANGED: cooler Listening-now chip <<< */}
           <span className="np-chip np-chip--live" title="You are listening right now">
             <span className="np-chip-ring" aria-hidden="true" />
             <SpotifyIcon />

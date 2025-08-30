@@ -1,5 +1,3 @@
-// src/components/Projects.js
-import React from "react";
 import "./Projects.css";
 
 // Images
@@ -21,7 +19,11 @@ const PROJECTS = [
     status: "Active",
     icon: RobotIcon,
     stack: ["FormSG", "Plumber", "Postman", "Excel Power Query"],
-    url: "#",
+    url: "https://docs.google.com/presentation/d/1iQNU_TAhzT77QZ6msAJMFkqVFwiHF2Vx6Bu9MvVLmx4/edit?usp=sharing",
+  
+    contactNote: "Contact me to find out more",
+    contactUrl:
+      "mailto:Keonshu.contact@gmail.com?subject=YCS%20Collaterals%20System%20inquiry",
   },
   {
     id: "p2",
@@ -72,7 +74,7 @@ const PROJECTS = [
     url: "https://www.figma.com/design/A6x153odr5Cm0Z7WZ4xHHg/Singapura-CC-Wireframes?node-id=0-1&t=t0PWWN755B44LOOr-1",
   },
 
-  // ------- Remaining projects --------
+
   {
     id: "p4",
     title: "Illumia",
@@ -156,7 +158,6 @@ export default function Projects() {
         {PROJECTS.map((p) => {
           const CardTag = p.url ? "a" : "div";
 
-          // ✅ No "Since " prefix
           const metaChips = [
             p.since ? p.since : null,
             p.builtAt ? p.builtAt : p.audience ? `For ${p.audience}` : null,
@@ -191,7 +192,7 @@ export default function Projects() {
               onMouseLeave={onLeave}
               style={CARD_LARGER_STYLE}
             >
-              {/* Header: icon + title + chip */}
+             
               <div className="pr-head">
                 <div className="pr-logo" style={logoWrapperStyle} aria-hidden={!p.icon && !p.emoji}>
                   {p.icon ? (
@@ -216,7 +217,7 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Meta chips */}
+              
               {metaChips.length > 0 && (
                 <div className="pr-meta" style={{ gap: 8, flexWrap: "wrap" }}>
                   {metaChips.map((chip, i) => (
@@ -227,10 +228,10 @@ export default function Projects() {
                 </div>
               )}
 
-              {/* Description */}
+            
               {p.description && <p className="pr-desc">{p.description}</p>}
 
-              {/* Tech stack chips */}
+             
               {Array.isArray(p.stack) && p.stack.length > 0 && (
                 <div
                   className="pr-stack"
@@ -244,8 +245,36 @@ export default function Projects() {
                 </div>
               )}
 
-              {/* Footer */}
+           
               <div className="pr-foot">
+               
+                {p.contactNote &&
+                  (p.url ? (
+                    <button
+                      type="button"
+                      className="pr-cta"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        window.location.href =
+                          p.contactUrl || "mailto:Keonshu.contact@gmail.com";
+                      }}
+                      aria-label="Contact me about this project"
+                    >
+                      <span aria-hidden="true">✉️</span>
+                      <span className="pr-cta-text">{p.contactNote}</span>
+                    </button>
+                  ) : (
+                    <a
+                      className="pr-cta"
+                      href={p.contactUrl || "mailto:Keonshu.contact@gmail.com"}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <span aria-hidden="true">✉️</span>
+                      <span className="pr-cta-text">{p.contactNote}</span>
+                    </a>
+                  ))}
+
                 <span
                   className={`pr-badge ${
                     (p.status || "").toLowerCase() === "active" ? "pr-badge--active" : ""
@@ -259,11 +288,15 @@ export default function Projects() {
           );
         })}
 
-        {/* 🚀 Extra "Coming Soon" Card — sits in the blank space */}
+       
         <div className="pr-card coming-soon" role="listitem" aria-label="More projects coming soon">
           <div className="cs-content">
             <span className="cs-emoji">✨</span>
-            <p className="cs-text">More exciting projects<br />coming soon…</p>
+            <p className="cs-text">
+              More exciting projects
+              <br />
+              coming soon…
+            </p>
           </div>
         </div>
       </div>
