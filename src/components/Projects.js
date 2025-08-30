@@ -20,7 +20,6 @@ const PROJECTS = [
     icon: RobotIcon,
     stack: ["FormSG", "Plumber", "Postman", "Excel Power Query"],
     url: "https://docs.google.com/presentation/d/1iQNU_TAhzT77QZ6msAJMFkqVFwiHF2Vx6Bu9MvVLmx4/edit?usp=sharing",
-  
     contactNote: "Contact me to find out more",
     contactUrl:
       "mailto:Keonshu.contact@gmail.com?subject=YCS%20Collaterals%20System%20inquiry",
@@ -73,8 +72,6 @@ const PROJECTS = [
     stack: ["Figma", "UI/UX"],
     url: "https://www.figma.com/design/A6x153odr5Cm0Z7WZ4xHHg/Singapura-CC-Wireframes?node-id=0-1&t=t0PWWN755B44LOOr-1",
   },
-
-
   {
     id: "p4",
     title: "Illumia",
@@ -130,7 +127,7 @@ function onLeave(e) {
 }
 
 const GRID_WIDE_STYLE = {
-  gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+  // gridTemplateColumns removed so CSS controls layout at breakpoints
   gap: 28,
   maxWidth: 1240,
   margin: "0 auto",
@@ -192,7 +189,6 @@ export default function Projects() {
               onMouseLeave={onLeave}
               style={CARD_LARGER_STYLE}
             >
-             
               <div className="pr-head">
                 <div className="pr-logo" style={logoWrapperStyle} aria-hidden={!p.icon && !p.emoji}>
                   {p.icon ? (
@@ -217,7 +213,6 @@ export default function Projects() {
                 </div>
               </div>
 
-              
               {metaChips.length > 0 && (
                 <div className="pr-meta" style={{ gap: 8, flexWrap: "wrap" }}>
                   {metaChips.map((chip, i) => (
@@ -228,10 +223,8 @@ export default function Projects() {
                 </div>
               )}
 
-            
               {p.description && <p className="pr-desc">{p.description}</p>}
 
-             
               {Array.isArray(p.stack) && p.stack.length > 0 && (
                 <div
                   className="pr-stack"
@@ -245,9 +238,7 @@ export default function Projects() {
                 </div>
               )}
 
-           
               <div className="pr-foot">
-               
                 {p.contactNote &&
                   (p.url ? (
                     <button
@@ -288,7 +279,6 @@ export default function Projects() {
           );
         })}
 
-       
         <div className="pr-card coming-soon" role="listitem" aria-label="More projects coming soon">
           <div className="cs-content">
             <span className="cs-emoji">✨</span>
