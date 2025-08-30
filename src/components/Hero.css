@@ -183,7 +183,7 @@
   100% { opacity: 1; transform: translateY(0); }
 }
 
-
+/* ----------------- Mobile-only tweaks ----------------- */
 @media screen and (max-width: 992px) {
   .hero {
     min-height: auto;
@@ -197,11 +197,13 @@
     gap: 20px;
     padding-top: 52px;
     padding-bottom: 12px;
+    align-items: center;            /* NEW: center the whole column on mobile */
   }
 
   .hero-image img {
     width: 220px;
     aspect-ratio: 4 / 5;
+    margin: 0 auto;                 /* NEW: hard-center the portrait */
   }
 
   .hero-image-column { gap: 14px; margin-top: 8px; }

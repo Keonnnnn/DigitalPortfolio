@@ -222,13 +222,23 @@
   .pr-card { transition: box-shadow .23s ease, border-color .18s ease; }
 }
 
+/* ---------- Mobile-only centering tweaks ---------- */
 @media (max-width: 992px) {
-  .pr-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .pr-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    justify-content: center;   /* center the grid as a whole */
+    justify-items: center;     /* center each card in its cell */
+  }
 }
+
 @media (max-width: 768px) {
   .pr-heading { font-size: 2.2rem; }
-  .pr-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-  .pr-card { padding: 18px; border-radius: 18px; }
+  .pr-grid {
+    grid-template-columns: 1fr;  /* single centered column */
+    max-width: 720px;             /* pleasant reading width */
+    margin: 0 auto;
+  }
+  .pr-card { padding: 18px; border-radius: 18px; width: 100%; }
   .pr-head { grid-template-columns: 48px 1fr; gap: 12px; }
   .pr-logo { width: 48px; height: 48px; }
   .pr-logo span { font-size: 22px; }
@@ -236,8 +246,9 @@
   .pr-meta { font-size: 0.9rem; }
   .pr-desc { font-size: 0.95rem; -webkit-line-clamp: 4; }
 }
+
 @media (max-width: 480px) {
-  .pr-grid { grid-template-columns: 1fr; }
+  .pr-grid { max-width: 560px; }
   .pr-card { padding: 14px; border-radius: 14px; }
   .pr-head { grid-template-columns: 44px 1fr; gap: 10px; }
   .pr-logo { width: 44px; height: 44px; }
