@@ -1,7 +1,10 @@
+// src/components/SpotifyNowPlaying.js
 import React, { useEffect, useMemo, useState } from "react";
 import "./SpotifyNowPlaying.css";
-import vinylPlaceholder from "../assets/vinyl1.png"; 
+import vinylPlaceholder from "../assets/vinyl1.png";
 
+// 👉 Replace with your Vercel API URL
+const API_URL = "https://spotify-proxy-gules.vercel.app/api/now-playing";
 
 const fmt = (ms) => {
   if (!ms || ms < 0) return "0:00";
@@ -23,11 +26,24 @@ export default function SpotifyNowPlaying() {
 
     const fetchNowPlaying = async () => {
       try {
-        const res = await fetch("/now-playing", { cache: "no-store" });
+        // no-store so we always get fresh data
+        const res = await fetch(API_URL, { cache: "no-store" });
         const json = await res.json();
         if (!mounted) return;
 
-        setData(json);
+        // Map Vercel API fields -> component fields
+        // Vercel returns: { isPlaying, title, artist, album, artwork, url, progressMs?, durationMs? }
+        const mapped = {
+          isPlaying: !!json.isPlaying,
+          title: json.title || "None",
+          artist: json.artist || "None",
+          albumImageUrl: json.artwork || "",
+          songUrl: json.url || "#",
+          progressMs: json.progressMs || 0, // optional in your API
+          durationMs: json.durationMs || 0, // optional in your API
+        };
+
+        setData(mapped);
         setUpdatedAt(Date.now());
         setErr(null);
       } catch (e) {
@@ -40,8 +56,8 @@ export default function SpotifyNowPlaying() {
     };
 
     fetchNowPlaying();
-    const poll = setInterval(fetchNowPlaying, 25000);
-    const timer = setInterval(() => setHeartbeat((h) => h + 1), 1000);
+    const poll = setInterval(fetchNowPlaying, 25_000); // refresh every 25s
+    const timer = setInterval(() => setHeartbeat((h) => h + 1), 1000); // tick for progress animation
 
     return () => {
       mounted = false;
@@ -60,18 +76,16 @@ export default function SpotifyNowPlaying() {
     durationMs = 0,
   } = data || {};
 
-  
+  // Animate progress locally between polls (only if API provides timing)
   const liveProgress = useMemo(() => {
     if (!isPlaying || !durationMs) return 0;
     const elapsed = Math.max(0, Date.now() - updatedAt);
     const base = Math.max(0, Math.min(progressMs, durationMs));
     return Math.min(base + elapsed, durationMs);
-   
   }, [isPlaying, durationMs, progressMs, updatedAt, heartbeat]);
 
   const pct = durationMs ? (liveProgress / durationMs) * 100 : 0;
 
- 
   const SpotifyIcon = () => (
     <svg
       aria-hidden="true"
@@ -110,7 +124,6 @@ export default function SpotifyNowPlaying() {
     );
   }
 
-
   if (err) {
     return (
       <div className="np-card paused">
@@ -131,7 +144,6 @@ export default function SpotifyNowPlaying() {
       </div>
     );
   }
-
 
   if (!isPlaying) {
     return (
@@ -162,7 +174,6 @@ export default function SpotifyNowPlaying() {
     );
   }
 
-
   return (
     <a
       className="np-card playing"
@@ -178,7 +189,7 @@ export default function SpotifyNowPlaying() {
           ) : (
             <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
           )}
-         
+
           <div className="np-eq on">
             <span /><span /><span /><span />
           </div>
