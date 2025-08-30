@@ -2,6 +2,9 @@
   "name": "my-portfolio",
   "version": "0.1.0",
   "private": true,
+
+  "homepage": "https://<your-username>.github.io/DigitalPortfolio/",
+
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
@@ -19,6 +22,7 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
+    "gh-pages": "^6.3.0",
     "nodemon": "^3.1.10",
     "react-app-rewired": "^2.2.1"
   },
@@ -28,22 +32,17 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "server": "nodemon server.js",
-    "dev": "concurrently -k -n \"server,client\" -c \"blue,green\" \"npm:server\" \"npm:start\""
+    "dev": "concurrently -k -n \"server,client\" -c \"blue,green\" \"npm:server\" \"npm:start\"",
+
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "proxy": "http://localhost:5001",
   "eslintConfig": {
     "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   }
 }
