@@ -1,3 +1,4 @@
+/* --- Card ----------------------------------------------------- */
 .np-card {
   display: block;
   width: 100%;
@@ -5,6 +6,7 @@
   border-radius: 20px;
   padding: 20px;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05));
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow:
@@ -13,6 +15,13 @@
   text-decoration: none;
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   color: #111827;
+
+  /* Stabilize to prevent GPU flicker with glow + backdrop-filter */
+  overflow: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, box-shadow, border-color;
+  contain: layout paint;
 }
 
 .np-card:hover {
@@ -38,6 +47,7 @@
   }
 }
 
+/* --- Layout --------------------------------------------------- */
 .np-media {
   display: grid;
   grid-template-columns: 120px 1fr;
@@ -73,16 +83,19 @@
 
 .np-meta { min-width: 0; }
 
-
+/* --- Text: wrap/clamp to avoid jitter on long titles --------- */
 .np-title {
   margin: 0 0 4px;
   font-size: clamp(1rem, 4vw, 1.75rem);
   line-height: 1.2;
   font-weight: 600;
   color: #111827;
+
+  /* allow up to 2 lines */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .np-artist {
@@ -90,12 +103,15 @@
   color: #374151;
   font-size: clamp(0.8rem, 3.5vw, 1rem);
   font-weight: 400;
+
+  /* single-line clamp that still handles CJK nicely */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-
+/* --- Times / progress ---------------------------------------- */
 .np-times {
   display: flex;
   justify-content: space-between;
@@ -104,7 +120,7 @@
   color: #4b5563;
   margin-bottom: 8px;
 }
-.np-times span { flex: 1; min-width: 0; }
+.np-times span { flex: 0 0 auto; }  /* keep width stable */
 
 .np-track {
   position: relative;
@@ -122,7 +138,7 @@
   transition: width .6s ease;
 }
 
-
+/* --- EQ + chips ---------------------------------------------- */
 .np-eq {
   position: absolute;
   bottom: 10px;
@@ -149,9 +165,8 @@
 
 @keyframes npBar {
   0%,100% { transform: scaleY(.3); }
-  50% { transform: scaleY(1); }
+  50%     { transform: scaleY(1); }
 }
-
 
 .np-chip {
   display: inline-flex;
@@ -217,7 +232,7 @@
 .np-chip--loading { color: #334155; }
 .np-chip--error   { color: #b91c1c; }
 
-
+/* --- Spin + reduced motion ----------------------------------- */
 .np-spin {
   animation: npSpin 24s linear infinite;
   transform-origin: 50% 50%;
@@ -235,16 +250,13 @@
   }
 }
 
-
+/* --- Responsive ------------------------------------------------ */
 @media (max-width: 640px) {
   .np-media {
     grid-template-columns: 88px 1fr;
     gap: 14px;
   }
-  .np-cover-wrap {
-    width: 88px;
-    height: 88px;
-  }
+  .np-cover-wrap { width: 88px; height: 88px; }
   .np-title { font-size: 1.25rem; }
   .np-artist { font-size: 0.9rem; }
   .np-chip { font-size: .74rem; padding: 4px 10px; margin-bottom: 8px; }
