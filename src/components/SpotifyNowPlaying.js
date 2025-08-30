@@ -1,9 +1,9 @@
 // src/components/SpotifyNowPlaying.js
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./SpotifyNowPlaying.css";
 import vinylPlaceholder from "../assets/vinyl1.png";
 
-// 👉 Replace with your Vercel API URL
+// Your deployed Vercel API endpoint
 const API_URL = "https://spotify-proxy-gules.vercel.app/api/now-playing";
 
 const fmt = (ms) => {
@@ -14,6 +14,19 @@ const fmt = (ms) => {
   return `${m}:${r}`;
 };
 
+// small helper to add a fetch timeout
+async function fetchWithTimeout(resource, options = {}) {
+  const { timeout = 7000, ...rest } = options;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  try {
+    const resp = await fetch(resource, { ...rest, signal: controller.signal });
+    return resp;
+  } finally {
+    clearTimeout(id);
+  }
+}
+
 export default function SpotifyNowPlaying() {
   const [data, setData] = useState(null);
   const [updatedAt, setUpdatedAt] = useState(0);
@@ -21,26 +34,30 @@ export default function SpotifyNowPlaying() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
 
+  const pollRef = useRef(null);
+  const tickRef = useRef(null);
+
+  // --- polling --------------------------------------------------------------
   useEffect(() => {
     let mounted = true;
 
     const fetchNowPlaying = async () => {
       try {
-        // no-store so we always get fresh data
-        const res = await fetch(API_URL, { cache: "no-store" });
+        const url = `${API_URL}?t=${Date.now()}`; // cache-buster
+        const res = await fetchWithTimeout(url, { cache: "no-store", timeout: 7000 });
         const json = await res.json();
+
         if (!mounted) return;
 
-        // Map Vercel API fields -> component fields
-        // Vercel returns: { isPlaying, title, artist, album, artwork, url, progressMs?, durationMs? }
+        // Map API -> UI
         const mapped = {
           isPlaying: !!json.isPlaying,
           title: json.title || "None",
           artist: json.artist || "None",
           albumImageUrl: json.artwork || "",
           songUrl: json.url || "#",
-          progressMs: json.progressMs || 0, // optional in your API
-          durationMs: json.durationMs || 0, // optional in your API
+          progressMs: Number(json.progressMs || 0),
+          durationMs: Number(json.durationMs || 0),
         };
 
         setData(mapped);
@@ -55,14 +72,39 @@ export default function SpotifyNowPlaying() {
       }
     };
 
+    const startTimers = () => {
+      // poll every 25s
+      pollRef.current = setInterval(fetchNowPlaying, 25_000);
+      // 1s heartbeat to animate progress
+      tickRef.current = setInterval(() => setHeartbeat((h) => h + 1), 1_000);
+    };
+
+    const stopTimers = () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+      if (tickRef.current) clearInterval(tickRef.current);
+      pollRef.current = null;
+      tickRef.current = null;
+    };
+
+    // handle tab visibility (pause polling while hidden)
+    const handleVis = () => {
+      if (document.hidden) {
+        stopTimers();
+      } else {
+        fetchNowPlaying(); // refresh immediately
+        startTimers();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVis);
+
+    // initial load
     fetchNowPlaying();
-    const poll = setInterval(fetchNowPlaying, 25_000); // refresh every 25s
-    const timer = setInterval(() => setHeartbeat((h) => h + 1), 1000); // tick for progress animation
+    startTimers();
 
     return () => {
       mounted = false;
-      clearInterval(poll);
-      clearInterval(timer);
+      stopTimers();
+      document.removeEventListener("visibilitychange", handleVis);
     };
   }, []);
 
@@ -76,7 +118,7 @@ export default function SpotifyNowPlaying() {
     durationMs = 0,
   } = data || {};
 
-  // Animate progress locally between polls (only if API provides timing)
+  // live progress between polls
   const liveProgress = useMemo(() => {
     if (!isPlaying || !durationMs) return 0;
     const elapsed = Math.max(0, Date.now() - updatedAt);
@@ -99,6 +141,7 @@ export default function SpotifyNowPlaying() {
     </svg>
   );
 
+  // --- UI states ------------------------------------------------------------
   if (loading) {
     return (
       <div className="np-card">
@@ -111,13 +154,9 @@ export default function SpotifyNowPlaying() {
               <SpotifyIcon />
               <span>Connecting…</span>
             </span>
-
             <h3 className="np-title">Loading Spotify…</h3>
             <p className="np-artist">Fetching current track</p>
-
-            <div className="np-track">
-              <div className="np-track-fill" style={{ width: "20%" }} />
-            </div>
+            <div className="np-track"><div className="np-track-fill" style={{ width: "20%" }} /></div>
           </div>
         </div>
       </div>
@@ -136,7 +175,6 @@ export default function SpotifyNowPlaying() {
               <SpotifyIcon />
               <span>Spotify unavailable</span>
             </span>
-
             <h3 className="np-title">Spotify unavailable</h3>
             <p className="np-artist">{err}</p>
           </div>
@@ -157,23 +195,17 @@ export default function SpotifyNowPlaying() {
               <SpotifyIcon />
               <span>Paused</span>
             </span>
-
             <h3 className="np-title">Not playing right now</h3>
             <p className="np-artist">Keon's Spotify is paused</p>
-
-            <div className="np-times">
-              <span>{fmt(0)}</span>
-              <span>{fmt(0)}</span>
-            </div>
-            <div className="np-track" aria-hidden="true">
-              <div className="np-track-fill" style={{ width: "0%" }} />
-            </div>
+            <div className="np-times"><span>{fmt(0)}</span><span>{fmt(0)}</span></div>
+            <div className="np-track" aria-hidden="true"><div className="np-track-fill" style={{ width: "0%" }} /></div>
           </div>
         </div>
       </div>
     );
   }
 
+  // --- playing --------------------------------------------------------------
   return (
     <a
       className="np-card playing"
@@ -189,10 +221,7 @@ export default function SpotifyNowPlaying() {
           ) : (
             <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
           )}
-
-          <div className="np-eq on">
-            <span /><span /><span /><span />
-          </div>
+          <div className="np-eq on"><span /><span /><span /><span /></div>
         </div>
 
         <div className="np-meta" role="status" aria-live="polite">
@@ -200,9 +229,7 @@ export default function SpotifyNowPlaying() {
             <span className="np-chip-ring" aria-hidden="true" />
             <SpotifyIcon />
             <span>Listening now</span>
-            <span className="np-chip-bars" aria-hidden="true">
-              <i /><i /><i />
-            </span>
+            <span className="np-chip-bars" aria-hidden="true"><i /><i /><i /></span>
           </span>
 
           <h3 className="np-title">{title}</h3>
