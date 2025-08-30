@@ -38,7 +38,6 @@
   }
 }
 
-
 .np-media {
   display: grid;
   grid-template-columns: 120px 1fr;
@@ -68,36 +67,44 @@
   filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
 }
 
-
 .np-cover--placeholder {
   background: linear-gradient(180deg, #e5e7eb, #d1d5db);
 }
 
 .np-meta { min-width: 0; }
 
+
 .np-title {
   margin: 0 0 4px;
-  font-size: 1.75rem;
+  font-size: clamp(1rem, 4vw, 1.75rem);
   line-height: 1.2;
   font-weight: 600;
   color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .np-artist {
   margin: 0 0 14px;
   color: #374151;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
   font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 
 .np-times {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
   font-size: 0.85rem;
   color: #4b5563;
   margin-bottom: 8px;
 }
+.np-times span { flex: 1; min-width: 0; }
 
 .np-track {
   position: relative;
@@ -106,7 +113,6 @@
   border-radius: 999px;
   overflow: hidden;
 }
-
 .np-track-fill {
   position: absolute;
   inset: 0;
@@ -137,7 +143,6 @@
   transform-origin: bottom;
   animation: npBar 1s ease-in-out infinite;
 }
-
 .np-eq span:nth-child(2) { animation-delay: .12s; }
 .np-eq span:nth-child(3) { animation-delay: .24s; }
 .np-eq span:nth-child(4) { animation-delay: .36s; }
@@ -163,10 +168,9 @@
   backdrop-filter: blur(6px);
 }
 
-
 .np-chip--live {
   position: relative;
-  color: #0b766d; 
+  color: #0b766d;
   background:
     linear-gradient(#ffffffb3, #ffffffa6) padding-box,
     linear-gradient(90deg, #22d3ee, #6366f1) border-box;
@@ -178,7 +182,6 @@
 }
 .np-chip--live .np-chip-icon { opacity: .95; }
 
-
 .np-chip--live .np-chip-ring {
   position: absolute;
   inset: -6px;
@@ -188,7 +191,6 @@
   filter: blur(10px);
   z-index: -1;
 }
-
 
 .np-chip--live .np-chip-bars {
   display: inline-flex;
@@ -211,10 +213,27 @@
   50%     { transform: scaleY(1); }
 }
 
-
 .np-chip--paused  { color: #6b7280; }
 .np-chip--loading { color: #334155; }
 .np-chip--error   { color: #b91c1c; }
+
+
+.np-spin {
+  animation: npSpin 24s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes npSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .np-spin,
+  .np-card.playing,
+  .np-chip-bars i,
+  .np-eq span {
+    animation: none !important;
+  }
+}
 
 
 @media (max-width: 640px) {
@@ -231,18 +250,14 @@
   .np-chip { font-size: .74rem; padding: 4px 10px; margin-bottom: 8px; }
 }
 
-
-.np-spin {
-  animation: npSpin 24s linear infinite;
-  transform-origin: 50% 50%;
+@media (max-width: 480px) {
+  .np-card { padding: 14px; border-radius: 14px; }
+  .np-media { grid-template-columns: 70px 1fr; gap: 10px; }
+  .np-cover-wrap { width: 70px; height: 70px; }
 }
 
-
-@media (prefers-reduced-motion: reduce) {
-  .np-spin { animation: none !important; }
-}
-
-@keyframes npSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+@media (max-width: 360px) {
+  .np-media { grid-template-columns: 60px 1fr; gap: 8px; }
+  .np-cover-wrap { width: 60px; height: 60px; }
+  .np-chip { font-size: 0.7rem; padding: 3px 8px; }
 }

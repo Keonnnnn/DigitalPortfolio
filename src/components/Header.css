@@ -1,6 +1,6 @@
 .header {
   position: fixed;
-  top: calc(20px + env(safe-area-inset-top, 0px)); 
+  top: calc(20px + env(safe-area-inset-top, 0px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -9,8 +9,8 @@
   justify-content: space-between;
   align-items: center;
 
-  width: min(900px, calc(100% - 40px));
-  padding: 6px 18px;             
+  width: min(900px, calc(100% - clamp(16px, 6vw, 40px)));
+  padding: 6px clamp(14px, 3.5vw, 18px);
 
   background: #1d1f23;
   color: #fff;
@@ -20,9 +20,13 @@
 }
 
 
+@supports not ((backdrop-filter: blur(6px)) or (-webkit-backdrop-filter: blur(6px))) {
+  .header { background: rgba(29, 31, 35, 0.98); }
+}
+
 .logo h1 {
   font-family: 'Dancing Script', cursive;
-  font-size: 1.2rem; 
+  font-size: 1.2rem;
   margin: 0;
   color: #fff;
 }
@@ -30,16 +34,24 @@
 .header-right {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .email {
   color: #e5e7eb;
   text-decoration: none;
-  font-size: 0.85rem;   
+  font-size: 0.85rem;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.3px;
   transition: opacity .2s ease, transform .2s ease;
+
+  max-width: 60vw;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding: 6px 10px;
+  border-radius: 9999px;
 }
 
 .email:hover {
@@ -47,17 +59,37 @@
   transform: translateY(-1px);
 }
 
-/* Mobile tweaks */
+
 @media screen and (max-width: 768px) {
   .header {
-    top: calc(12px + env(safe-area-inset-top, 0px)); 
+    top: calc(12px + env(safe-area-inset-top, 0px));
     padding: 5px 14px;
     width: calc(100% - 24px);
+    box-shadow: 0 6px 12px rgba(0,0,0,.22);
   }
-  .logo h1 {
-    font-size: 1rem;
-  }
+  .logo h1 { font-size: 1rem; }
+  .email   { font-size: 0.8rem; max-width: 52vw; }
+}
+
+
+@media screen and (max-width: 420px) {
   .email {
-    font-size: 0.8rem;
+    font-size: 0; 
+    max-width: none;
+    padding: 7px 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+  }
+  .email::before {
+    content: "✉️";
+    font-size: 1rem;
+    margin-right: 6px;
+    vertical-align: -1px;
+  }
+  .email::after {
+    content: "Email me";
+    font-size: 0.85rem;
+    letter-spacing: 0.2px;
+    color: #e5e7eb;
   }
 }

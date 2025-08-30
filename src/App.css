@@ -1,33 +1,70 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #fff;   
-  min-height: 100%;  
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: #fff;
+  color: #111827;
+  line-height: 1.5;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; 
+}
 
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;  
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 
 section {
-  padding: 60px 20px;  
-  background-color: #fff; 
-  margin: 0;           
-  border-radius: 0;    
-  box-shadow: none;    
+  padding: 60px 20px;
+  background-color: #fff;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-@media screen and (max-width: 768px) {
-  .App {
-    flex-direction: column;
-  }
 
+img, video, svg, canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+:where(a, button, [role="button"]):focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+
+@media screen and (max-width: 768px) {
   section {
     padding: 40px 15px;
   }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
 }
