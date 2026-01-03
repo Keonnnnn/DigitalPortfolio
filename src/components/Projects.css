@@ -185,11 +185,13 @@
   font-weight: 600;
   border: 1px solid transparent;
 }
+
 .pr-badge--active {
   background: #e7f8ed;
   color: #11693a;
   border-color: #b6e6c8;
 }
+
 .pr-open { color: #9ca3af; font-size: 1rem; }
 
 .pr-cta {
@@ -206,11 +208,14 @@
   cursor: pointer;
   text-decoration: none;
 }
+
 .pr-cta:hover { filter: saturate(1.05) brightness(0.98); }
+
 .pr-cta:focus-visible {
   outline: 2px solid #fed7aa;
   outline-offset: 3px;
 }
+
 .pr-cta .pr-cta-text { white-space: nowrap; }
 
 @media (hover: none) {
@@ -218,6 +223,7 @@
   .pr-card::before { display: none; }
   .pr-card:active { transform: scale(.98); }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .pr-card { transition: box-shadow .23s ease, border-color .18s ease; }
 }
@@ -290,6 +296,7 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
+
 @keyframes csPulse {
   0%, 100% { border-color: #d1d5db; }
   50% { border-color: #9ca3af; }

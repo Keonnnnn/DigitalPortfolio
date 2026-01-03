@@ -284,6 +284,17 @@ export default function Projects() {
             </CardTag>
           );
         })}
+
+        <div className="pr-card coming-soon" role="listitem" aria-label="More projects coming soon">
+          <div className="cs-content">
+            <span className="cs-emoji">✨</span>
+            <p className="cs-text">
+              More exciting projects
+              <br />
+              coming soon…
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
