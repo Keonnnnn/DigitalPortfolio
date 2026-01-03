@@ -6,6 +6,7 @@ import SingapuraIcon from "../assets/Singapura.png";
 import EcotureIcon from "../assets/ECOTURE.png";
 import IllumiaIcon from "../assets/illumia.png";
 import MakanLahIcon from "../assets/MakanLah.png";
+import TeleIcon from "../assets/tele.jpeg";
 
 const PROJECTS = [
   {
@@ -23,6 +24,21 @@ const PROJECTS = [
     contactNote: "Contact me to find out more",
     contactUrl:
       "mailto:Keonshu.contact@gmail.com?subject=YCS%20Collaterals%20System%20inquiry",
+  },
+  {
+    id: "p6", 
+    title: "YCS Telegram Bot",
+    category: "Internship", 
+    since: "2025",
+    builtAt: "National Youth Council (NYC)", 
+    description: "A Telegram bot for Youth to easily search and inquire about the latest Youth Programs organised by Youth Corps Singapore (YCS).",
+    status: "Active",
+    icon: TeleIcon, 
+    stack: ["Make", "Plumber", "FormSG", "Google Sheets"], 
+    url: "https://docs.google.com/presentation/d/1hvkY74sHCgRcpcnWgDr3fC7C-EJSYIEug4lXn4XOAoE/edit?usp=sharing", 
+    contactNote: "Contact me to find out more",
+    contactUrl: "mailto:Keonshu.contact@gmail.com?subject=YCS%20Telegram%20Bot%20inquiry",
+    telegramBotUrl: "https://t.me/YouthCorpsSG_events_bot", 
   },
   {
     id: "p2",
@@ -111,12 +127,14 @@ function onMove(e) {
   card.style.setProperty("--px", `${x * 100}%`);
   card.style.setProperty("--py", `${y * 100}%`);
 }
+
 function onEnter(e) {
   const card = e.currentTarget;
   card.classList.add("is-hovered");
   card.style.setProperty("--px", `50%`);
   card.style.setProperty("--py", `50%`);
 }
+
 function onLeave(e) {
   const card = e.currentTarget;
   card.classList.remove("is-hovered");
@@ -127,17 +145,18 @@ function onLeave(e) {
 }
 
 const GRID_WIDE_STYLE = {
-  // gridTemplateColumns removed so CSS controls layout at breakpoints
   gap: 28,
   maxWidth: 1240,
   margin: "0 auto",
   padding: "0 16px",
 };
+
 const CARD_LARGER_STYLE = {
   padding: "26px 26px 22px",
   borderRadius: 20,
   minHeight: 220,
 };
+
 const TITLE_TWO_LINE_STYLE = {
   whiteSpace: "normal",
   overflow: "hidden",
@@ -171,11 +190,6 @@ export default function Projects() {
             objectFit: "contain",
             transform: `scale(${scale})`,
           };
-          const emojiStyle = {
-            fontSize: "22px",
-            lineHeight: 1,
-            transform: "scale(0.92)",
-          };
 
           return (
             <CardTag
@@ -201,7 +215,7 @@ export default function Projects() {
                       draggable="false"
                     />
                   ) : (
-                    <span style={emojiStyle}>{p.emoji}</span>
+                    <span style={{ fontSize: "22px", lineHeight: 1 }}>{p.emoji}</span>
                   )}
                 </div>
 
@@ -226,45 +240,37 @@ export default function Projects() {
               {p.description && <p className="pr-desc">{p.description}</p>}
 
               {Array.isArray(p.stack) && p.stack.length > 0 && (
-                <div
-                  className="pr-stack"
-                  style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: 12 }}
-                >
+                <div className="pr-stack" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: 12 }}>
                   {p.stack.map((s, i) => (
-                    <span key={i} className="pr-chip">
-                      {s}
-                    </span>
+                    <span key={i} className="pr-chip">{s}</span>
                   ))}
                 </div>
               )}
 
               <div className="pr-foot">
-                {p.contactNote &&
-                  (p.url ? (
-                    <button
-                      type="button"
-                      className="pr-cta"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        window.location.href =
-                          p.contactUrl || "mailto:Keonshu.contact@gmail.com";
-                      }}
-                      aria-label="Contact me about this project"
-                    >
-                      <span aria-hidden="true">✉️</span>
-                      <span className="pr-cta-text">{p.contactNote}</span>
-                    </button>
-                  ) : (
-                    <a
-                      className="pr-cta"
-                      href={p.contactUrl || "mailto:Keonshu.contact@gmail.com"}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span aria-hidden="true">✉️</span>
-                      <span className="pr-cta-text">{p.contactNote}</span>
-                    </a>
-                  ))}
+                {p.contactNote && (
+                  <a
+                    className="pr-cta"
+                    href={p.contactUrl || "mailto:Keonshu.contact@gmail.com"}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span aria-hidden="true">✉️</span>
+                    <span className="pr-cta-text">{p.contactNote}</span>
+                  </a>
+                )}
+
+                {p.telegramBotUrl && (
+                  <a
+                    className="pr-cta"
+                    href={p.telegramBotUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Open YCS Telegram Bot"
+                  >
+                    <span aria-hidden="true">🤖</span>
+                    <span className="pr-cta-text">Try the YCS Telegram Bot</span>
+                  </a>
+                )}
 
                 <span
                   className={`pr-badge ${
@@ -278,17 +284,6 @@ export default function Projects() {
             </CardTag>
           );
         })}
-
-        <div className="pr-card coming-soon" role="listitem" aria-label="More projects coming soon">
-          <div className="cs-content">
-            <span className="cs-emoji">✨</span>
-            <p className="cs-text">
-              More exciting projects
-              <br />
-              coming soon…
-            </p>
-          </div>
-        </div>
       </div>
     </section>
   );
