@@ -3,36 +3,44 @@ import ShootingStars from "./ShootingStars";
 import Header from "./Header";
 import MeImage from "../assets/me.jpg";
 import SpotifyNowPlaying from "./SpotifyNowPlaying";
+import React, { useState } from "react";
+import ImageGallery from "./ImageGallery";
 
 const Hero = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const scrollToProjects = () => {
     const el = document.getElementById("projects");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const openGallery = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeGallery = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section className="hero">
-    
       <Header />
-
-    
       <ShootingStars count={20} />
-
-      
       <div className="hero-layout">
-        
         <div className="hero-image-column">
           <div className="hero-image">
-            <img src={MeImage} alt="Keon portrait" />
+            <img
+              src={MeImage}
+              alt="Keon portrait"
+              onClick={openGallery}
+            />
           </div>
-
           <button
             className="projects-callout"
             onClick={scrollToProjects}
             aria-label="Scroll to projects"
           >
             <span className="projects-text">My projects</span>
-          
             <svg
               className="projects-arrow"
               viewBox="0 0 64 64"
@@ -49,27 +57,24 @@ const Hero = () => {
             </svg>
           </button>
         </div>
-
-       
         <div className="hero-content">
           <div className="hero-greeting" aria-label="Hello, I'm Keon">
             <span className="greet-type">Hello, I&apos;m Keon</span>
           </div>
-
           <h1>
-            I’m an Innovator — blending technology, design, and user impact
+            I'm an Innovator — blending technology, design, and user impact
           </h1>
           <p>
-            I aim to craft impactful solutions that not only address problems
-            but also resonate with users.
+            I aim to craft impactful solutions that not only address problems but also resonate with users.
           </p>
-
-  
           <div className="hero-player">
             <SpotifyNowPlaying />
           </div>
         </div>
       </div>
+
+      {/* Render ImageGallery directly - it has its own modal wrapper and close button */}
+      {isModalOpen && <ImageGallery closeGallery={closeGallery} />}
     </section>
   );
 };

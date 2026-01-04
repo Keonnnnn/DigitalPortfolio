@@ -1,3 +1,4 @@
+/* Global Styles */
 *,
 *::before,
 *::after {
@@ -33,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-
 section {
   padding: 60px 20px;
   background-color: #fff;
@@ -42,13 +42,11 @@ section {
   box-shadow: none;
 }
 
-
 img, video, svg, canvas {
   max-width: 100%;
   height: auto;
   display: block;
 }
-
 
 :where(a, button, [role="button"]):focus-visible {
   outline: 2px solid #6366f1;
@@ -56,15 +54,39 @@ img, video, svg, canvas {
   border-radius: 8px;
 }
 
-
 @media screen and (max-width: 768px) {
   section {
     padding: 40px 15px;
   }
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
+}
+
+/* Profile Section  */
+.profile-section {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.profile-pic:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-pic {
+    width: 120px;
+    height: 120px;
+  }
 }

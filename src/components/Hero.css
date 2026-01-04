@@ -1,3 +1,4 @@
+/* Hero Section Styling */
 .hero {
   position: relative;
   display: flex;
@@ -9,11 +10,12 @@
   background: radial-gradient(ellipse at bottom, #d9f1ff 0%, #a6d4ff 100%);
   overflow: hidden;
 
-  padding-top: 80px; /* reduced from 100px */
+  padding-top: 80px;
   padding-bottom: 48px;
   min-height: clamp(640px, 90vh, 980px);
 }
 
+/* Layout for hero section */
 .hero-layout {
   display: flex;
   align-items: flex-start;
@@ -26,6 +28,7 @@
   z-index: 1;
 }
 
+/* Image column styling */
 .hero-image-column {
   display: flex;
   flex-direction: column;
@@ -34,6 +37,7 @@
   gap: 24px;
 }
 
+/* Profile Image Styling */
 .hero-image img {
   width: min(65vw, 320px);
   height: auto;
@@ -42,8 +46,10 @@
   border-radius: 20px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
   user-select: none;
+  cursor: pointer;
 }
 
+/* Hero Content Styling */
 .hero-content {
   max-width: 600px;
   text-align: left;
@@ -51,6 +57,7 @@
   flex-direction: column;
 }
 
+/* Greeting Text Styling */
 .hero-greeting {
   margin: 0 0 10px;
   height: 20px;
@@ -108,6 +115,7 @@
   animation: fadeInText 2s ease-out 0.5s forwards;
 }
 
+/* Projects Callout Button */
 .projects-callout {
   display: flex;
   flex-direction: column;
@@ -142,6 +150,7 @@
   transform-origin: center;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,.15));
 }
+
 .projects-arrow path {
   stroke: #111827;
   stroke-width: 3.25;
@@ -174,36 +183,12 @@
   max-width: 600px;
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeInText {
-  0% { opacity: 0; transform: translateY(15px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* ----------------- Mobile-only tweaks ----------------- */
-@media screen and (max-width: 992px) {
-  .hero {
-    min-height: auto;
-    padding-top: 64px;
-    padding-bottom: 28px;
-  }
-
-  .hero-layout {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-    padding-top: 52px;
-    padding-bottom: 12px;
-    align-items: center;            /* NEW: center the whole column on mobile */
-  }
-
+/* Responsive Design */
+@media (max-width: 768px) {
   .hero-image img {
     width: 220px;
     aspect-ratio: 4 / 5;
-    margin: 0 auto;                 /* NEW: hard-center the portrait */
+    margin: 0 auto;
   }
 
   .hero-image-column { gap: 14px; margin-top: 8px; }
@@ -224,4 +209,14 @@
   }
 
   .hero-image-column { gap: 12px; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInText {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
 }

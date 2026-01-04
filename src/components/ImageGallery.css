@@ -1,0 +1,584 @@
+/* Gallery Modal Styles */
+
+/* Gallery Title */
+.gallery-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 30px 0;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+/* Layout wrapper for gallery and quote */
+.gallery-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.gallery-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  position: relative;
+}
+
+/* Quote Section */
+.quote-section {
+  width: 320px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: flex-start;
+}
+
+.quote-card {
+  padding: 35px 30px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.quote-card::before {
+  content: '';
+  display: none;
+}
+
+.quote-text {
+  font-size: 18px;
+  font-style: italic;
+  color: #374151;
+  line-height: 1.8;
+  margin: 0 0 18px 0;
+  position: relative;
+  z-index: 1;
+  font-weight: 400;
+}
+
+.quote-author {
+  font-size: 14px;
+  color: #6b7280;
+  text-align: right;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  position: relative;
+  z-index: 1;
+}
+
+.animation-container {
+  width: 100%;
+  height: 240px;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.inside-out-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.inside-out-video::-webkit-media-controls {
+  display: none !important;
+}
+
+.inside-out-video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+.animation-placeholder {
+  font-size: 16px;
+  color: #6b7280;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Music Player Container */
+.music-player-container {
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Image wrapper for animation */
+.image-wrapper {
+  width: 100%;
+  max-height: 600px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background: #f8f9fa;
+  touch-action: pan-y; /* Allow vertical scrolling but enable horizontal swipe detection */
+}
+
+/* Image Styling */
+.gallery-image {
+  width: 100%;
+  max-width: 100%;
+  max-height: 600px;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  user-select: none; /* Prevent image selection on mobile */
+  -webkit-user-drag: none; /* Prevent image dragging */
+}
+
+/* Slide animations */
+.gallery-image.slide-left {
+  animation: slideOutToLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.gallery-image.slide-right {
+  animation: slideOutToRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.gallery-image.slide-in-right {
+  animation: slideInFromRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.gallery-image.slide-in-left {
+  animation: slideInFromLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Image Counter */
+.image-counter {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 1003;
+  backdrop-filter: blur(10px);
+}
+
+/* Navigation Buttons */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  color: #111827;
+  cursor: pointer;
+  z-index: 1003;
+  padding: 12px;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.nav-button:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-button.left {
+  left: 15px;
+}
+
+.nav-button.right {
+  right: 15px;
+}
+
+/* Thumbnails Styling */
+.gallery-thumbnails {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 3px solid transparent;
+  opacity: 0.6;
+}
+
+.thumbnail:hover {
+  transform: scale(1.1) translateY(-4px);
+  border-color: #6366f1;
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+  opacity: 1;
+}
+
+.thumbnail.active {
+  border-color: #6366f1;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Modal Styling */
+.gallery-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  backdrop-filter: blur(8px);
+}
+
+/* Modal Container */
+.gallery-modal {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 1200px;
+  text-align: center;
+  position: relative;
+  z-index: 1001;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  z-index: 1002;
+  padding: 0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #111827;
+  transform: scale(1.1);
+}
+
+.close-btn:active {
+  transform: scale(0.95);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Responsive Design - Tablet */
+@media (max-width: 768px) {
+  .gallery-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .gallery-layout {
+    flex-direction: column;
+  }
+
+  .quote-section {
+    width: 100%;
+  }
+
+  .animation-container {
+    height: 180px; 
+  }
+
+  .music-player-container {
+    margin-top: 20px;
+  }
+
+  .gallery-container {
+    padding: 0;
+  }
+
+  .image-wrapper {
+    max-height: 70vh;
+    border-radius: 16px;
+  }
+
+  .gallery-image {
+    max-height: 70vh;
+  }
+
+  .gallery-thumbnails {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .thumbnail {
+    width: 70px; 
+    height: 70px;
+  }
+
+  .close-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .nav-button {
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+  }
+
+  .nav-button.left {
+    left: 12px;
+  }
+
+  .nav-button.right {
+    right: 12px;
+  }
+
+  .image-counter {
+    font-size: 13px;
+    padding: 7px 14px;
+    top: 15px; 
+  }
+
+  .quote-card {
+    padding: 25px 20px;
+  }
+
+  .quote-text {
+    font-size: 16px;
+  }
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 480px) {
+  .gallery-modal {
+    width: 95%;
+    padding: 20px 15px;
+    border-radius: 20px;
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+
+  .gallery-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .image-wrapper {
+    max-height: 55vh; /* More conservative height for small screens */
+    border-radius: 14px;
+  }
+
+  .gallery-image {
+    max-height: 55vh;
+  }
+
+  .gallery-thumbnails {
+    gap: 8px;
+    margin-top: 15px;
+  }
+
+  .thumbnail {
+    width: 65px; /* Slightly larger for better touch targets */
+    height: 65px;
+    border-width: 2px;
+  }
+
+  .nav-button {
+    width: 44px; /* Minimum touch target size */
+    height: 44px;
+    font-size: 24px;
+    padding: 8px;
+  }
+
+  .nav-button.left {
+    left: 8px;
+  }
+
+  .nav-button.right {
+    right: 8px;
+  }
+
+  .close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .image-counter {
+    font-size: 12px;
+    padding: 6px 12px;
+    top: 12px;
+  }
+
+  .animation-container {
+    height: 160px;
+  }
+
+  .quote-card {
+    padding: 20px 16px;
+  }
+
+  .quote-text {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .quote-author {
+    font-size: 13px;
+  }
+
+  .music-player-container iframe {
+    height: 140px; /* Slightly smaller on mobile */
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .gallery-modal {
+    padding: 15px 10px;
+  }
+
+  .thumbnail {
+    width: 55px;
+    height: 55px;
+  }
+
+  .gallery-thumbnails {
+    gap: 6px;
+  }
+
+  .image-wrapper {
+    max-height: 50vh;
+  }
+
+  .gallery-image {
+    max-height: 50vh;
+  }
+}
