@@ -7,6 +7,7 @@ import EcotureIcon from "../assets/ECOTURE.png";
 import IllumiaIcon from "../assets/illumia.png";
 import MakanLahIcon from "../assets/MakanLah.png";
 import TeleIcon from "../assets/tele.jpeg";
+import CollatorIcon from "../assets/Collator.jpeg";
 
 const PROJECTS = [
   {
@@ -24,6 +25,20 @@ const PROJECTS = [
     contactNote: "Contact me to find out more",
     contactUrl:
       "mailto:Keonshu.contact@gmail.com?subject=YCS%20Collaterals%20System%20inquiry",
+  },
+  {
+    id: "p7", 
+    title: "Customer Relations Management System Master Collator",
+    category: "Internship", 
+    since: "2025",
+    builtAt: "National Youth Council (NYC)", 
+    description: "A macro-enabled solution that automates validation of email domains and collates contacts.",
+    status: "Active",
+    icon: CollatorIcon, 
+    stack: ["VBA Macros", "Excel"], 
+    url: "https://docs.google.com/presentation/d/1J3P9i4oo5bBNHAjPPtG_Mzq8vovgw1_JIN2hlTSP5Vk/edit?usp=sharing", 
+    contactNote: "Contact me to find out more",
+    contactUrl: "mailto:Keonshu.contact@gmail.com?subject=YCS%20Master%20Collator%20inquiry",
   },
   {
     id: "p6", 
