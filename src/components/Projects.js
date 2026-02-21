@@ -38,7 +38,7 @@ const PROJECTS = [
     stack: ["VBA Macros", "Excel"], 
     url: "https://docs.google.com/presentation/d/1J3P9i4oo5bBNHAjPPtG_Mzq8vovgw1_JIN2hlTSP5Vk/edit?usp=sharing", 
     contactNote: "Contact me to find out more",
-    contactUrl: "mailto:Keonshu.contact@gmail.com?subject=YCS%20Master%20Collator%20inquiry",
+    contactUrl: "mailto:Keonshu.contact@gmail.com?subject=CRMS%20Master%20Collator%20inquiry",
   },
   {
     id: "p6", 
