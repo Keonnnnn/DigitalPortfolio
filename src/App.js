@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
 import ImageGallery from "./components/ImageGallery";
@@ -8,14 +8,25 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openGallery = () => {
-    console.log("Gallery Opened");
     setIsModalOpen(true);
   };
 
   const closeGallery = () => {
-    console.log("Gallery Closed");
     setIsModalOpen(false);
   };
+
+ 
+  useEffect(() => {
+    const handleClick = (e) => {
+      const target = e.target;
+      if (target && target.classList && target.classList.contains("profile-pic")) {
+        openGallery();
+      }
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
 
   return (
     <main className="App">
@@ -23,8 +34,6 @@ export default function App() {
       <Projects />
 
       {isModalOpen && <ImageGallery closeGallery={closeGallery} />}
-      
-      
     </main>
   );
 }

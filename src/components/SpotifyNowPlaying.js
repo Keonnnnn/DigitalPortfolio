@@ -1,5 +1,5 @@
 // src/components/SpotifyNowPlaying.js
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./SpotifyNowPlaying.css";
 import vinylPlaceholder from "../assets/vinyl1.png";
 
@@ -44,7 +44,10 @@ export default function SpotifyNowPlaying() {
     const fetchNowPlaying = async () => {
       try {
         const url = `${API_URL}?t=${Date.now()}`; // cache-buster
-        const res = await fetchWithTimeout(url, { cache: "no-store", timeout: 7000 });
+        const res = await fetchWithTimeout(url, {
+          cache: "no-store",
+          timeout: 7000,
+        });
         const json = await res.json();
 
         if (!mounted) return;
@@ -118,13 +121,17 @@ export default function SpotifyNowPlaying() {
     durationMs = 0,
   } = data || {};
 
-  // live progress between polls
-  const liveProgress = useMemo(() => {
+  // live progress between polls (no useMemo -> no ESLint "unnecessary deps" error)
+  const liveProgress = (() => {
     if (!isPlaying || !durationMs) return 0;
     const elapsed = Math.max(0, Date.now() - updatedAt);
     const base = Math.max(0, Math.min(progressMs, durationMs));
     return Math.min(base + elapsed, durationMs);
-  }, [isPlaying, durationMs, progressMs, updatedAt, heartbeat]);
+  })();
+
+  // heartbeat forces a re-render every second (so progress updates)
+  // eslint doesn't complain because it's used here (even though we don't display it)
+  void heartbeat;
 
   const pct = durationMs ? (liveProgress / durationMs) * 100 : 0;
 
@@ -147,7 +154,11 @@ export default function SpotifyNowPlaying() {
       <div className="np-card">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
+            <img
+              className="np-cover np-cover--art np-spin"
+              src={vinylPlaceholder}
+              alt="Vinyl"
+            />
           </div>
           <div className="np-meta" role="status" aria-live="polite">
             <span className="np-chip np-chip--loading">
@@ -156,7 +167,9 @@ export default function SpotifyNowPlaying() {
             </span>
             <h3 className="np-title">Loading Spotify…</h3>
             <p className="np-artist">Fetching current track</p>
-            <div className="np-track"><div className="np-track-fill" style={{ width: "20%" }} /></div>
+            <div className="np-track">
+              <div className="np-track-fill" style={{ width: "20%" }} />
+            </div>
           </div>
         </div>
       </div>
@@ -168,7 +181,11 @@ export default function SpotifyNowPlaying() {
       <div className="np-card paused">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
+            <img
+              className="np-cover np-cover--art np-spin"
+              src={vinylPlaceholder}
+              alt="Vinyl"
+            />
           </div>
           <div className="np-meta" role="status" aria-live="polite">
             <span className="np-chip np-chip--error">
@@ -188,7 +205,11 @@ export default function SpotifyNowPlaying() {
       <div className="np-card paused">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
+            <img
+              className="np-cover np-cover--art np-spin"
+              src={vinylPlaceholder}
+              alt="Vinyl"
+            />
           </div>
           <div className="np-meta" role="status" aria-live="polite">
             <span className="np-chip np-chip--paused">
@@ -197,8 +218,13 @@ export default function SpotifyNowPlaying() {
             </span>
             <h3 className="np-title">Not playing right now</h3>
             <p className="np-artist">Keon's Spotify is paused</p>
-            <div className="np-times"><span>{fmt(0)}</span><span>{fmt(0)}</span></div>
-            <div className="np-track" aria-hidden="true"><div className="np-track-fill" style={{ width: "0%" }} /></div>
+            <div className="np-times">
+              <span>{fmt(0)}</span>
+              <span>{fmt(0)}</span>
+            </div>
+            <div className="np-track" aria-hidden="true">
+              <div className="np-track-fill" style={{ width: "0%" }} />
+            </div>
           </div>
         </div>
       </div>
@@ -219,9 +245,18 @@ export default function SpotifyNowPlaying() {
           {albumImageUrl ? (
             <img className="np-cover" src={albumImageUrl} alt="Album cover" />
           ) : (
-            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
+            <img
+              className="np-cover np-cover--art np-spin"
+              src={vinylPlaceholder}
+              alt="Vinyl"
+            />
           )}
-          <div className="np-eq on"><span /><span /><span /><span /></div>
+          <div className="np-eq on">
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
 
         <div className="np-meta" role="status" aria-live="polite">
@@ -229,7 +264,11 @@ export default function SpotifyNowPlaying() {
             <span className="np-chip-ring" aria-hidden="true" />
             <SpotifyIcon />
             <span>Listening now</span>
-            <span className="np-chip-bars" aria-hidden="true"><i /><i /><i /></span>
+            <span className="np-chip-bars" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
           </span>
 
           <h3 className="np-title">{title}</h3>
