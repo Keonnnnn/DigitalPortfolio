@@ -7,7 +7,7 @@ import EcotureIcon from "../assets/ECOTURE.png";
 import IllumiaIcon from "../assets/illumia.png";
 import MakanLahIcon from "../assets/MakanLah.png";
 import TeleIcon from "../assets/tele.jpeg";
-import CollatorIcon from "../assets/Collator.jpeg";
+import CollatorIcon from "../assets/Collator.png";
 
 const PROJECTS = [
   {
