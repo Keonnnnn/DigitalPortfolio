@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/youtube",
+      "destination": "https://youtube.com/@keonshu?si=_CQ4iZS4HvwdWPDd",
+      "permanent": false
+    },
+    {
+      "source": "/ig",
+      "destination": "https://www.instagram.com/keikiie_?igsh=NWVtYXRtM2FsNHZs&utm_source=qr",
+      "permanent": false
+    },
+    {
+      "source": "/github",
+      "destination": "https://github.com/Keonnnnn",
+      "permanent": false
+    }
+  ]
+}
