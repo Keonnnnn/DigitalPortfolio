@@ -28,11 +28,11 @@ const PROJECTS = [
   },
   {
     id: "p7", 
-    title: "Customer Relations Management System Master Collator",
+    title: "CRMS Master Collator",
     category: "Internship", 
     since: "2025",
     builtAt: "National Youth Council (NYC)", 
-    description: "A macro-enabled solution that automates validation of email domains and collates contacts.",
+    description: "I developed a macro-enabled solution that automates validation of email domains and collates contacts.",
     status: "Active",
     icon: CollatorIcon, 
     stack: ["VBA Macros", "Excel"], 
@@ -46,7 +46,7 @@ const PROJECTS = [
     category: "Internship", 
     since: "2025",
     builtAt: "National Youth Council (NYC)", 
-    description: "A Telegram bot for Youth to easily search and inquire about the latest Youth Programs organised by Youth Corps Singapore (YCS).",
+    description: "I developed a Telegram bot for Youth to easily search and inquire about the latest Youth Programs organised by Youth Corps Singapore (YCS).",
     status: "Active",
     icon: TeleIcon, 
     stack: ["Make", "Plumber", "FormSG", "Google Sheets"], 
@@ -197,6 +197,7 @@ export default function Projects() {
           let scale = 0.92;
           if (p.id === "p1") scale = 0.8;
           if (p.id === "p2" || p.id === "p3" || p.id.endsWith("w")) scale = 1.02;
+          if (p.id === "p7") scale = 0.75;
 
           const logoWrapperStyle = { overflow: "hidden" };
           const logoImgStyle = {
