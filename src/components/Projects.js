@@ -46,7 +46,7 @@ const PROJECTS = [
     category: "Internship", 
     since: "2025",
     builtAt: "National Youth Council (NYC)", 
-    description: "I developed a Telegram bot for Youth to easily search and inquire about the latest Youth Programs organised by Youth Corps Singapore (YCS).",
+    description: "I developed a Telegram bot for Youth to easily search and enquire about the latest Programs organised by Youth Corps Singapore (YCS).",
     status: "Active",
     icon: TeleIcon, 
     stack: ["Make", "Plumber", "FormSG", "Google Sheets"], 
