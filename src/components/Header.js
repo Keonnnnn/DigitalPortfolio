@@ -27,18 +27,27 @@ const Header = () => {
 
         {/* Right side — email pill button */}
         <a
-          href="mailto:Keonshu.contact@gmail.com"
+          href="mailto:keonshu.contact@gmail.com"
           className="email-btn"
           aria-label="Contact Keon via email"
         >
           <span className="email-icon">✉️</span>
-          <span className="email-label">Email me</span>
+          <span className="email-label">keonshu.contact@gmail.com</span>
         </a>
+
+        {/* Round dark mode toggle — desktop only, inside header */}
+        <button
+          className="dark-mode-fab desktop-fab"
+          onClick={toggleDark}
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {darkMode ? "☀️" : "🌙"}
+        </button>
       </header>
 
-      {/* Floating dark mode toggle — bottom right */}
+      {/* Floating dark mode toggle — mobile only, bottom right */}
       <button
-        className="dark-mode-fab"
+        className="dark-mode-fab mobile-fab"
         onClick={toggleDark}
         aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
       >
