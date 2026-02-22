@@ -34,39 +34,39 @@
   color: #ffffff;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  margin-left: auto;
-}
-
-.email {
+/* Email pill button — right side of nav */
+.email-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  padding: 6px 14px;
 
   color: #ffffff;
   text-decoration: none;
   font-size: 0.85rem;
   font-family: "Roboto", sans-serif;
   letter-spacing: 0.3px;
-  line-height: 1;
-
-  transition: opacity 0.2s ease, transform 0.2s ease;
-
-  max-width: 60vw;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
-  padding: 6px 12px;
-  border-radius: 9999px;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.email:hover {
-  opacity: 0.85;
+.email-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
   transform: translateY(-1px);
+}
+
+.email-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.email-label {
+  line-height: 1;
 }
 
 /* Tablet */
@@ -82,54 +82,28 @@
     font-size: 1rem;
   }
 
-  .email {
+  .email-btn {
     font-size: 0.8rem;
-    max-width: 50vw;
+    padding: 5px 12px;
   }
 }
 
-/* Reserve space so floating toggle never overlaps */
-@media screen and (max-width: 520px) {
-  .header {
-    padding-right: 140px;
-  }
-
-  .email {
-    max-width: 40vw;
-  }
-}
-
-/* Small mobile */
+/* Small mobile — hide label, show icon only */
 @media screen and (max-width: 420px) {
-  .header {
-    padding-right: 140px;
+  .email-label {
+    display: none;
   }
 
-  .email {
-    font-size: 0;
-    max-width: none;
-
-    padding: 10px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.06);
+  .email-btn {
+    padding: 8px 10px;
   }
 
-  .email::before {
-    content: "✉️";
+  .email-icon {
     font-size: 1rem;
-    margin-right: 8px;
-    vertical-align: -1px;
-  }
-
-  .email::after {
-    content: "Email me";
-    font-size: 0.9rem;
-    letter-spacing: 0.2px;
-    color: #ffffff;
   }
 }
 
-/* Dark mode styling */
+/* Dark mode — header */
 body.dark .header {
   background: linear-gradient(
     135deg,
@@ -147,9 +121,18 @@ body.dark .header {
   backdrop-filter: blur(12px) saturate(1.3);
 }
 
-body.dark .logo h1,
-body.dark .email {
-  color: #ffffff !important;
+body.dark .logo h1 {
+  color: #ffffff;
+}
+
+body.dark .email-btn {
+  color: #ffffff;
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+body.dark .email-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
 }
 
 /* ── Floating Dark Mode Button ── */
@@ -185,7 +168,6 @@ body.dark .email {
   transform: scale(0.95);
 }
 
-/* Dark mode variant of the FAB */
 body.dark .dark-mode-fab {
   background: rgba(30, 41, 59, 0.95);
   border: 1px solid rgba(99, 102, 241, 0.4);

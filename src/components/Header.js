@@ -4,7 +4,6 @@ import "./Header.css";
 const Header = () => {
   const [darkMode, setDarkMode] = useState(false);
 
-  // On mount, read saved preference
   useEffect(() => {
     const saved = localStorage.getItem("darkMode") === "true";
     setDarkMode(saved);
@@ -26,16 +25,15 @@ const Header = () => {
           <h1>Keon</h1>
         </div>
 
-        {/* Right side email link */}
-        <div className="header-right">
-          <a
-            href="mailto:Keonshu.contact@gmail.com"
-            className="email"
-            aria-label="Contact Keon via email"
-          >
-            Keonshu.contact@gmail.com
-          </a>
-        </div>
+        {/* Right side — email pill button */}
+        <a
+          href="mailto:Keonshu.contact@gmail.com"
+          className="email-btn"
+          aria-label="Contact Keon via email"
+        >
+          <span className="email-icon">✉️</span>
+          <span className="email-label">Email me</span>
+        </a>
       </header>
 
       {/* Floating dark mode toggle — bottom right */}
