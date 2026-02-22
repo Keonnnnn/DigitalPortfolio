@@ -1,6 +1,3 @@
-/* Gallery Modal Styles */
-
-/* Gallery Title */
 .gallery-title {
   font-size: 32px;
   font-weight: 700;
@@ -11,7 +8,6 @@
   letter-spacing: -0.5px;
 }
 
-/* Layout wrapper for gallery and quote */
 .gallery-layout {
   display: flex;
   gap: 30px;
@@ -29,7 +25,6 @@
   position: relative;
 }
 
-/* Quote Section */
 .quote-section {
   width: 320px;
   padding: 0;
@@ -112,7 +107,6 @@
   text-align: center;
 }
 
-/* Music Player Container */
 .music-player-container {
   width: 100%;
   background: white;
@@ -122,7 +116,6 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-/* Image wrapper for animation */
 .image-wrapper {
   width: 100%;
   max-height: 600px;
@@ -133,10 +126,9 @@
   align-items: center;
   border-radius: 20px;
   background: #f8f9fa;
-  touch-action: pan-y; /* Allow vertical scrolling but enable horizontal swipe detection */
+  touch-action: pan-y;
 }
 
-/* Image Styling */
 .gallery-image {
   width: 100%;
   max-width: 100%;
@@ -144,11 +136,10 @@
   height: auto;
   object-fit: cover;
   display: block;
-  user-select: none; /* Prevent image selection on mobile */
-  -webkit-user-drag: none; /* Prevent image dragging */
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* Slide animations */
 .gallery-image.slide-left {
   animation: slideOutToLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
@@ -209,7 +200,6 @@
   }
 }
 
-/* Image Counter */
 .image-counter {
   position: absolute;
   top: 20px;
@@ -225,7 +215,6 @@
   backdrop-filter: blur(10px);
 }
 
-/* Navigation Buttons */
 .nav-button {
   position: absolute;
   top: 50%;
@@ -273,7 +262,6 @@
   right: 15px;
 }
 
-/* Thumbnails Styling */
 .gallery-thumbnails {
   display: flex;
   gap: 12px;
@@ -308,7 +296,6 @@
   transform: scale(1.05);
 }
 
-/* Modal Styling */
 .gallery-modal-overlay {
   position: fixed;
   top: 0;
@@ -325,7 +312,6 @@
   backdrop-filter: blur(8px);
 }
 
-/* Modal Container */
 .gallery-modal {
   background: white;
   padding: 40px;
@@ -352,7 +338,6 @@
   }
 }
 
-/* Close Button */
 .close-btn {
   position: absolute;
   top: 20px;
@@ -397,7 +382,6 @@
   }
 }
 
-/* Responsive Design - Tablet */
 @media (max-width: 768px) {
   .gallery-title {
     font-size: 24px;
@@ -413,7 +397,7 @@
   }
 
   .animation-container {
-    height: 180px; /* Reduced height for mobile */
+    height: 180px;
   }
 
   .music-player-container {
@@ -439,7 +423,7 @@
   }
 
   .thumbnail {
-    width: 70px; /* Larger touch target */
+    width: 70px;
     height: 70px;
   }
 
@@ -458,7 +442,7 @@
   }
 
   .nav-button.left {
-    left: 12px; /* More space from edge */
+    left: 12px;
   }
 
   .nav-button.right {
@@ -468,7 +452,7 @@
   .image-counter {
     font-size: 13px;
     padding: 7px 14px;
-    top: 15px; /* Lower position to avoid notch */
+    top: 15px;
   }
 
   .quote-card {
@@ -480,7 +464,6 @@
   }
 }
 
-/* Responsive Design - Mobile */
 @media (max-width: 480px) {
   .gallery-modal {
     width: 95%;
@@ -496,7 +479,7 @@
   }
 
   .image-wrapper {
-    max-height: 55vh; /* More conservative height for small screens */
+    max-height: 55vh;
     border-radius: 14px;
   }
 
@@ -510,13 +493,13 @@
   }
 
   .thumbnail {
-    width: 65px; /* Slightly larger for better touch targets */
+    width: 65px;
     height: 65px;
     border-width: 2px;
   }
 
   .nav-button {
-    width: 44px; /* Minimum touch target size */
+    width: 44px;
     height: 44px;
     font-size: 24px;
     padding: 8px;
@@ -562,11 +545,10 @@
   }
 
   .music-player-container iframe {
-    height: 140px; /* Slightly smaller on mobile */
+    height: 140px;
   }
 }
 
-/* Extra small devices */
 @media (max-width: 360px) {
   .gallery-modal {
     padding: 15px 10px;
@@ -588,4 +570,78 @@
   .gallery-image {
     max-height: 50vh;
   }
+}
+
+body.dark .gallery-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+body.dark .gallery-modal {
+  background: #0f172a;
+  color: #f9fafb;
+}
+
+body.dark .gallery-title {
+  color: #f9fafb;
+}
+
+body.dark .quote-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .quote-text {
+  color: #e5e7eb;
+}
+
+body.dark .quote-author {
+  color: #cbd5e1;
+}
+
+body.dark .music-player-container {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .animation-container {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 2px solid rgba(147, 197, 253, 0.18);
+}
+
+body.dark .image-wrapper {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+body.dark .nav-button {
+  background: rgba(15, 23, 42, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  color: #f9fafb;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .nav-button:hover:not(:disabled) {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: #93c5fd;
+  color: #93c5fd;
+}
+
+body.dark .close-btn {
+  background: rgba(15, 23, 42, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  color: #e5e7eb;
+}
+
+body.dark .image-counter {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+body.dark .thumbnail {
+  opacity: 0.75;
+}
+
+body.dark .thumbnail.active {
+  opacity: 1;
 }

@@ -273,3 +273,41 @@
   .np-cover-wrap { width: 60px; height: 60px; }
   .np-chip { font-size: 0.7rem; padding: 3px 8px; }
 }
+
+body.dark .np-card {
+  color: #f9fafb;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 12px 34px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+body.dark .np-title {
+  color: #f9fafb;
+}
+
+body.dark .np-artist {
+  color: #e5e7eb;
+}
+
+body.dark .np-times {
+  color: #cbd5e1;
+}
+
+body.dark .np-track {
+  background: rgba(255,255,255,0.10);
+}
+
+body.dark .np-chip {
+  background: rgba(15,23,42,0.6);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+body.dark .np-chip--paused {
+  color: #cbd5e1;
+}
+
+body.dark .np-chip--loading {
+  color: #e5e7eb;
+}

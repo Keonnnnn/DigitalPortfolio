@@ -1,11 +1,12 @@
-/* Global Styles */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -24,7 +25,7 @@ body {
   min-height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 .App {
@@ -42,7 +43,10 @@ section {
   box-shadow: none;
 }
 
-img, video, svg, canvas {
+img,
+video,
+svg,
+canvas {
   max-width: 100%;
   height: auto;
   display: block;
@@ -61,11 +65,15 @@ img, video, svg, canvas {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { animation: none !important; transition: none !important; }
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
-/* Profile Section  */
 .profile-section {
   text-align: center;
   margin-top: 30px;
@@ -83,10 +91,51 @@ img, video, svg, canvas {
   transform: scale(1.05);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .profile-pic {
     width: 120px;
     height: 120px;
   }
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 9999;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  color: #111827;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+}
+
+body.dark {
+  background: #0b1220;
+  color: #f9fafb;
+}
+
+body.dark section {
+  background-color: #0f172a;
+  color: #f9fafb;
+}
+
+body.dark .theme-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(17, 24, 39, 0.7);
+  color: #f9fafb;
+}
+
+body.dark :where(a, button, [role="button"]):focus-visible {
+  outline: 2px solid #93c5fd;
 }

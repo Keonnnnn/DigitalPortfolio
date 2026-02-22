@@ -301,3 +301,66 @@
   0%, 100% { border-color: #d1d5db; }
   50% { border-color: #9ca3af; }
 }
+
+body.dark .pr-heading {
+  color: #f9fafb;
+}
+
+body.dark .pr-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .pr-card.is-hovered {
+  border-color: rgba(255, 255, 255, 0.18);
+  filter: saturate(1.02);
+}
+
+body.dark .pr-title {
+  color: #f9fafb;
+}
+
+body.dark .pr-meta {
+  color: #cbd5e1;
+}
+
+body.dark .pr-desc {
+  color: #e5e7eb;
+}
+
+body.dark .pr-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f9fafb;
+}
+
+body.dark .pr-logo {
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+body.dark .pr-open {
+  color: #cbd5e1;
+}
+
+body.dark .pr-badge--active {
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.28);
+}
+
+body.dark .pr-cta {
+  background: rgba(251, 191, 36, 0.10);
+  color: #fdba74;
+  border: 1px dashed rgba(251, 191, 36, 0.35);
+}
+
+body.dark .coming-soon {
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 2px dashed rgba(255, 255, 255, 0.18);
+}
+
+body.dark .cs-text {
+  color: #e5e7eb;
+}

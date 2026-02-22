@@ -6,7 +6,7 @@ import SingapuraIcon from "../assets/Singapura.png";
 import EcotureIcon from "../assets/ECOTURE.png";
 import IllumiaIcon from "../assets/illumia.png";
 import MakanLahIcon from "../assets/MakanLah.png";
-import TeleIcon from "../assets/tele.jpeg";
+import TeleIcon from "../assets/tele.png";
 import CollatorIcon from "../assets/Collator.png";
 
 const PROJECTS = [
