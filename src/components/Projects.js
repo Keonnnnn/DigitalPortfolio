@@ -138,199 +138,135 @@ function onMove(e) {
   const r = card.getBoundingClientRect();
   const x = (e.clientX - r.left) / r.width;
   const y = (e.clientY - r.top) / r.height;
-  const rotY = (x - 0.5) * 16;
-  const rotX = (0.5 - y) * 10;
-  card.style.setProperty("--rX", `${rotX}deg`);
-  card.style.setProperty("--rY", `${rotY}deg`);
-  card.style.setProperty("--px", `${x * 100}%`);
-  card.style.setProperty("--py", `${y * 100}%`);
+  card.style.setProperty("--rX", `${(0.5 - y) * 10}deg`);
+  card.style.setProperty("--rY", `${(x - 0.5) * 16}deg`);
 }
 
 function onEnter(e) {
-  const card = e.currentTarget;
-  card.classList.add("is-hovered");
-  card.style.setProperty("--px", `50%`);
-  card.style.setProperty("--py", `50%`);
+  e.currentTarget.classList.add("is-hovered");
 }
 
 function onLeave(e) {
   const card = e.currentTarget;
   card.classList.remove("is-hovered");
-  card.style.setProperty("--rX", `0deg`);
-  card.style.setProperty("--rY", `0deg`);
-  card.style.setProperty("--px", `50%`);
-  card.style.setProperty("--py", `50%`);
+  card.style.setProperty("--rX", "0deg");
+  card.style.setProperty("--rY", "0deg");
 }
-
-const GRID_WIDE_STYLE = {
-  gap: 28,
-  maxWidth: 1240,
-  margin: "0 auto",
-  padding: "0 16px",
-};
-
-const CARD_LARGER_STYLE = {
-  padding: "26px 26px 22px",
-  borderRadius: 20,
-  minHeight: 220,
-};
 
 export default function Projects() {
   return (
     <section id="projects" className="projects">
       <h2 className="pr-heading">My Projects</h2>
 
-      <div className="pr-grid" role="list" style={GRID_WIDE_STYLE}>
+      <div className="pr-grid" role="list">
         {PROJECTS.map((p) => {
           const CardTag = p.url ? "a" : "div";
-
-          const metaChips = [
-            p.since ? p.since : null,
-            p.builtAt ? p.builtAt : p.audience ? `For ${p.audience}` : null,
-          ].filter(Boolean);
 
           let scale = 0.92;
           if (p.id === "p1") scale = 0.8;
           if (p.id === "p2" || p.id === "p3" || p.id.endsWith("w")) scale = 1.02;
           if (p.id === "p7") scale = 0.75;
 
-          const logoWrapperStyle = { overflow: "hidden" };
-          const logoImgStyle = {
-            width: "100%",
-            height: "100%",
-            objectFit: "contain",
-            transform: `scale(${scale})`,
-          };
+          const metaChips = [
+            p.since,
+            p.builtAt ?? (p.audience ? `For ${p.audience}` : null),
+          ].filter(Boolean);
 
           return (
             <CardTag
               key={p.id}
               className="pr-card"
-              {...(p.url
-                ? { href: p.url, target: "_blank", rel: "noreferrer" }
-                : {})}
+              {...(p.url ? { href: p.url, target: "_blank", rel: "noreferrer" } : {})}
               role="listitem"
               aria-label={`${p.title} — ${p.category}`}
               onMouseMove={onMove}
               onMouseEnter={onEnter}
               onMouseLeave={onLeave}
-              style={CARD_LARGER_STYLE}
             >
+              {/* Row 1: logo · title · category chip — all on one line */}
               <div className="pr-head">
-                <div
-                  className="pr-logo"
-                  style={logoWrapperStyle}
-                  aria-hidden={!p.icon && !p.emoji}
-                >
+                <div className="pr-logo">
                   {p.icon ? (
                     <img
                       src={p.icon}
                       alt={`${p.title} icon`}
                       className="pr-logo-img"
-                      style={logoImgStyle}
+                      style={{ transform: `scale(${scale})` }}
                       loading="lazy"
                       draggable="false"
                     />
                   ) : (
-                    <span style={{ fontSize: "22px", lineHeight: 1 }}>
-                      {p.emoji}
-                    </span>
+                    <span>{p.emoji}</span>
+                  )}
+                </div>
+                <h3 className="pr-title">{p.title}</h3>
+                <span className="pr-chip pr-category-chip">{p.category}</span>
+              </div>
+
+              {/* Row 2: meta chips */}
+              {metaChips.length > 0 && (
+                <div className="pr-meta">
+                  {metaChips.map((chip, i) => (
+                    <span key={i} className="pr-chip">{chip}</span>
+                  ))}
+                </div>
+              )}
+
+              {/* Row 3: description */}
+              {p.description && <p className="pr-desc">{p.description}</p>}
+
+              {/* Row 4: stack */}
+              {Array.isArray(p.stack) && p.stack.length > 0 && (
+                <div className="pr-stack">
+                  {p.stack.map((s, i) => (
+                    <span key={i} className="pr-chip">{s}</span>
+                  ))}
+                </div>
+              )}
+
+              {/* Row 5: footer — pinned to bottom */}
+              <div className="pr-foot">
+                <div className="pr-foot-left">
+                  {p.contactNote && (
+                    <a
+                      className="pr-cta"
+                      href={p.contactUrl || "mailto:Keonshu.contact@gmail.com"}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <span aria-hidden="true">✉️</span>
+                      <span>{p.contactNote}</span>
+                    </a>
+                  )}
+                  {p.telegramBotUrl && (
+                    <a
+                      className="pr-cta"
+                      href={p.telegramBotUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span aria-hidden="true">🤖</span>
+                      <span>Try the YCS Telegram Bot</span>
+                    </a>
                   )}
                 </div>
 
-                <div className="pr-titleWrap">
-                  <h3 className="pr-title pr-title--full">{p.title}</h3>
-                  <span className="pr-chip">{p.category}</span>
-                </div>
-              </div>
-
-              {metaChips.length > 0 && (
-                <div className="pr-meta" style={{ gap: 8, flexWrap: "wrap" }}>
-                  {metaChips.map((chip, i) => (
-                    <span key={i} className="pr-chip">
-                      {chip}
+                <div className="pr-foot-right">
+                  {p.status && (
+                    <span className={`pr-badge${p.status.toLowerCase() === "active" ? " pr-badge--active" : ""}`}>
+                      {p.status}
                     </span>
-                  ))}
+                  )}
+                  {p.url && <span className="pr-open" aria-hidden="true">↗</span>}
                 </div>
-              )}
-
-              {p.description && <p className="pr-desc">{p.description}</p>}
-
-              {Array.isArray(p.stack) && p.stack.length > 0 && (
-                <div
-                  className="pr-stack"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "8px",
-                    marginBottom: 12,
-                  }}
-                >
-                  {p.stack.map((s, i) => (
-                    <span key={i} className="pr-chip">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div className="pr-foot">
-                {p.contactNote && (
-                  <a
-                    className="pr-cta"
-                    href={p.contactUrl || "mailto:Keonshu.contact@gmail.com"}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <span aria-hidden="true">✉️</span>
-                    <span className="pr-cta-text">{p.contactNote}</span>
-                  </a>
-                )}
-
-                {p.telegramBotUrl && (
-                  <a
-                    className="pr-cta"
-                    href={p.telegramBotUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Open YCS Telegram Bot"
-                  >
-                    <span aria-hidden="true">🤖</span>
-                    <span className="pr-cta-text">Try the YCS Telegram Bot</span>
-                  </a>
-                )}
-
-                <span
-                  className={`pr-badge ${
-                    (p.status || "").toLowerCase() === "active"
-                      ? "pr-badge--active"
-                      : ""
-                  }`}
-                >
-                  {p.status}
-                </span>
-
-                {p.url && (
-                  <span className="pr-open" aria-hidden="true">
-                    ↗
-                  </span>
-                )}
               </div>
             </CardTag>
           );
         })}
 
-        <div
-          className="pr-card coming-soon"
-          role="listitem"
-          aria-label="More projects coming soon"
-        >
+        <div className="pr-card coming-soon" role="listitem">
           <div className="cs-content">
             <span className="cs-emoji">✨</span>
-            <p className="cs-text">
-              More exciting projects
-              <br />
-              coming soon…
-            </p>
+            <p className="cs-text">More exciting projects<br />coming soon…</p>
           </div>
         </div>
       </div>
