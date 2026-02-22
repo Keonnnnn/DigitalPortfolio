@@ -6,8 +6,8 @@
   z-index: 1000;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
   width: min(900px, calc(100% - clamp(16px, 6vw, 40px)));
   padding: 6px clamp(14px, 3.5vw, 18px);
@@ -38,14 +38,21 @@
   display: flex;
   align-items: center;
   min-width: 0;
+  margin-left: auto;
 }
 
 .email {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   color: #ffffff;
   text-decoration: none;
   font-size: 0.85rem;
   font-family: "Roboto", sans-serif;
   letter-spacing: 0.3px;
+  line-height: 1;
+
   transition: opacity 0.2s ease, transform 0.2s ease;
 
   max-width: 60vw;
@@ -53,7 +60,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 9999px;
 }
 
@@ -66,8 +73,8 @@
 @media screen and (max-width: 768px) {
   .header {
     top: calc(12px + env(safe-area-inset-top, 0px));
-    padding: 5px 14px;
     width: calc(100% - 24px);
+    padding: 5px 14px;
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
   }
 
@@ -77,51 +84,52 @@
 
   .email {
     font-size: 0.8rem;
-    max-width: 52vw;
+    max-width: 50vw;
   }
 }
 
-/* Prevent toggle overlap on mobile */
+/* Reserve space so floating toggle never overlaps */
 @media screen and (max-width: 520px) {
   .header {
-    padding-right: calc(18px + 150px);
+    padding-right: 140px;
   }
 
   .email {
-    max-width: calc(100vw - 180px);
+    max-width: 40vw;
   }
 }
 
 /* Small mobile */
 @media screen and (max-width: 420px) {
   .header {
-    padding-right: calc(18px + 150px);
+    padding-right: 140px;
   }
 
   .email {
     font-size: 0;
     max-width: none;
-    padding: 7px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.04);
+
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .email::before {
     content: "✉️";
     font-size: 1rem;
-    margin-right: 6px;
+    margin-right: 8px;
     vertical-align: -1px;
   }
 
   .email::after {
     content: "Email me";
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     letter-spacing: 0.2px;
     color: #ffffff;
   }
 }
 
-/* Strong dark mode */
+/* Dark mode styling */
 body.dark .header {
   background: linear-gradient(
     135deg,

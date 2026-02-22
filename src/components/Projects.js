@@ -1,6 +1,6 @@
+// src/components/Projects.js
 import "./Projects.css";
 
-// Images
 import RobotIcon from "../assets/robot.png";
 import SingapuraIcon from "../assets/Singapura.png";
 import EcotureIcon from "../assets/ECOTURE.png";
@@ -27,33 +27,37 @@ const PROJECTS = [
       "mailto:Keonshu.contact@gmail.com?subject=YCS%20Collaterals%20System%20inquiry",
   },
   {
-    id: "p7", 
+    id: "p7",
     title: "CRMS Master Collator",
-    category: "Internship", 
+    category: "Internship",
     since: "2025",
-    builtAt: "National Youth Council (NYC)", 
-    description: "I developed a macro-enabled solution that automates validation of email domains and collates contacts.",
+    builtAt: "National Youth Council (NYC)",
+    description:
+      "I developed a macro-enabled solution that automates validation of email domains and collates contacts.",
     status: "Active",
-    icon: CollatorIcon, 
-    stack: ["VBA Macros", "Excel"], 
-    url: "https://docs.google.com/presentation/d/1J3P9i4oo5bBNHAjPPtG_Mzq8vovgw1_JIN2hlTSP5Vk/edit?usp=sharing", 
+    icon: CollatorIcon,
+    stack: ["VBA Macros", "Excel"],
+    url: "https://docs.google.com/presentation/d/1J3P9i4oo5bBNHAjPPtG_Mzq8vovgw1_JIN2hlTSP5Vk/edit?usp=sharing",
     contactNote: "Contact me to find out more",
-    contactUrl: "mailto:Keonshu.contact@gmail.com?subject=CRMS%20Master%20Collator%20inquiry",
+    contactUrl:
+      "mailto:Keonshu.contact@gmail.com?subject=CRMS%20Master%20Collator%20inquiry",
   },
   {
-    id: "p6", 
+    id: "p6",
     title: "YCS Telegram Bot",
-    category: "Internship", 
+    category: "Internship",
     since: "2025",
-    builtAt: "National Youth Council (NYC)", 
-    description: "I developed a Telegram bot for Youth to easily search and enquire about the latest Programs organised by Youth Corps Singapore (YCS).",
+    builtAt: "National Youth Council (NYC)",
+    description:
+      "I developed a Telegram bot for Youth to easily search and enquire about the latest Programs organised by Youth Corps Singapore (YCS).",
     status: "Active",
-    icon: TeleIcon, 
-    stack: ["Make", "Plumber", "FormSG", "Google Sheets"], 
-    url: "https://docs.google.com/presentation/d/1hvkY74sHCgRcpcnWgDr3fC7C-EJSYIEug4lXn4XOAoE/edit?usp=sharing", 
+    icon: TeleIcon,
+    stack: ["Make", "Plumber", "FormSG", "Google Sheets"],
+    url: "https://docs.google.com/presentation/d/1hvkY74sHCgRcpcnWgDr3fC7C-EJSYIEug4lXn4XOAoE/edit?usp=sharing",
     contactNote: "Contact me to find out more",
-    contactUrl: "mailto:Keonshu.contact@gmail.com?subject=YCS%20Telegram%20Bot%20inquiry",
-    telegramBotUrl: "https://t.me/YouthCorpsSG_events_bot", 
+    contactUrl:
+      "mailto:Keonshu.contact@gmail.com?subject=YCS%20Telegram%20Bot%20inquiry",
+    telegramBotUrl: "https://t.me/YouthCorpsSG_events_bot",
   },
   {
     id: "p2",
@@ -129,7 +133,6 @@ const PROJECTS = [
   },
 ];
 
-/* --- 3D tilt (uses CSS vars) --- */
 function onMove(e) {
   const card = e.currentTarget;
   const r = card.getBoundingClientRect();
@@ -172,14 +175,6 @@ const CARD_LARGER_STYLE = {
   minHeight: 220,
 };
 
-const TITLE_TWO_LINE_STYLE = {
-  whiteSpace: "normal",
-  overflow: "hidden",
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: 2,
-};
-
 export default function Projects() {
   return (
     <section id="projects" className="projects">
@@ -211,7 +206,9 @@ export default function Projects() {
             <CardTag
               key={p.id}
               className="pr-card"
-              {...(p.url ? { href: p.url, target: "_blank", rel: "noreferrer" } : {})}
+              {...(p.url
+                ? { href: p.url, target: "_blank", rel: "noreferrer" }
+                : {})}
               role="listitem"
               aria-label={`${p.title} — ${p.category}`}
               onMouseMove={onMove}
@@ -220,7 +217,11 @@ export default function Projects() {
               style={CARD_LARGER_STYLE}
             >
               <div className="pr-head">
-                <div className="pr-logo" style={logoWrapperStyle} aria-hidden={!p.icon && !p.emoji}>
+                <div
+                  className="pr-logo"
+                  style={logoWrapperStyle}
+                  aria-hidden={!p.icon && !p.emoji}
+                >
                   {p.icon ? (
                     <img
                       src={p.icon}
@@ -231,14 +232,14 @@ export default function Projects() {
                       draggable="false"
                     />
                   ) : (
-                    <span style={{ fontSize: "22px", lineHeight: 1 }}>{p.emoji}</span>
+                    <span style={{ fontSize: "22px", lineHeight: 1 }}>
+                      {p.emoji}
+                    </span>
                   )}
                 </div>
 
                 <div className="pr-titleWrap">
-                  <h3 className="pr-title" style={TITLE_TWO_LINE_STYLE}>
-                    {p.title}
-                  </h3>
+                  <h3 className="pr-title pr-title--full">{p.title}</h3>
                   <span className="pr-chip">{p.category}</span>
                 </div>
               </div>
@@ -256,9 +257,19 @@ export default function Projects() {
               {p.description && <p className="pr-desc">{p.description}</p>}
 
               {Array.isArray(p.stack) && p.stack.length > 0 && (
-                <div className="pr-stack" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: 12 }}>
+                <div
+                  className="pr-stack"
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "8px",
+                    marginBottom: 12,
+                  }}
+                >
                   {p.stack.map((s, i) => (
-                    <span key={i} className="pr-chip">{s}</span>
+                    <span key={i} className="pr-chip">
+                      {s}
+                    </span>
                   ))}
                 </div>
               )}
@@ -290,18 +301,29 @@ export default function Projects() {
 
                 <span
                   className={`pr-badge ${
-                    (p.status || "").toLowerCase() === "active" ? "pr-badge--active" : ""
+                    (p.status || "").toLowerCase() === "active"
+                      ? "pr-badge--active"
+                      : ""
                   }`}
                 >
                   {p.status}
                 </span>
-                {p.url && <span className="pr-open" aria-hidden="true">↗</span>}
+
+                {p.url && (
+                  <span className="pr-open" aria-hidden="true">
+                    ↗
+                  </span>
+                )}
               </div>
             </CardTag>
           );
         })}
 
-        <div className="pr-card coming-soon" role="listitem" aria-label="More projects coming soon">
+        <div
+          className="pr-card coming-soon"
+          role="listitem"
+          aria-label="More projects coming soon"
+        >
           <div className="cs-content">
             <span className="cs-emoji">✨</span>
             <p className="cs-text">
