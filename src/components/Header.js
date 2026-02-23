@@ -20,12 +20,12 @@ const Header = () => {
   return (
     <>
       <header className="header" aria-label="Top navigation">
-        {/* Left side logo */}
+        {/* Logo */}
         <div className="logo">
           <h1>Keon</h1>
         </div>
 
-        {/* Right side — email pill button */}
+        {/* Email pill */}
         <a
           href="mailto:keonshu.contact@gmail.com"
           className="email-btn"
@@ -35,7 +35,7 @@ const Header = () => {
           <span className="email-label">keonshu.contact@gmail.com</span>
         </a>
 
-        {/* Round dark mode toggle — desktop only, inside header */}
+        {/* Dark mode toggle — desktop header */}
         <button
           className="dark-mode-fab desktop-fab"
           onClick={toggleDark}

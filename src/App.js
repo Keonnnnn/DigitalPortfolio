@@ -7,6 +7,7 @@ import "./App.css";
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [starsHidden, setStarsHidden] = useState(false);
 
   const openGallery = () => setIsModalOpen(true);
   const closeGallery = () => setIsModalOpen(false);
@@ -25,7 +26,10 @@ export default function App() {
 
   return (
     <main className="App">
-      <Hero />
+      <Hero
+        starsHidden={starsHidden}
+        onToggleStars={() => setStarsHidden((p) => !p)}
+      />
       <Projects />
 
       {isModalOpen && <ImageGallery closeGallery={closeGallery} />}

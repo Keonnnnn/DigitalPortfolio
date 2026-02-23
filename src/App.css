@@ -111,3 +111,17 @@ body.dark section {
 body.dark :where(a, button, [role="button"]):focus-visible {
   outline: 2px solid #93c5fd;
 }
+
+/*
+  ── ScrollToTop offset on mobile ──
+  The mobile FAB group (stars + dark mode) is 2 × 44px buttons + 10px gap = 98px tall,
+  sitting at bottom: clamp(20px, 5vh, 36px) from the edge.
+  We push ScrollToTop above it by targeting its class.
+  Adjust .scroll-to-top if your component uses a different class name.
+*/
+@media screen and (max-width: 600px) {
+  .scroll-to-top {
+    /* 2 FABs (44px each) + gap (10px) + FAB group bottom offset (20px) + breathing room (12px) */
+    bottom: calc(44px + 44px + 10px + 20px + 12px) !important;
+  }
+}
