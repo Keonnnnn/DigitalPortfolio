@@ -28,7 +28,6 @@
   align-items: center;
   justify-content: center;
 
-  /* Prevent text size adjustment on mobile */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -64,14 +63,15 @@
     0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Mobile — smaller, tucked closer to corner so it doesn't cover content */
+/* Mobile — move to bottom LEFT to avoid clashing with mode toggle on bottom right */
 @media (max-width: 768px) {
   .scroll-to-top {
     width: 42px;
     height: 42px;
     border-radius: 12px;
     bottom: 1.25rem;
-    right: 1.25rem;
+    right: auto;
+    left: 1.25rem;
   }
 
   .scroll-to-top svg {
@@ -79,7 +79,6 @@
     height: 16px;
   }
 
-  /* No hover lift on touch devices — use active instead */
   .scroll-to-top:hover {
     transform: translateY(0) scale(1);
     box-shadow:
@@ -95,14 +94,14 @@
   }
 }
 
-/* Very small screens (e.g. iPhone SE) */
+/* Very small screens e.g. iPhone SE */
 @media (max-width: 380px) {
   .scroll-to-top {
     width: 38px;
     height: 38px;
     border-radius: 10px;
     bottom: 1rem;
-    right: 1rem;
+    left: 1rem;
   }
 }
 
