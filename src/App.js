@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
 import ImageGallery from "./components/ImageGallery";
+import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
       <Projects />
 
       {isModalOpen && <ImageGallery closeGallery={closeGallery} />}
+      <ScrollToTop />
     </main>
   );
 }

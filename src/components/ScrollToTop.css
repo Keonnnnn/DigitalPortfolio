@@ -1,0 +1,130 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: none;
+
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+
+  cursor: pointer;
+
+  opacity: 0;
+  transform: translateY(12px) scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s ease;
+
+  box-shadow:
+    0 4px 15px rgba(45, 55, 72, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Prevent text size adjustment on mobile */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.scroll-to-top svg {
+  width: 18px;
+  height: 18px;
+  stroke: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.scroll-to-top:hover {
+  box-shadow:
+    0 8px 25px rgba(45, 55, 72, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px) scale(1.08);
+}
+
+.scroll-to-top:hover svg {
+  transform: translateY(-2px);
+}
+
+.scroll-to-top:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow:
+    0 3px 10px rgba(45, 55, 72, 0.3),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile — smaller, tucked closer to corner so it doesn't cover content */
+@media (max-width: 768px) {
+  .scroll-to-top {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+
+  .scroll-to-top svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* No hover lift on touch devices — use active instead */
+  .scroll-to-top:hover {
+    transform: translateY(0) scale(1);
+    box-shadow:
+      0 4px 15px rgba(45, 55, 72, 0.35),
+      0 2px 6px rgba(0, 0, 0, 0.12);
+  }
+
+  .scroll-to-top:active {
+    transform: scale(0.93);
+    box-shadow:
+      0 2px 8px rgba(45, 55, 72, 0.3),
+      0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Very small screens (e.g. iPhone SE) */
+@media (max-width: 380px) {
+  .scroll-to-top {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+/* Dark mode */
+body.dark .scroll-to-top {
+  background: linear-gradient(135deg, #7c9ef5 0%, #a78bfa 100%);
+  box-shadow:
+    0 4px 20px rgba(124, 158, 245, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .scroll-to-top:hover {
+  box-shadow:
+    0 8px 30px rgba(124, 158, 245, 0.65),
+    0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  body.dark .scroll-to-top:hover {
+    box-shadow:
+      0 4px 20px rgba(124, 158, 245, 0.5),
+      0 2px 6px rgba(0, 0, 0, 0.3);
+    transform: translateY(0) scale(1);
+  }
+}
