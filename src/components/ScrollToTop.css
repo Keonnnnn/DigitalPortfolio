@@ -60,44 +60,39 @@
   transform: translateY(0) scale(0.97);
 }
 
-/* Mobile — stay bottom right but sit above the mode toggle button */
-@media (max-width: 768px) {
+/* Mobile — mirror the mobile-fab exactly, stacked above it.
+   mobile-fab: bottom: clamp(20px, 5vh, 36px), right: clamp(16px, 4vw, 28px), size: 48px
+   We sit 12px gap above it: 48px (fab) + 12px (gap) + clamp(20px,5vh,36px) = bottom offset */
+@media screen and (max-width: 600px) {
   .scroll-to-top {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;   /* Pill/circle looks cleaner on mobile */
-    bottom: 5.5rem;       /* Pushes it above the mode toggle */
-    right: 1.25rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    right: clamp(16px, 4vw, 28px);
     left: auto;
+    /* fab bottom + fab height + gap */
+    bottom: calc(clamp(20px, 5vh, 36px) + 48px + 12px);
+
+    background: #1d1f23;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
   }
 
   .scroll-to-top svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 
   .scroll-to-top:hover {
     transform: translateY(0) scale(1);
-    box-shadow:
-      0 4px 15px rgba(45, 55, 72, 0.35),
-      0 2px 6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
   }
 
   .scroll-to-top:active {
-    transform: scale(0.93);
+    transform: scale(0.92);
   }
 }
 
-@media (max-width: 380px) {
-  .scroll-to-top {
-    width: 38px;
-    height: 38px;
-    bottom: 5rem;
-    right: 1rem;
-  }
-}
-
-/* Dark mode */
+/* Dark mode — desktop */
 body.dark .scroll-to-top {
   background: linear-gradient(135deg, #7c9ef5 0%, #a78bfa 100%);
   box-shadow:
@@ -111,11 +106,20 @@ body.dark .scroll-to-top:hover {
     0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
-@media (max-width: 768px) {
-  body.dark .scroll-to-top:hover {
+/* Dark mode — mobile, match mobile-fab dark style */
+@media screen and (max-width: 600px) {
+  body.dark .scroll-to-top {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(99, 102, 241, 0.4);
     box-shadow:
-      0 4px 20px rgba(124, 158, 245, 0.5),
-      0 2px 6px rgba(0, 0, 0, 0.3);
+      0 0 0 1px rgba(99, 102, 241, 0.25),
+      0 4px 20px rgba(99, 102, 241, 0.3);
+  }
+
+  body.dark .scroll-to-top:hover {
     transform: translateY(0) scale(1);
+    box-shadow:
+      0 0 0 1px rgba(99, 102, 241, 0.25),
+      0 4px 20px rgba(99, 102, 241, 0.3);
   }
 }
