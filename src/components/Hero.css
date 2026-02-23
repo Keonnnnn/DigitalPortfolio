@@ -416,18 +416,21 @@ body.dark .hero-stars-btn--off:hover {
   .hero-player { justify-content: center; margin-top: 24px; }
 }
 
-@media screen and (max-width: 480px) {
-  .hero { padding-top: 56px; padding-bottom: 48px; }
-  .hero-layout { gap: 24px; padding: 16px clamp(12px, 4vw, 20px) 12px; }
-
-  /* On small phones header is ~44px tall, sits 12px from top */
+@media screen and (max-width: 600px) {
+  /* On mobile the header spans almost full width — no room beside it.
+     Drop the button below the header, flush to the right edge of the hero. */
   .hero-stars-btn {
-    top: calc(12px + env(safe-area-inset-top, 0px) + 5px);
+    position: absolute;
+    top: calc(12px + env(safe-area-inset-top, 0px) + 52px + 10px);
     right: 14px;
     width: 36px;
     height: 36px;
   }
+}
 
+@media screen and (max-width: 480px) {
+  .hero { padding-top: 56px; padding-bottom: 48px; }
+  .hero-layout { gap: 24px; padding: 16px clamp(12px, 4vw, 20px) 12px; }
   .hero-image::after { font-size: 12px; bottom: 12px; }
   .hero-image img { width: 200px; }
   .greet-type { animation: none !important; border-right: 0 !important; white-space: normal; }
