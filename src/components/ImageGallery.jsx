@@ -102,14 +102,18 @@ const ImageGallery = ({ closeGallery }) => {
 
   // Touch handlers for swipe gestures
   const handleTouchStart = (e) => {
+    if (!isMobile) return;
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchMove = (e) => {
+    if (!isMobile) return;
     touchEndX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = () => {
+    if (!isMobile) return;
+
     const swipeThreshold = 50;
     const diff = touchStartX.current - touchEndX.current;
 
@@ -122,11 +126,13 @@ const ImageGallery = ({ closeGallery }) => {
     touchEndX.current = 0;
   };
 
-  // Auto-advance on BOTH mobile and desktop
+  // Auto-advance only on desktop
   useEffect(() => {
+    if (isMobile) return;
+
     const intervalId = setInterval(goToNextImage, 5000);
     return () => clearInterval(intervalId);
-  }, [goToNextImage]);
+  }, [isMobile, goToNextImage]);
 
   // Keyboard navigation
   useEffect(() => {
