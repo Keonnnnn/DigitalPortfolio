@@ -126,13 +126,11 @@ const ImageGallery = ({ closeGallery }) => {
     touchEndX.current = 0;
   };
 
-  // Auto-advance only on desktop
+  // Auto-advance on all devices
   useEffect(() => {
-    if (isMobile) return;
-
     const intervalId = setInterval(goToNextImage, 5000);
     return () => clearInterval(intervalId);
-  }, [isMobile, goToNextImage]);
+  }, [goToNextImage]);
 
   // Keyboard navigation
   useEffect(() => {
