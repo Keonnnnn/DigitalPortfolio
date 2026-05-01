@@ -5,7 +5,7 @@
 .blog-post {
   min-height: 100vh;
   background: #f8f5f0;
-  padding: 110px 20px 120px;
+  padding: 48px 20px 120px;
 }
 
 .blog-post-header,
@@ -120,9 +120,6 @@
   max-width: 680px;
 }
 
-
-
-
 /* Inline images */
 .blog-post-figure {
   margin: 8px 0 36px;
@@ -152,13 +149,12 @@
 
 @media (max-width: 768px) {
   .blog-post {
-    padding: 90px 20px 80px;
+    padding: 36px 20px 80px;
   }
 
   .blog-post h1 {
     font-size: 2.1rem;
   }
-
 
   .blog-post article p {
     font-size: 1rem;
