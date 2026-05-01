@@ -8,6 +8,7 @@ import IllumiaIcon from "../assets/illumia.png";
 import MakanLahIcon from "../assets/MakanLah.png";
 import TeleIcon from "../assets/tele.png";
 import CollatorIcon from "../assets/Collator.png";
+import BlogIcon from "../assets/blog.png";
 
 const PROJECTS = [
   {
@@ -58,6 +59,18 @@ const PROJECTS = [
     contactUrl:
       "mailto:Keonshu.contact@gmail.com?subject=YCS%20Telegram%20Bot%20inquiry",
     telegramBotUrl: "https://t.me/YouthCorpsSG_events_bot",
+  },
+  {
+    id: "p8",
+    title: "Personal Blog",
+    category: "Personal Project",
+    since: "2026",
+    builtAt: "keonshu.com",
+    description:
+      "A blog section built into my portfolio where I share my thoughts, learning notes, and reflections.",
+    icon: BlogIcon,
+    stack: ["HTML5", "CSS", "JavaScript", "Vercel", "React"],
+    url: "/blog",
   },
   {
     id: "p2",
@@ -166,6 +179,7 @@ export default function Projects() {
           if (p.id === "p1") scale = 0.8;
           if (p.id === "p2" || p.id === "p3" || p.id.endsWith("w")) scale = 1.02;
           if (p.id === "p7") scale = 0.75;
+          if (p.id === "p8") scale = 0.7;
 
           const metaChips = [
             p.since,

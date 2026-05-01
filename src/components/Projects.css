@@ -13,6 +13,8 @@
   max-width: 1240px;
   padding: 0 16px;
   margin: 0 auto;
+
+  align-items: stretch; 
 }
 
 /* ── Card ── */
@@ -31,7 +33,10 @@
   padding: 22px 22px 18px;
   text-decoration: none;
   color: inherit;
-  min-height: 220px;
+
+  min-height: 340px; 
+  height: 100%;     
+
   overflow: hidden;
 
   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.06),

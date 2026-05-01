@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import "./Header.css";
 
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem("darkMode") === "true";
-    setDarkMode(saved);
-    document.body.classList.toggle("dark", saved);
+    const saved = localStorage.getItem("darkMode");
+    const shouldUseDark = saved === null ? true : saved === "true";
+
+    setDarkMode(shouldUseDark);
+    document.body.classList.toggle("dark", shouldUseDark);
   }, []);
 
   const toggleDark = () => {
@@ -20,12 +22,10 @@ const Header = () => {
   return (
     <>
       <header className="header" aria-label="Top navigation">
-        {/* Logo */}
         <div className="logo">
           <h1>Keon</h1>
         </div>
 
-        {/* Email pill */}
         <a
           href="mailto:keonshu.contact@gmail.com"
           className="email-btn"
@@ -35,7 +35,6 @@ const Header = () => {
           <span className="email-label">keonshu.contact@gmail.com</span>
         </a>
 
-        {/* Dark mode toggle — desktop header */}
         <button
           className="dark-mode-fab desktop-fab"
           onClick={toggleDark}
@@ -45,7 +44,6 @@ const Header = () => {
         </button>
       </header>
 
-      {/* Floating dark mode toggle — mobile only, bottom right */}
       <button
         className="dark-mode-fab mobile-fab"
         onClick={toggleDark}

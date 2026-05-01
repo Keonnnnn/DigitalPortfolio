@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
 import ImageGallery from "./components/ImageGallery";
 import ScrollToTop from "./components/ScrollToTop";
+
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+
 import "./App.css";
 
-export default function App() {
+function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [starsHidden, setStarsHidden] = useState(false);
 
@@ -25,7 +31,7 @@ export default function App() {
   }, []);
 
   return (
-    <main className="App">
+    <>
       <Hero
         starsHidden={starsHidden}
         onToggleStars={() => setStarsHidden((p) => !p)}
@@ -33,7 +39,22 @@ export default function App() {
       <Projects />
 
       {isModalOpen && <ImageGallery closeGallery={closeGallery} />}
-      <ScrollToTop />
-    </main>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <main className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+        </Routes>
+
+        <ScrollToTop />
+      </main>
+    </BrowserRouter>
   );
 }
