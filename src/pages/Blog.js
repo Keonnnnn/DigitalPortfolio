@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { posts } from "../data/posts";
 import KatsuojiPhoto from "../assets/Katsuoji.jpeg";
 import DarumaPhoto from "../assets/daruma2.jpeg";
@@ -10,6 +11,10 @@ function getReadingTime(text) {
 }
 
 export default function Blog() {
+  useEffect(() => {
+    document.title = "After Hours — Keon's Blog";
+  }, []);
+
   return (
     <section className="blog-page">
       {/* HERO */}

@@ -15,7 +15,8 @@ export default function BlogPost() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    document.title = post ? `${post.title} — After Hours` : "After Hours";
+  }, [post]);
 
   if (!post) {
     return (
