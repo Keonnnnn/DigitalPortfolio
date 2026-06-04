@@ -82,7 +82,7 @@ const PROJECTS = [
       "Full Stack web app. Our very own version of a Retail E-commerce platform.",
     icon: EcotureIcon,
     stack: ["HTML5", "CSS", "JavaScript", "C#", "MySQL"],
-    url: "https://github.com/Keonnnnn/Ecoture",
+    url: "https://ecoture.keonshu.com",
   },
   {
     id: "p2w",
