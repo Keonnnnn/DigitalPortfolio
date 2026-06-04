@@ -1,0 +1,125 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: none;
+
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+
+  cursor: pointer;
+
+  opacity: 0;
+  transform: translateY(12px) scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s ease;
+
+  box-shadow:
+    0 4px 15px rgba(45, 55, 72, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.scroll-to-top svg {
+  width: 18px;
+  height: 18px;
+  stroke: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.scroll-to-top:hover {
+  box-shadow:
+    0 8px 25px rgba(45, 55, 72, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px) scale(1.08);
+}
+
+.scroll-to-top:hover svg {
+  transform: translateY(-2px);
+}
+
+.scroll-to-top:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Mobile — mirror the mobile-fab exactly, stacked above it.
+   mobile-fab: bottom: clamp(20px, 5vh, 36px), right: clamp(16px, 4vw, 28px), size: 48px
+   We sit 12px gap above it: 48px (fab) + 12px (gap) + clamp(20px,5vh,36px) = bottom offset */
+@media screen and (max-width: 600px) {
+  .scroll-to-top {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    right: clamp(16px, 4vw, 28px);
+    left: auto;
+    /* fab bottom + fab height + gap */
+    bottom: calc(clamp(20px, 5vh, 36px) + 48px + 12px);
+
+    background: #1d1f23;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  }
+
+  .scroll-to-top svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .scroll-to-top:hover {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  }
+
+  .scroll-to-top:active {
+    transform: scale(0.92);
+  }
+}
+
+/* Dark mode — desktop */
+body.dark .scroll-to-top {
+  background: linear-gradient(135deg, #7c9ef5 0%, #a78bfa 100%);
+  box-shadow:
+    0 4px 20px rgba(124, 158, 245, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .scroll-to-top:hover {
+  box-shadow:
+    0 8px 30px rgba(124, 158, 245, 0.65),
+    0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark mode — mobile, match mobile-fab dark style */
+@media screen and (max-width: 600px) {
+  body.dark .scroll-to-top {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    box-shadow:
+      0 0 0 1px rgba(99, 102, 241, 0.25),
+      0 4px 20px rgba(99, 102, 241, 0.3);
+  }
+
+  body.dark .scroll-to-top:hover {
+    transform: translateY(0) scale(1);
+    box-shadow:
+      0 0 0 1px rgba(99, 102, 241, 0.25),
+      0 4px 20px rgba(99, 102, 241, 0.3);
+  }
+}
