@@ -1,5 +1,4 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "redirects": [
     {
       "source": "/youtube",
@@ -20,6 +19,12 @@
       "source": "/TeleBot",
       "destination": "https://t.me/Keikie_Bot",
       "permanent": false
+    },
+    {
+      "source": "/telebot",
+      "destination": "https://t.me/Keikie_Bot",
+      "permanent": false
     }
-  ]
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
