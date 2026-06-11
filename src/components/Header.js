@@ -1,33 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./Header.css";
 
 const Header = () => {
   const [darkMode, setDarkMode] = useState(true);
-  const [musicPlaying, setMusicPlaying] = useState(false);
-  const audioRef = useRef(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("darkMode");
     const shouldUseDark = saved === null ? true : saved === "true";
     setDarkMode(shouldUseDark);
     document.body.classList.toggle("dark", shouldUseDark);
-  }, []);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.volume = 0.6;
-
-    if (localStorage.getItem("musicEnabled") !== "1") return;
-
-    const tryPlay = () => {
-      audio.play()
-        .then(() => setMusicPlaying(true))
-        .catch(() => {});
-      document.removeEventListener("click", tryPlay);
-    };
-    document.addEventListener("click", tryPlay);
-    return () => document.removeEventListener("click", tryPlay);
   }, []);
 
   const toggleDark = () => {
@@ -37,28 +18,8 @@ const Header = () => {
     localStorage.setItem("darkMode", next);
   };
 
-  const toggleMusic = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (musicPlaying) {
-      audio.pause();
-      setMusicPlaying(false);
-      localStorage.setItem("musicEnabled", "0");
-    } else {
-      try {
-        await audio.play();
-        setMusicPlaying(true);
-        localStorage.setItem("musicEnabled", "1");
-      } catch {
-        // autoplay blocked — user gesture required
-      }
-    }
-  };
-
   return (
     <>
-      <audio ref={audioRef} src="/audio/Ahsoka.mp3" loop preload="auto" />
-
       <header className="header" aria-label="Top navigation">
         <div className="logo">
           <h1>Keon</h1>
@@ -74,14 +35,6 @@ const Header = () => {
         </a>
 
         <button
-          className={`dark-mode-fab desktop-fab music-btn${musicPlaying ? " music-on" : ""}`}
-          onClick={toggleMusic}
-          aria-label={musicPlaying ? "Pause music" : "Play music"}
-        >
-          {musicPlaying ? "🔊" : "🔇"}
-        </button>
-
-        <button
           className="dark-mode-fab desktop-fab"
           onClick={toggleDark}
           aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
@@ -89,14 +42,6 @@ const Header = () => {
           {darkMode ? "☀️" : "🌙"}
         </button>
       </header>
-
-      <button
-        className={`music-mobile-fab${musicPlaying ? " music-on" : ""}`}
-        onClick={toggleMusic}
-        aria-label={musicPlaying ? "Pause music" : "Play music"}
-      >
-        {musicPlaying ? "🔊" : "🔇"}
-      </button>
 
       <button
         className="dark-mode-fab mobile-fab"

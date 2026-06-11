@@ -30,10 +30,29 @@ const StarIcon = ({ className }) => (
   </svg>
 );
 
+const SpeakerIcon = ({ muted, className }) => (
+  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true" className={className}>
+    <path d="M11 5L6 9H2v6h4l5 4V5z" className="speaker-body" />
+    {muted ? (
+      <>
+        <line x1="16" y1="9" x2="22" y2="15" className="speaker-mute" strokeLinecap="round" />
+        <line x1="22" y1="9" x2="16" y2="15" className="speaker-mute" strokeLinecap="round" />
+      </>
+    ) : (
+      <>
+        <path d="M15.5 9a4 4 0 0 1 0 6"         className="speaker-wave" strokeLinecap="round" />
+        <path d="M18.5 6.5a8 8 0 0 1 0 11"      className="speaker-wave" strokeLinecap="round" />
+      </>
+    )}
+  </svg>
+);
+
 const Hero = ({ starsHidden, onToggleStars }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnVisible, setBtnVisible] = useState(true);
+  const [musicPlaying, setMusicPlaying] = useState(false);
   const heroRef = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,6 +62,41 @@ const Hero = ({ starsHidden, onToggleStars }) => {
     if (heroRef.current) observer.observe(heroRef.current);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = 0.6;
+
+    if (localStorage.getItem("musicEnabled") !== "1") return;
+
+    const tryPlay = () => {
+      audio.play()
+        .then(() => setMusicPlaying(true))
+        .catch(() => {});
+      document.removeEventListener("click", tryPlay);
+    };
+    document.addEventListener("click", tryPlay);
+    return () => document.removeEventListener("click", tryPlay);
+  }, []);
+
+  const toggleMusic = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (musicPlaying) {
+      audio.pause();
+      setMusicPlaying(false);
+      localStorage.setItem("musicEnabled", "0");
+    } else {
+      try {
+        await audio.play();
+        setMusicPlaying(true);
+        localStorage.setItem("musicEnabled", "1");
+      } catch {
+        // autoplay blocked — user gesture required
+      }
+    }
+  };
 
   const scrollToProjects = () => {
     const el = document.getElementById("projects");
@@ -57,7 +111,19 @@ const Hero = ({ starsHidden, onToggleStars }) => {
       <Header />
       <ShootingStars count={20} hidden={starsHidden} />
 
-      {/* Stars toggle — fixed top-right, only visible while hero is in view */}
+      <audio ref={audioRef} src="/audio/Ahsoka.mp3" loop preload="auto" />
+
+      {/* Music toggle — fixed top-left, mirrors stars button */}
+      <button
+        className={`hero-music-btn${musicPlaying ? "" : " hero-music-btn--off"}${btnVisible ? "" : " hero-music-btn--hidden"}`}
+        onClick={toggleMusic}
+        aria-label={musicPlaying ? "Pause music" : "Play music"}
+        title={musicPlaying ? "Pause music" : "Play music"}
+      >
+        <SpeakerIcon muted={!musicPlaying} className="hero-speaker-icon" />
+      </button>
+
+      {/* Stars toggle — fixed top-right */}
       <button
         className={`hero-stars-btn ${starsHidden ? "hero-stars-btn--off" : ""} ${btnVisible ? "" : "hero-stars-btn--hidden"}`}
         onClick={onToggleStars}
