@@ -43,8 +43,6 @@ const FakeCode = () => (
     <div className="dsw-line dsw-line--blank"> </div>
     <div className="dsw-line"><span className="dsw-k">export default function</span> <span className="dsw-f">App</span><span className="dsw-p">() {'{'}</span></div>
     <div className="dsw-line dsw-line--active">{'  '}<span className="dsw-k">const</span> <span className="dsw-p">[</span><span className="dsw-v">data</span><span className="dsw-p">,</span> <span className="dsw-v">setData</span><span className="dsw-p">]</span> <span className="dsw-p">=</span> <span className="dsw-f">useState</span><span className="dsw-p">(</span><span className="dsw-n">null</span><span className="dsw-p">)</span></div>
-    <div className="dsw-line dsw-line--blank"> </div>
-    <div className="dsw-line">{'  '}<span className="dsw-k">return</span> <span className="dsw-p">(</span></div>
   </>
 );
 
@@ -144,7 +142,7 @@ export default function DevStatus() {
 
           <div className="dsw-editor">
             <div className="dsw-gutter" aria-hidden="true">
-              {[1,2,3,4,5,6].map(n => <span key={n}>{n}</span>)}
+              {[1,2,3,4].map(n => <span key={n}>{n}</span>)}
             </div>
             <div className="dsw-code" aria-label="Code editor preview">
               <FakeCode />
