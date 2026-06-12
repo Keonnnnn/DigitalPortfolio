@@ -98,6 +98,23 @@ const Hero = ({ starsHidden, onToggleStars }) => {
     }
   };
 
+  // Listen for Spotify album color and tint the hero background
+  useEffect(() => {
+    const handler = ({ detail }) => {
+      if (!heroRef.current) return;
+      if (detail) {
+        heroRef.current.style.setProperty('--sc-r', detail.r);
+        heroRef.current.style.setProperty('--sc-g', detail.g);
+        heroRef.current.style.setProperty('--sc-b', detail.b);
+        heroRef.current.style.setProperty('--sc-on', '1');
+      } else {
+        heroRef.current.style.setProperty('--sc-on', '0');
+      }
+    };
+    window.addEventListener('spotifycolor', handler);
+    return () => window.removeEventListener('spotifycolor', handler);
+  }, []);
+
   const scrollToProjects = () => {
     const el = document.getElementById("projects");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });

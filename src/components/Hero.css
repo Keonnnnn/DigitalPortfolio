@@ -12,6 +12,34 @@
   min-height: clamp(640px, 90vh, 980px);
 }
 
+/* Ambient glow — radiates from top-right (where status card sits) when Spotify is playing.
+   Uses CSS vars --sc-r/g/b set by Hero.js; opacity transitions via --sc-on (0→1). */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 85% 65% at 74% 0%,
+    rgba(var(--sc-r, 0), var(--sc-g, 0), var(--sc-b, 0), 0.26) 0%,
+    transparent 68%
+  );
+  opacity: var(--sc-on, 0);
+  transition: opacity 2.5s ease;
+}
+
+@media (max-width: 768px) {
+  /* On mobile the status card is centered at the bottom — shift glow to match */
+  .hero::before {
+    background: radial-gradient(
+      ellipse 110% 55% at 50% 95%,
+      rgba(var(--sc-r, 0), var(--sc-g, 0), var(--sc-b, 0), 0.26) 0%,
+      transparent 68%
+    );
+  }
+}
+
 /* ── Stars toggle — absolute top-right inside hero ── */
 .hero-stars-btn {
   position: fixed;

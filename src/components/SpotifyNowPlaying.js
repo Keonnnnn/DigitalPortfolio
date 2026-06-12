@@ -137,6 +137,56 @@ export default function SpotifyNowPlaying() {
 
   const pct = durationMs ? (liveProgress / durationMs) * 100 : 0;
 
+  // Extract dominant color from album art and broadcast it so Hero can tint the background
+  useEffect(() => {
+    if (!isPlaying || !albumImageUrl) {
+      window.dispatchEvent(new CustomEvent('spotifycolor', { detail: null }));
+      return;
+    }
+
+    let cancelled = false;
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // must be set before .src
+    img.onload = () => {
+      if (cancelled) return;
+      try {
+        const SIZE = 16;
+        const canvas = document.createElement('canvas');
+        canvas.width = SIZE;
+        canvas.height = SIZE;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, SIZE, SIZE);
+        const { data } = ctx.getImageData(0, 0, SIZE, SIZE); // throws SecurityError if CORS fails
+
+        let r = 0, g = 0, b = 0, count = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const pr = data[i], pg = data[i + 1], pb = data[i + 2];
+          const max = Math.max(pr, pg, pb) / 255;
+          const min = Math.min(pr, pg, pb) / 255;
+          const l = (max + min) / 2;
+          const s = max === min ? 0 : (max - min) / (1 - Math.abs(2 * l - 1));
+          // Keep only vibrant, visible pixels (skip near-black, near-white, near-gray)
+          if (s > 0.2 && l > 0.15 && l < 0.85) {
+            r += pr; g += pg; b += pb; count++;
+          }
+        }
+
+        const color = count > 3
+          ? { r: Math.round(r / count), g: Math.round(g / count), b: Math.round(b / count) }
+          : null;
+        if (!cancelled) window.dispatchEvent(new CustomEvent('spotifycolor', { detail: color }));
+      } catch {
+        if (!cancelled) window.dispatchEvent(new CustomEvent('spotifycolor', { detail: null }));
+      }
+    };
+    img.onerror = () => {
+      if (!cancelled) window.dispatchEvent(new CustomEvent('spotifycolor', { detail: null }));
+    };
+    img.src = albumImageUrl;
+
+    return () => { cancelled = true; };
+  }, [isPlaying, albumImageUrl]);
+
   const SpotifyIcon = () => (
     <svg
       aria-hidden="true"
