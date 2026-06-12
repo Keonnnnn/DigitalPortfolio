@@ -10,6 +10,12 @@ import TeleIcon from "../assets/tele.png";
 import CollatorIcon from "../assets/Collator.png";
 import BlogIcon from "../assets/blog.png";
 
+const CATEGORY_CLASS = {
+  'Internship':       'pr-card--intern',
+  'School Project':   'pr-card--school',
+  'Personal Project': 'pr-card--personal',
+};
+
 const PROJECTS = [
   {
     id: "p1",
@@ -189,7 +195,7 @@ export default function Projects() {
           return (
             <CardTag
               key={p.id}
-              className="pr-card"
+              className={`pr-card${CATEGORY_CLASS[p.category] ? ' ' + CATEGORY_CLASS[p.category] : ''}`}
               {...(p.url ? { href: p.url, target: "_blank", rel: "noreferrer" } : {})}
               role="listitem"
               aria-label={`${p.title} — ${p.category}`}
