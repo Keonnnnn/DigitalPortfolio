@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
@@ -65,6 +66,7 @@ export default function App() {
 
         <ScrollToTop />
         <CursorTrail enabled={animationsEnabled} />
+        <Analytics />
       </main>
     </BrowserRouter>
   );
