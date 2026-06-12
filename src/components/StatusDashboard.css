@@ -157,6 +157,10 @@ body.dark .sd-arrow:hover { background: rgba(30,41,59,0.95); }
 body.dark .sd-dot { background: rgba(255,255,255,0.22); }
 body.dark .sd-dot--active { background: #818cf8; }
 
+@media (min-width: 641px) {
+  .sd-viewport { height: 170px; }
+}
+
 @media (max-width: 640px) {
   .sd-viewport { height: 210px; }
 }

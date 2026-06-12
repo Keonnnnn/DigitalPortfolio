@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 700px;
   border-radius: 20px;
-  padding: 16px;
+  padding: 20px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   background: rgba(255,255,255,0.48);
@@ -50,16 +50,16 @@
 /* --- Layout --------------------------------------------------- */
 .np-media {
   display: grid;
-  grid-template-columns: 88px 1fr;
-  gap: 14px;
+  grid-template-columns: 120px 1fr;
+  gap: 20px;
   align-items: center;
 }
 
 .np-cover-wrap {
   position: relative;
-  width: 88px;
-  height: 88px;
-  border-radius: 12px;
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
   overflow: hidden;
   background: rgba(0,0,0,.08);
   flex-shrink: 0;
@@ -85,8 +85,8 @@
 
 /* --- Text: wrap/clamp to avoid jitter on long titles --------- */
 .np-title {
-  margin: 0 0 3px;
-  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  margin: 0 0 4px;
+  font-size: clamp(1rem, 4vw, 1.75rem);
   line-height: 1.2;
   font-weight: 600;
   color: #111827;
@@ -99,9 +99,9 @@
 }
 
 .np-artist {
-  margin: 0 0 10px;
+  margin: 0 0 14px;
   color: #374151;
-  font-size: clamp(0.78rem, 2vw, 0.9rem);
+  font-size: clamp(0.8rem, 3.5vw, 1rem);
   font-weight: 400;
 
   /* single-line clamp that still handles CJK nicely */
@@ -116,15 +116,15 @@
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   color: #4b5563;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .np-times span { flex: 0 0 auto; }  /* keep width stable */
 
 .np-track {
   position: relative;
-  height: 6px;
+  height: 8px;
   background: rgba(17,24,39,.15);
   border-radius: 999px;
   overflow: hidden;
@@ -171,10 +171,10 @@
 .np-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  margin-bottom: 8px;
-  font-size: 0.76rem;
+  gap: 8px;
+  padding: 6px 12px;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
   font-weight: 700;
   border-radius: 999px;
   line-height: 1;
