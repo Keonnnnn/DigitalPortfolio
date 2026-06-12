@@ -55,8 +55,9 @@ export default function SpotifyNowPlaying() {
         // Map API -> UI
         const mapped = {
           isPlaying: !!json.isPlaying,
-          title: json.title || "None",
-          artist: json.artist || "None",
+          lastPlayed: !!json.lastPlayed,
+          title: json.title || "",
+          artist: json.artist || "",
           albumImageUrl: json.artwork || "",
           songUrl: json.url || "#",
           progressMs: Number(json.progressMs || 0),
@@ -113,8 +114,9 @@ export default function SpotifyNowPlaying() {
 
   const {
     isPlaying = false,
-    title = "None",
-    artist = "None",
+    lastPlayed = false,
+    title = "",
+    artist = "",
     albumImageUrl = "",
     songUrl = "#",
     progressMs = 0,
@@ -201,15 +203,47 @@ export default function SpotifyNowPlaying() {
   }
 
   if (!isPlaying) {
-    return (
+    const hasTrack = Boolean(title);
+    const pausedPct = hasTrack && durationMs ? (progressMs / durationMs) * 100 : 0;
+
+    return hasTrack ? (
+      <a
+        className="np-card paused"
+        href={songUrl || "#"}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Open in Spotify"
+      >
+        <div className="np-media">
+          <div className="np-cover-wrap">
+            {albumImageUrl ? (
+              <img className="np-cover np-cover--art" src={albumImageUrl} alt="Album cover" />
+            ) : (
+              <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
+            )}
+          </div>
+          <div className="np-meta" role="status" aria-live="polite">
+            <span className={`np-chip ${lastPlayed ? "np-chip--last" : "np-chip--paused"}`}>
+              <SpotifyIcon />
+              <span>{lastPlayed ? "Last played" : "Paused"}</span>
+            </span>
+            <h3 className="np-title">{title}</h3>
+            <p className="np-artist">{artist}</p>
+            <div className="np-times">
+              <span>{fmt(lastPlayed ? 0 : progressMs)}</span>
+              <span>{fmt(durationMs)}</span>
+            </div>
+            <div className="np-track" aria-hidden="true">
+              <div className="np-track-fill" style={{ width: `${lastPlayed ? 0 : pausedPct}%` }} />
+            </div>
+          </div>
+        </div>
+      </a>
+    ) : (
       <div className="np-card paused">
         <div className="np-media">
           <div className="np-cover-wrap">
-            <img
-              className="np-cover np-cover--art np-spin"
-              src={vinylPlaceholder}
-              alt="Vinyl"
-            />
+            <img className="np-cover np-cover--art np-spin" src={vinylPlaceholder} alt="Vinyl" />
           </div>
           <div className="np-meta" role="status" aria-live="polite">
             <span className="np-chip np-chip--paused">
@@ -218,13 +252,6 @@ export default function SpotifyNowPlaying() {
             </span>
             <h3 className="np-title">Not playing right now</h3>
             <p className="np-artist">Keon's Spotify is paused</p>
-            <div className="np-times">
-              <span>{fmt(0)}</span>
-              <span>{fmt(0)}</span>
-            </div>
-            <div className="np-track" aria-hidden="true">
-              <div className="np-track-fill" style={{ width: "0%" }} />
-            </div>
           </div>
         </div>
       </div>

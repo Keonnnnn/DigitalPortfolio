@@ -229,6 +229,7 @@
 }
 
 .np-chip--paused  { color: #6b7280; }
+.np-chip--last    { color: #6d28d9; }
 .np-chip--loading { color: #334155; }
 .np-chip--error   { color: #b91c1c; }
 
@@ -306,6 +307,10 @@ body.dark .np-chip {
 
 body.dark .np-chip--paused {
   color: #cbd5e1;
+}
+
+body.dark .np-chip--last {
+  color: #a78bfa;
 }
 
 body.dark .np-chip--loading {
