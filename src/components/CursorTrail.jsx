@@ -48,9 +48,9 @@ export default function CursorTrail({ enabled }) {
       }
 
       const dark = document.body.classList.contains('dark');
-      const hue = dark ? 255 : 265;
-      const sat = dark ? 88 : 68;
-      const lit = dark ? 72 : 50;
+      const hue = dark ? 255 : 262;
+      const sat = dark ? 88 : 52;
+      const lit = dark ? 72 : 65;
 
       followerX += (targetX - followerX) * LERP;
       followerY += (targetY - followerY) * LERP;
@@ -61,8 +61,8 @@ export default function CursorTrail({ enabled }) {
       trail.forEach((pos, i) => {
         const t = 1 - i / TRAIL_LEN;
         const r = Math.max(5 * t, 0.4);
-        ctx.globalAlpha = t * t * 0.65;
-        ctx.shadowBlur = r * 6;
+        ctx.globalAlpha = t * t * (dark ? 0.65 : 0.55);
+        ctx.shadowBlur = r * (dark ? 6 : 3.5);
         ctx.shadowColor = `hsl(${hue}, ${sat}%, ${lit}%)`;
         ctx.fillStyle  = `hsl(${hue}, ${sat - 5}%, ${lit + 13}%)`;
         ctx.beginPath();
