@@ -1,9 +1,13 @@
-.sd-root { position: relative; width: 100%; min-width: 0; }
+.sd-root { position: relative; width: 100%; min-width: 0; text-align: left; }
 
 .sd-viewport {
   position: relative;
   overflow: hidden;
   border-radius: 20px;
+  /* transform: translateZ(0) forces a GPU layer so iOS Safari correctly clips
+     the transformed sd-track children behind the border-radius */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
   /* Shadow lives here so it's always consistent — card shadows are clipped by overflow:hidden */
   box-shadow:
     0 4px 20px rgba(100,116,139,0.12),
@@ -30,13 +34,15 @@
 .sd-track {
   display: flex;
   align-items: stretch; /* equal height panels */
+  width: 100%;          /* ensure track fills viewport, not min-content */
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
 .sd-panel {
-  min-width: 100%;
-  flex-shrink: 0;
+  /* flex: 0 0 100% is the robust cross-browser carousel approach;
+     min-width: 100% can mis-resolve on iOS Safari */
+  flex: 0 0 100%;
   display: flex;
   flex-direction: column;
 }
