@@ -12,9 +12,8 @@ import BlogPost from "./pages/BlogPost";
 
 import "./App.css";
 
-function Home() {
+function Home({ animationsEnabled, onToggleAnimations }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [starsHidden, setStarsHidden] = useState(false);
 
   const openGallery = () => setIsModalOpen(true);
   const closeGallery = () => setIsModalOpen(false);
@@ -34,8 +33,8 @@ function Home() {
   return (
     <>
       <Hero
-        starsHidden={starsHidden}
-        onToggleStars={() => setStarsHidden((p) => !p)}
+        starsHidden={!animationsEnabled}
+        onToggleStars={onToggleAnimations}
       />
       <Projects />
 
@@ -45,17 +44,27 @@ function Home() {
 }
 
 export default function App() {
+  const [animationsEnabled, setAnimationsEnabled] = useState(true);
+
   return (
     <BrowserRouter>
       <main className="App">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                animationsEnabled={animationsEnabled}
+                onToggleAnimations={() => setAnimationsEnabled((p) => !p)}
+              />
+            }
+          />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>
 
         <ScrollToTop />
-        <CursorTrail />
+        <CursorTrail enabled={animationsEnabled} />
       </main>
     </BrowserRouter>
   );
