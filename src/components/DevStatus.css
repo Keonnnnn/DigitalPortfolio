@@ -1,185 +1,271 @@
-/* Mirrors np-card glass aesthetic */
+/* ── Base card shell ── */
 .ds-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   border-radius: 20px;
-  padding: 20px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background: rgba(255,255,255,0.48);
-  border: 1px solid rgba(255,255,255,0.7);
-  box-shadow:
-    0 4px 20px rgba(100,116,139,0.1),
-    inset 0 1px 0 rgba(255,255,255,0.8);
-  text-decoration: none;
-  color: #111827;
   overflow: hidden;
   backface-visibility: hidden;
   transform: translateZ(0);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  text-decoration: none;
+  color: #111827;
+  transition: transform .25s ease;
 }
 
-a.ds-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(0,122,204,.45);
-  box-shadow: 0 20px 40px rgba(0,122,204,.22), inset 0 1px 0 rgba(255,255,255,.25);
+/* Window mode: card is purely a transparent shell — dsw-wrap provides all visuals */
+.ds-card--window {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+body.dark .ds-card--window {
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-.ds-card--coding {
-  animation: dsGlow 3s ease-in-out infinite;
+/* ds-card--coding kept so sd-viewport:has() glow selector works */
+.ds-card--coding { /* intentionally empty */ }
+
+/* ── Editor window wrapper ── */
+.dsw-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1e1e2e; /* Catppuccin Mocha base — always dark */
+  font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  min-height: 160px;
 }
 
-@keyframes dsGlow {
-  0%,100% { box-shadow: 0 12px 32px rgba(0,122,204,.2), inset 0 1px 0 rgba(255,255,255,.15); }
-  50%     { box-shadow: 0 20px 48px rgba(0,122,204,.35), inset 0 1px 0 rgba(255,255,255,.2); }
-}
-
-/* Layout — mirrors np-media */
-.ds-media {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 20px;
-  align-items: center;
-}
-
-/* Cover square */
-.ds-cover {
-  width: 120px;
-  height: 120px;
-  border-radius: 16px;
+/* ── Title bar ── */
+.dsw-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  padding: 9px 14px;
+  background: #181825;
   flex-shrink: 0;
 }
 
-.ds-cover--vsc    { background: linear-gradient(135deg, #007ACC, #0065A9); }
-.ds-cover--gh     { background: linear-gradient(135deg, #1a1a2e, #24292e); }
-.ds-cover--idle   { background: linear-gradient(135deg, #374151, #1f2937); }
-.ds-cover--loading {
-  background: linear-gradient(135deg, #e5e7eb, #d1d5db);
-  animation: dsPulse 1.5s ease-in-out infinite;
+/* macOS traffic lights */
+.dsw-tl { display: flex; gap: 6px; }
+.dsw-tl-r, .dsw-tl-y, .dsw-tl-g {
+  width: 12px; height: 12px; border-radius: 50%;
 }
+.dsw-tl-r { background: #f38ba8; }
+.dsw-tl-y { background: #f9e2af; }
+.dsw-tl-g { background: #a6e3a1; }
 
-@keyframes dsPulse {
-  0%,100% { opacity: 1; }
-  50%     { opacity: .55; }
-}
-
-.ds-cover-svg {
-  width: 54px;
-  height: 54px;
-}
-
-/* Meta */
-.ds-meta { min-width: 0; }
-
-.ds-title {
-  margin: 0 0 4px;
-  font-size: clamp(1rem, 4vw, 1.75rem);
-  font-weight: 600;
-  color: #111827;
-  line-height: 1.2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-
-.ds-subtitle {
-  margin: 0 0 8px;
-  color: #374151;
-  font-size: clamp(0.8rem, 3.5vw, 1rem);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-}
-
-.ds-time {
-  margin: 0;
-  font-size: 0.82rem;
-  color: #6b7280;
-}
-
-/* Chips */
-.ds-chip {
-  display: inline-flex;
+/* File tab */
+.dsw-tab {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  margin-bottom: 10px;
-  font-size: 0.82rem;
+  gap: 7px;
+  background: #1e1e2e;
+  padding: 3px 12px;
+  border-radius: 5px 5px 0 0;
+}
+
+.dsw-tab-lang {
+  font-size: 9px;
+  padding: 1px 5px;
+  background: #89b4fa;
+  color: #1e1e2e;
+  border-radius: 3px;
   font-weight: 700;
-  border-radius: 999px;
-  line-height: 1;
-  background: rgba(255,255,255,.55);
-  border: 1px solid rgba(255,255,255,.35);
-  backdrop-filter: blur(6px);
+  letter-spacing: 0.4px;
 }
 
-.ds-chip--live {
-  color: #065f46;
-  background: linear-gradient(#ffffffb3, #ffffffa6) padding-box,
-              linear-gradient(90deg, #22c55e, #007ACC) border-box;
-  border: 1px solid transparent;
+.dsw-tab-name { color: #cdd6f4; font-size: 12px; }
+.dsw-tab-x   { color: #45475a; font-size: 14px; }
+
+.dsw-win-title { color: #6c7086; font-size: 12px; }
+
+/* ── Editor area ── */
+.dsw-editor {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  padding: 10px 0;
 }
 
-.ds-dot {
-  width: 7px;
-  height: 7px;
+.dsw-gutter {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 12px;
+  color: #45475a;
+  font-size: 11px;
+  line-height: 1.75;
+  text-align: right;
+  user-select: none;
+  flex-shrink: 0;
+  min-width: 32px;
+}
+
+.dsw-code {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  padding-right: 12px;
+}
+
+.dsw-line {
+  color: #cdd6f4;
+  font-size: 11.5px;
+  line-height: 1.75;
+  white-space: pre;
+  overflow: hidden;
+}
+
+.dsw-line--active {
+  background: rgba(205,214,244,0.06);
+  border-left: 2px solid #89b4fa;
+  padding-left: 6px;
+  margin-left: -2px;
+}
+
+/* Catppuccin Mocha syntax palette */
+.dsw-k { color: #cba6f7; }         /* keyword   - mauve  */
+.dsw-f { color: #89b4fa; }         /* function  - blue   */
+.dsw-s { color: #a6e3a1; }         /* string    - green  */
+.dsw-v { color: #cdd6f4; }         /* variable  - text   */
+.dsw-n { color: #fab387; }         /* number    - peach  */
+.dsw-p { color: #89dceb; }         /* punctuation - sky  */
+
+/* ── VS Code status bar ── */
+.dsw-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 14px;
+  background: #007ACC;
+  color: #fff;
+  font-size: 11px;
+  flex-shrink: 0;
+  gap: 8px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.dsw-status--gh   { background: #3c4048; }
+.dsw-status--idle { background: #45475a; }
+
+.dsw-status-l, .dsw-status-r {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dsw-status-live {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+}
+
+.dsw-status-dot {
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: #22c55e;
-  animation: dotPulse 1.8s ease-in-out infinite;
+  background: #4ade80;
+  flex-shrink: 0;
+  animation: dsStatusPulse 1.8s ease-in-out infinite;
 }
 
-@keyframes dotPulse {
-  0%,100% { opacity: 1; }
-  50%     { opacity: 0.45; }
+@keyframes dsStatusPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
 }
 
-.ds-chip-time {
-  margin-left: 4px;
+.dsw-status-time { opacity: 0.72; font-weight: 400; }
+.dsw-status-ws   { opacity: 0.75; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.dsw-status-lang {
+  background: rgba(255,255,255,0.15);
+  padding: 1px 8px;
+  border-radius: 3px;
   font-weight: 500;
-  opacity: 0.75;
+  white-space: nowrap;
 }
 
-.ds-chip--gh      { color: #374151; }
-.ds-chip--idle    { color: #6b7280; }
-.ds-chip--loading { color: #6b7280; }
+.dsw-status-chip {
+  padding: 1px 8px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.15);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
 
-/* Responsive */
+/* ── Terminal (GitHub / idle state) ── */
+.dsw-terminal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+  gap: 4px;
+  font-size: 11.5px;
+  font-family: inherit;
+  overflow: hidden;
+}
+
+.dsw-prompt {
+  display: flex;
+  align-items: baseline;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1.7;
+}
+
+.dsw-dir    { color: #a6e3a1; flex-shrink: 0; }
+.dsw-branch { color: #f38ba8; flex-shrink: 0; }
+.dsw-sym    { color: #89dceb; white-space: pre; flex-shrink: 0; }
+.dsw-cmd    { color: #cdd6f4; overflow: hidden; text-overflow: ellipsis; }
+
+.dsw-output {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  color: #a6e3a1;
+  font-size: 11.5px;
+  line-height: 1.7;
+  overflow: hidden;
+}
+
+.dsw-ok { font-weight: 700; flex-shrink: 0; }
+
+.dsw-prompt--idle { margin-top: 4px; }
+
+.dsw-cursor {
+  color: #cba6f7;
+  animation: dsBlinkCursor 1.2s step-end infinite;
+}
+
+@keyframes dsBlinkCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Loading ── */
+.dsw-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #45475a;
+  font-size: 12px;
+}
+
+/* ── Responsive ── */
 @media (max-width: 640px) {
-  .ds-media { grid-template-columns: 88px 1fr; gap: 14px; }
-  .ds-cover { width: 88px; height: 88px; }
-  .ds-cover-svg { width: 40px; height: 40px; }
-  .ds-chip { font-size: .74rem; padding: 4px 10px; }
+  .dsw-bar  { padding: 7px 12px; }
+  .dsw-line { font-size: 10.5px; }
+  .dsw-gutter { font-size: 10px; min-width: 26px; padding: 0 8px; }
+  .dsw-terminal { padding: 10px 12px; font-size: 10.5px; }
+  .dsw-status { padding: 3px 12px; font-size: 10px; }
 }
-
-@media (max-width: 480px) {
-  .ds-card { padding: 14px; border-radius: 14px; }
-  .ds-media { grid-template-columns: 70px 1fr; gap: 10px; }
-  .ds-cover { width: 70px; height: 70px; }
-  .ds-cover-svg { width: 32px; height: 32px; }
-}
-
-/* Dark mode */
-body.dark .ds-card {
-  color: #f9fafb;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 12px 34px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
-}
-
-body.dark .ds-title   { color: #f9fafb; }
-body.dark .ds-subtitle { color: #e5e7eb; }
-body.dark .ds-time    { color: #94a3b8; }
-
-body.dark .ds-chip {
-  background: rgba(15,23,42,0.6);
-  border: 1px solid rgba(255,255,255,0.14);
-}
-
-body.dark .ds-chip--live { color: #6ee7b7; }
-body.dark .ds-chip--gh   { color: #cbd5e1; }
-body.dark .ds-chip--idle { color: #94a3b8; }

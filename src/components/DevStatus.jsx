@@ -21,33 +21,39 @@ const ago = (iso) => {
   return d === 1 ? 'yesterday' : `${d}d ago`;
 };
 
-const CodeIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2"
-    strokeLinecap="round" strokeLinejoin="round" className="ds-cover-svg" aria-hidden="true">
-    <polyline points="16 18 22 12 16 6"/>
-    <polyline points="8 6 2 12 8 18"/>
-  </svg>
+const LANG_MAP = { js:'JavaScript', jsx:'JSX', ts:'TypeScript', tsx:'TSX', css:'CSS', html:'HTML', py:'Python', md:'Markdown', json:'JSON', cs:'C#' };
+
+const getFileInfo = (details = '') => {
+  const parts = details.trim().split(/\s+/);
+  const filename = parts.length > 1 ? parts.slice(1).join(' ') : (parts[0] || 'untitled');
+  const dotIdx = filename.lastIndexOf('.');
+  const ext = dotIdx >= 0 ? filename.slice(dotIdx + 1).toLowerCase() : '';
+  return { filename, ext, lang: LANG_MAP[ext] || (ext ? ext.toUpperCase() : 'Text') };
+};
+
+const TrafficLights = () => (
+  <div className="dsw-tl" aria-hidden="true">
+    <span className="dsw-tl-r" /><span className="dsw-tl-y" /><span className="dsw-tl-g" />
+  </div>
 );
 
-const GitHubIcon = () => (
-  <svg viewBox="0 0 24 24" fill="white" className="ds-cover-svg" aria-hidden="true">
-    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57
-      0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695
-      -.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99
-      .105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225
-      -.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405
-      c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225
-      0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3
-      0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-  </svg>
+const FakeCode = () => (
+  <>
+    <div className="dsw-line"><span className="dsw-k">import</span> <span className="dsw-p">{'{'}</span> <span className="dsw-v">useState</span><span className="dsw-p">,</span> <span className="dsw-v">useEffect</span> <span className="dsw-p">{'}'}</span> <span className="dsw-k">from</span> <span className="dsw-s">'react'</span></div>
+    <div className="dsw-line dsw-line--blank"> </div>
+    <div className="dsw-line"><span className="dsw-k">export default function</span> <span className="dsw-f">App</span><span className="dsw-p">() {'{'}</span></div>
+    <div className="dsw-line dsw-line--active">{'  '}<span className="dsw-k">const</span> <span className="dsw-p">[</span><span className="dsw-v">data</span><span className="dsw-p">,</span> <span className="dsw-v">setData</span><span className="dsw-p">]</span> <span className="dsw-p">=</span> <span className="dsw-f">useState</span><span className="dsw-p">(</span><span className="dsw-n">null</span><span className="dsw-p">)</span></div>
+    <div className="dsw-line dsw-line--blank"> </div>
+    <div className="dsw-line">{'  '}<span className="dsw-k">return</span> <span className="dsw-p">(</span></div>
+  </>
 );
 
 export default function DevStatus() {
-  const [vsc, setVsc]       = useState(null);
-  const [gh, setGh]         = useState(null);
+  const [vsc, setVsc]         = useState(null);
+  const [gh, setGh]           = useState(null);
   const [loading, setLoading] = useState(true);
-  const [tick, setTick]     = useState(0);
-  const mounted = useRef(true);
+  const [tick, setTick]       = useState(0);
+  const mounted               = useRef(true);
 
   useEffect(() => {
     mounted.current = true;
@@ -61,9 +67,7 @@ export default function DevStatus() {
           ? json.data?.activities?.find(a => a.name === 'Visual Studio Code' && a.type === 0)
           : null;
         setVsc(activity ?? null);
-      } catch (_) {
-        if (mounted.current) setVsc(null);
-      }
+      } catch { if (mounted.current) setVsc(null); }
     };
 
     const fetchGitHub = async () => {
@@ -72,9 +76,7 @@ export default function DevStatus() {
         const events = await res.json();
         if (!mounted.current || !Array.isArray(events)) return;
         setGh(events.find(e => e.type === 'PushEvent') ?? null);
-      } catch (_) {
-        if (mounted.current) setGh(null);
-      }
+      } catch { if (mounted.current) setGh(null); }
     };
 
     Promise.all([fetchLanyard(), fetchGitHub()]).then(() => {
@@ -82,7 +84,7 @@ export default function DevStatus() {
     });
 
     const lanyardPoll = setInterval(fetchLanyard, 30_000);
-    const ghPoll      = setInterval(fetchGitHub, 300_000);
+    const ghPoll      = setInterval(fetchGitHub,  300_000);
     const ticker      = setInterval(() => setTick(t => t + 1), 60_000);
 
     return () => {
@@ -95,67 +97,137 @@ export default function DevStatus() {
 
   void tick;
 
+  /* ── Loading ── */
   if (loading) {
     return (
-      <div className="ds-card">
-        <div className="ds-media">
-          <div className="ds-cover ds-cover--loading" />
-          <div className="ds-meta">
-            <span className="ds-chip ds-chip--loading">Connecting…</span>
-            <h3 className="ds-title">Loading status…</h3>
+      <div className="ds-card ds-card--window">
+        <div className="dsw-wrap">
+          <div className="dsw-bar">
+            <TrafficLights />
+            <span className="dsw-win-title">connecting…</span>
+          </div>
+          <div className="dsw-loading">
+            <span className="dsw-cursor" aria-hidden="true">▋</span>
+            <span>Fetching live status…</span>
+          </div>
+          <div className="dsw-status dsw-status--idle">
+            <span className="dsw-status-l">Loading</span>
           </div>
         </div>
       </div>
     );
   }
 
+  /* ── VS Code active ── */
   if (vsc) {
-    const elapsed = vsc.timestamps?.start ? fmt(vsc.timestamps.start) : null;
+    const elapsed   = vsc.timestamps?.start ? fmt(vsc.timestamps.start) : null;
+    const { filename, ext, lang } = getFileInfo(vsc.details);
+    const workspace = vsc.state?.replace(/^Workspace:\s*/i, '') || 'Keon Website';
     return (
-      <div className="ds-card ds-card--coding">
-        <div className="ds-media">
-          <div className="ds-cover ds-cover--vsc"><CodeIcon /></div>
-          <div className="ds-meta">
-            <span className="ds-chip ds-chip--live">
-              <span className="ds-dot" aria-hidden="true" />
-              Now coding
-              {elapsed && <span className="ds-chip-time">{elapsed}</span>}
-            </span>
-            <h3 className="ds-title">{vsc.details || 'Visual Studio Code'}</h3>
-            <p className="ds-subtitle">{vsc.state || 'Visual Studio Code'}</p>
+      <div className="ds-card ds-card--window ds-card--coding">
+        <div className="dsw-wrap">
+          <div className="dsw-bar">
+            <TrafficLights />
+            <div className="dsw-tab">
+              {ext && <span className="dsw-tab-lang">{ext.toUpperCase()}</span>}
+              <span className="dsw-tab-name">{filename}</span>
+              <span className="dsw-tab-x" aria-hidden="true">×</span>
+            </div>
+          </div>
+
+          <div className="dsw-editor">
+            <div className="dsw-gutter" aria-hidden="true">
+              {[1,2,3,4,5,6].map(n => <span key={n}>{n}</span>)}
+            </div>
+            <div className="dsw-code" aria-label="Code editor preview">
+              <FakeCode />
+            </div>
+          </div>
+
+          <div className="dsw-status">
+            <div className="dsw-status-l">
+              <span className="dsw-status-live">
+                <span className="dsw-status-dot" aria-hidden="true" />
+                Now coding
+                {elapsed && <span className="dsw-status-time">{elapsed}</span>}
+              </span>
+            </div>
+            <div className="dsw-status-r">
+              <span className="dsw-status-ws">{workspace}</span>
+              <span className="dsw-status-lang">{lang}</span>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
+  /* ── GitHub last push ── */
   if (gh) {
     const repo = gh.repo?.name?.replace(`${GITHUB_USER}/`, '') ?? '';
     const msg  = gh.payload?.commits?.[0]?.message?.split('\n')[0] ?? 'Pushed code';
     return (
-      <a className="ds-card" href={`https://github.com/${gh.repo?.name}`}
-        target="_blank" rel="noreferrer" aria-label="View on GitHub">
-        <div className="ds-media">
-          <div className="ds-cover ds-cover--gh"><GitHubIcon /></div>
-          <div className="ds-meta">
-            <span className="ds-chip ds-chip--gh">Last built</span>
-            <h3 className="ds-title">{repo}</h3>
-            <p className="ds-subtitle">{msg}</p>
-            <p className="ds-time">{ago(gh.created_at)}</p>
+      <a className="ds-card ds-card--window"
+        href={`https://github.com/${gh.repo?.name}`}
+        target="_blank" rel="noreferrer"
+        aria-label="View on GitHub">
+        <div className="dsw-wrap">
+          <div className="dsw-bar">
+            <TrafficLights />
+            <span className="dsw-win-title">bash — {GITHUB_USER}</span>
+          </div>
+
+          <div className="dsw-terminal">
+            <div className="dsw-prompt">
+              <span className="dsw-dir">~/{repo}</span>
+              <span className="dsw-branch"> (main)</span>
+              <span className="dsw-sym"> $ </span>
+              <span className="dsw-cmd">git push origin main</span>
+            </div>
+            <div className="dsw-output">
+              <span className="dsw-ok">✓</span>
+              <span>{msg}</span>
+            </div>
+            <div className="dsw-prompt dsw-prompt--idle">
+              <span className="dsw-dir">~/{repo}</span>
+              <span className="dsw-branch"> (main)</span>
+              <span className="dsw-sym"> $ </span>
+              <span className="dsw-cursor" aria-hidden="true">▋</span>
+            </div>
+          </div>
+
+          <div className="dsw-status dsw-status--gh">
+            <div className="dsw-status-l">
+              <span className="dsw-status-chip">Last built</span>
+            </div>
+            <div className="dsw-status-r">
+              <span>{ago(gh.created_at)}</span>
+              <span className="dsw-status-lang">{repo}</span>
+            </div>
           </div>
         </div>
       </a>
     );
   }
 
+  /* ── Idle ── */
   return (
-    <div className="ds-card">
-      <div className="ds-media">
-        <div className="ds-cover ds-cover--idle"><CodeIcon /></div>
-        <div className="ds-meta">
-          <span className="ds-chip ds-chip--idle">Offline</span>
-          <h3 className="ds-title">Not currently coding</h3>
-          <p className="ds-subtitle">Check back later</p>
+    <div className="ds-card ds-card--window">
+      <div className="dsw-wrap">
+        <div className="dsw-bar">
+          <TrafficLights />
+          <span className="dsw-win-title">terminal — zsh</span>
+        </div>
+        <div className="dsw-terminal">
+          <div className="dsw-prompt">
+            <span className="dsw-dir">~/projects</span>
+            <span className="dsw-sym"> $ </span>
+            <span className="dsw-cursor" aria-hidden="true">▋</span>
+          </div>
+        </div>
+        <div className="dsw-status dsw-status--idle">
+          <div className="dsw-status-l"><span>Offline</span></div>
+          <div className="dsw-status-r"><span>zsh</span></div>
         </div>
       </div>
     </div>
