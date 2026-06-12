@@ -13,6 +13,7 @@ export default function CursorTrail() {
     let animId;
     let lastX = 0;
     let lastY = 0;
+    let frame = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -26,48 +27,61 @@ export default function CursorTrail() {
       particles.push({
         x,
         y,
-        vx: (Math.random() - 0.5) * 1.4,
-        vy: -(Math.random() * 1.8 + 0.4),
-        size: Math.random() * 3 + 1.5,
+        size: Math.random() * 9 + 6,
+        vy: -(Math.random() * 1.2 + 0.5),
+        vx: (Math.random() - 0.5) * 0.5,
+        wobbleOffset: Math.random() * Math.PI * 2,
+        wobbleSpeed: 0.035 + Math.random() * 0.025,
         life: 1,
-        decay: 0.022 + Math.random() * 0.018,
-        hue: dark ? 185 + Math.random() * 35 : 238 + Math.random() * 42,
+        decay: 0.011 + Math.random() * 0.009,
+        hue: dark ? 188 + Math.random() * 32 : 210 + Math.random() * 50,
+        dark,
       });
     };
 
     const onMove = (e) => {
       const dx = e.clientX - lastX;
       const dy = e.clientY - lastY;
-      if (dx * dx + dy * dy < 25) return;
+      if (dx * dx + dy * dy < 36) return;
       lastX = e.clientX;
       lastY = e.clientY;
       spawn(e.clientX, e.clientY);
-      if (Math.random() > 0.45) spawn(e.clientX, e.clientY);
     };
 
     const tick = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      frame++;
 
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.life -= p.decay;
         if (p.life <= 0) { particles.splice(i, 1); continue; }
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.045;
 
-        const r = p.size * p.life;
-        ctx.globalAlpha = p.life * 0.85;
-        ctx.shadowBlur = r * 7;
-        ctx.shadowColor = `hsl(${p.hue}, 90%, 65%)`;
-        ctx.fillStyle = `hsl(${p.hue}, 85%, 75%)`;
+        p.x += p.vx + Math.sin(frame * p.wobbleSpeed + p.wobbleOffset) * 0.5;
+        p.y += p.vy;
+
+        // Bubble pops (expands slightly) as life → 0
+        const pop = p.life < 0.2 ? 1 + (0.2 - p.life) * 3 : 1;
+        const r = p.size * pop;
+        const alpha = Math.min(p.life * 2, 1) * 0.7;
+
+        // Bubble outline
+        ctx.globalAlpha = alpha;
         ctx.beginPath();
         ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.strokeStyle = `hsl(${p.hue}, ${p.dark ? 75 : 60}%, ${p.dark ? 72 : 60}%)`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Shine highlight (upper-left arc)
+        ctx.globalAlpha = alpha * 0.55;
+        ctx.beginPath();
+        ctx.arc(p.x - r * 0.28, p.y - r * 0.28, r * 0.22, 0, Math.PI * 2);
+        ctx.fillStyle = `hsl(${p.hue}, 60%, 92%)`;
         ctx.fill();
       }
 
       ctx.globalAlpha = 1;
-      ctx.shadowBlur = 0;
       animId = requestAnimationFrame(tick);
     };
 
