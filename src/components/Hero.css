@@ -174,7 +174,7 @@ body.dark .hero-stars-btn--off:hover {
 .hero-music-btn {
   position: fixed;
   top: calc(20px + env(safe-area-inset-top, 0px) + 6px);
-  left: clamp(16px, 4vw, 32px);
+  right: calc(clamp(16px, 4vw, 32px) + 40px + 8px);
   z-index: 999;
 
   width: 40px;
