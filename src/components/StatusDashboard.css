@@ -1,4 +1,4 @@
-.sd-root { position: relative; width: 100%; }
+.sd-root { position: relative; width: 100%; min-width: 0; overflow: hidden; }
 
 .sd-viewport {
   position: relative;

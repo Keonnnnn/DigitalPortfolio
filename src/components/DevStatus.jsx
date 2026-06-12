@@ -135,6 +135,13 @@ export default function DevStatus() {
             </div>
           </div>
 
+          {/* Prominent live banner */}
+          <div className="dsw-live-banner">
+            <span className="dsw-live-dot" aria-hidden="true" />
+            <span className="dsw-live-label">Now coding</span>
+            {elapsed && <span className="dsw-live-time">{elapsed}</span>}
+          </div>
+
           <div className="dsw-editor">
             <div className="dsw-gutter" aria-hidden="true">
               {[1,2,3,4,5,6].map(n => <span key={n}>{n}</span>)}
@@ -146,14 +153,9 @@ export default function DevStatus() {
 
           <div className="dsw-status">
             <div className="dsw-status-l">
-              <span className="dsw-status-live">
-                <span className="dsw-status-dot" aria-hidden="true" />
-                Now coding
-                {elapsed && <span className="dsw-status-time">{elapsed}</span>}
-              </span>
+              <span className="dsw-status-ws">{workspace}</span>
             </div>
             <div className="dsw-status-r">
-              <span className="dsw-status-ws">{workspace}</span>
               <span className="dsw-status-lang">{lang}</span>
             </div>
           </div>
