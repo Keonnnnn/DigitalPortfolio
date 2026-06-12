@@ -310,9 +310,11 @@ body.dark .ds-card--window {
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
-  .dsw-bar  { padding: 7px 12px; }
-  .dsw-line { font-size: 10.5px; }
-  .dsw-gutter { font-size: 10px; min-width: 26px; padding: 0 8px; }
-  .dsw-terminal { padding: 10px 12px; font-size: 10.5px; }
-  .dsw-status { padding: 3px 12px; font-size: 10px; }
+  .dsw-bar         { padding: 7px 12px; }
+  .dsw-line        { font-size: 10.5px; }
+  .dsw-gutter      { font-size: 10px; min-width: 26px; padding: 0 8px; }
+  .dsw-terminal    { padding: 10px 12px; font-size: 10.5px; }
+  .dsw-status      { padding: 3px 12px; font-size: 10px; }
+  .dsw-live-banner { padding: 5px 12px; }
+  .dsw-editor      { padding: 6px 0; }
 }
