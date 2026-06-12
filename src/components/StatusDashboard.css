@@ -4,10 +4,33 @@
   position: relative;
   overflow: hidden;
   border-radius: 20px;
+  /* Shadow lives here so it's always consistent — card shadows are clipped by overflow:hidden */
+  box-shadow:
+    0 4px 24px rgba(100,116,139,0.15),
+    0 1px 4px rgba(100,116,139,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+/* Propagate glow states from cards up to the viewport */
+.sd-viewport:has(.np-card.playing) {
+  animation: sdGlowSpotify 3s ease-in-out infinite;
+}
+@keyframes sdGlowSpotify {
+  0%,100% { box-shadow: 0 8px 24px rgba(99,102,241,.22), inset 0 1px 0 rgba(255,255,255,.9); }
+  50%     { box-shadow: 0 18px 42px rgba(99,102,241,.38), inset 0 1px 0 rgba(255,255,255,.9); }
+}
+
+.sd-viewport:has(.ds-card--coding) {
+  animation: sdGlowCoding 3s ease-in-out infinite;
+}
+@keyframes sdGlowCoding {
+  0%,100% { box-shadow: 0 8px 24px rgba(0,122,204,.22), inset 0 1px 0 rgba(255,255,255,.9); }
+  50%     { box-shadow: 0 18px 42px rgba(0,122,204,.38), inset 0 1px 0 rgba(255,255,255,.9); }
 }
 
 .sd-track {
   display: flex;
+  align-items: stretch; /* equal height panels */
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
@@ -15,7 +38,20 @@
 .sd-panel {
   min-width: 100%;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 }
+
+/* Card fills its panel so both panels are always the same height */
+.sd-panel > * { flex: 1; }
+
+/* Strip card-level shadows — viewport provides the shadow */
+.sd-panel .np-card,
+.sd-panel .ds-card { box-shadow: none; }
+
+/* Strip card-level glow animations — viewport handles them via :has() */
+.sd-panel .np-card.playing,
+.sd-panel .ds-card--coding { animation: none; }
 
 /* Arrow buttons — overlaid on card edges */
 .sd-arrow {
@@ -76,6 +112,28 @@
 }
 
 /* Dark mode */
+body.dark .sd-viewport {
+  box-shadow:
+    0 12px 34px rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+body.dark .sd-viewport:has(.np-card.playing) {
+  animation: sdGlowSpotifyDark 3s ease-in-out infinite;
+}
+@keyframes sdGlowSpotifyDark {
+  0%,100% { box-shadow: 0 12px 32px rgba(99,102,241,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+  50%     { box-shadow: 0 20px 48px rgba(99,102,241,.4),  inset 0 1px 0 rgba(255,255,255,.12); }
+}
+
+body.dark .sd-viewport:has(.ds-card--coding) {
+  animation: sdGlowCodingDark 3s ease-in-out infinite;
+}
+@keyframes sdGlowCodingDark {
+  0%,100% { box-shadow: 0 12px 32px rgba(0,122,204,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+  50%     { box-shadow: 0 20px 48px rgba(0,122,204,.4),  inset 0 1px 0 rgba(255,255,255,.12); }
+}
+
 body.dark .sd-arrow {
   background: rgba(15,23,42,0.78);
   border-color: rgba(255,255,255,0.15);
