@@ -132,7 +132,7 @@ body.dark .ds-card--window {
   display: flex;
   flex: 1;
   overflow: hidden;
-  padding: 10px 0;
+  padding: 10px 0 16px;
   min-width: 0;
 }
 
