@@ -2,7 +2,7 @@ import "./Hero.css";
 import ShootingStars from "./ShootingStars";
 import Header from "./Header";
 import MeImage from "../assets/me.jpg";
-import SpotifyNowPlaying from "./SpotifyNowPlaying";
+import StatusDashboard from "./StatusDashboard";
 import React, { useState, useEffect, useRef } from "react";
 import ImageGallery from "./ImageGallery";
 
@@ -168,7 +168,7 @@ const Hero = ({ starsHidden, onToggleStars }) => {
             I aim to craft impactful solutions that not only address problems but also resonate with users.
           </p>
           <div className="hero-player">
-            <SpotifyNowPlaying />
+            <StatusDashboard />
           </div>
         </div>
       </div>
