@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Projects from "./components/Projects";
 import ImageGallery from "./components/ImageGallery";
 import ScrollToTop from "./components/ScrollToTop";
+import CursorTrail from "./components/CursorTrail";
 
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -54,6 +55,7 @@ export default function App() {
         </Routes>
 
         <ScrollToTop />
+        <CursorTrail />
       </main>
     </BrowserRouter>
   );
