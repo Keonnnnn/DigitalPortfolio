@@ -31,17 +31,17 @@ const StarIcon = ({ className }) => (
 );
 
 const SpeakerIcon = ({ muted, className }) => (
-  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true" className={className}>
-    <path d="M11 5L6 9H2v6h4l5 4V5z" className="speaker-body" />
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true" className={className}>
+    <polygon points="11,5 6,9 2,9 2,15 6,15 11,19 11,5" className="speaker-body" strokeLinejoin="round" />
     {muted ? (
       <>
-        <line x1="16" y1="9" x2="22" y2="15" className="speaker-mute" strokeLinecap="round" />
         <line x1="22" y1="9" x2="16" y2="15" className="speaker-mute" strokeLinecap="round" />
+        <line x1="16" y1="9" x2="22" y2="15" className="speaker-mute" strokeLinecap="round" />
       </>
     ) : (
       <>
-        <path d="M15.5 9a4 4 0 0 1 0 6"         className="speaker-wave" strokeLinecap="round" />
-        <path d="M18.5 6.5a8 8 0 0 1 0 11"      className="speaker-wave" strokeLinecap="round" />
+        <path d="M15.5 8.5a5 5 0 0 1 0 7"   className="speaker-wave" strokeLinecap="round" />
+        <path d="M19.5 5.5a10 10 0 0 1 0 13" className="speaker-wave" strokeLinecap="round" />
       </>
     )}
   </svg>
