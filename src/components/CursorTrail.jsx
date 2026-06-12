@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-// Dark mode  → cyan comet   hsl(190, …)  — pops on dark navy
-// Light mode → coral comet  hsl(12, …)   — warm complement to light-blue hero
+// Dark mode  → vivid violet  hsl(255, …)  — glows on dark navy
+// Light mode → deep violet   hsl(265, …)  — contrasts light-blue hero
 
 export default function CursorTrail({ enabled }) {
   const canvasRef = useRef(null);
@@ -48,9 +48,9 @@ export default function CursorTrail({ enabled }) {
       }
 
       const dark = document.body.classList.contains('dark');
-      const hue = dark ? 190 : 12;
-      const sat = dark ? 90 : 75;
-      const lit = dark ? 65 : 62;
+      const hue = dark ? 255 : 265;
+      const sat = dark ? 88 : 68;
+      const lit = dark ? 72 : 50;
 
       followerX += (targetX - followerX) * LERP;
       followerY += (targetY - followerY) * LERP;
