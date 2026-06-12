@@ -14,11 +14,19 @@ export default function CursorTrail({ enabled }) {
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
+
+    // Light mode — spark particles
     const particles = [];
+    let lastX = 0, lastY = 0;
+
+    // Dark mode — smooth lerped trail
+    let targetX = -1000, targetY = -1000;
+    let followerX = -1000, followerY = -1000;
+    const trail = [];
+    const TRAIL_LEN = 22;
+    const LERP = 0.13;
+
     let animId;
-    let lastX = 0;
-    let lastY = 0;
-    let frame = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -27,83 +35,75 @@ export default function CursorTrail({ enabled }) {
     resize();
     window.addEventListener('resize', resize);
 
-    const spawn = (x, y) => {
-      const dark = document.body.classList.contains('dark');
-      if (dark) {
-        particles.push({
-          mode: 'bubble',
-          x, y,
-          size: Math.random() * 9 + 6,
-          vy: -(Math.random() * 1.2 + 0.5),
-          vx: (Math.random() - 0.5) * 0.5,
-          wobbleOffset: Math.random() * Math.PI * 2,
-          wobbleSpeed: 0.035 + Math.random() * 0.025,
-          life: 1,
-          decay: 0.011 + Math.random() * 0.009,
-          hue: 188 + Math.random() * 32,
-        });
-      } else {
-        particles.push({
-          mode: 'spark',
-          x, y,
-          size: Math.random() * 3 + 1.5,
-          vy: -(Math.random() * 1.8 + 0.4),
-          vx: (Math.random() - 0.5) * 1.4,
-          life: 1,
-          decay: 0.022 + Math.random() * 0.018,
-          hue: 238 + Math.random() * 42,
-        });
-      }
+    const spawnSpark = (x, y) => {
+      particles.push({
+        x, y,
+        size: Math.random() * 3 + 1.5,
+        vy: -(Math.random() * 1.8 + 0.4),
+        vx: (Math.random() - 0.5) * 1.4,
+        life: 1,
+        decay: 0.022 + Math.random() * 0.018,
+        hue: 238 + Math.random() * 42,
+      });
     };
 
     const onMove = (e) => {
       if (!enabledRef.current) return;
-      const dx = e.clientX - lastX;
-      const dy = e.clientY - lastY;
-      if (dx * dx + dy * dy < 36) return;
-      lastX = e.clientX;
-      lastY = e.clientY;
-      spawn(e.clientX, e.clientY);
-      if (Math.random() > 0.45) spawn(e.clientX, e.clientY);
+      const dark = document.body.classList.contains('dark');
+
+      if (dark) {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      } else {
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        if (dx * dx + dy * dy < 25) return;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        spawnSpark(e.clientX, e.clientY);
+        if (Math.random() > 0.45) spawnSpark(e.clientX, e.clientY);
+      }
     };
 
     const tick = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       if (!enabledRef.current) {
         particles.length = 0;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        trail.length = 0;
         animId = requestAnimationFrame(tick);
         return;
       }
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      frame++;
+      const dark = document.body.classList.contains('dark');
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.life -= p.decay;
-        if (p.life <= 0) { particles.splice(i, 1); continue; }
+      if (dark) {
+        if (particles.length) particles.length = 0;
 
-        if (p.mode === 'bubble') {
-          p.x += p.vx + Math.sin(frame * p.wobbleSpeed + p.wobbleOffset) * 0.5;
-          p.y += p.vy;
+        followerX += (targetX - followerX) * LERP;
+        followerY += (targetY - followerY) * LERP;
 
-          const pop = p.life < 0.2 ? 1 + (0.2 - p.life) * 3 : 1;
-          const r = p.size * pop;
-          const alpha = Math.min(p.life * 2, 1) * 0.7;
+        trail.unshift({ x: followerX, y: followerY });
+        if (trail.length > TRAIL_LEN) trail.pop();
 
-          ctx.globalAlpha = alpha;
+        trail.forEach((pos, i) => {
+          const t = 1 - i / TRAIL_LEN;
+          const r = Math.max(5 * t, 0.4);
+          ctx.globalAlpha = t * t * 0.65;
+          ctx.shadowBlur = r * 6;
+          ctx.shadowColor = 'hsl(190, 90%, 65%)';
+          ctx.fillStyle = 'hsl(190, 85%, 78%)';
           ctx.beginPath();
-          ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-          ctx.strokeStyle = `hsl(${p.hue}, 75%, 72%)`;
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-
-          ctx.globalAlpha = alpha * 0.55;
-          ctx.beginPath();
-          ctx.arc(p.x - r * 0.28, p.y - r * 0.28, r * 0.22, 0, Math.PI * 2);
-          ctx.fillStyle = `hsl(${p.hue}, 60%, 92%)`;
+          ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
           ctx.fill();
-        } else {
+        });
+      } else {
+        if (trail.length) trail.length = 0;
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.life -= p.decay;
+          if (p.life <= 0) { particles.splice(i, 1); continue; }
           p.x += p.vx;
           p.y += p.vy;
           p.vy += 0.045;
