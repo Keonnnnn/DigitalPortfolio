@@ -48,9 +48,9 @@ export default function CursorTrail({ enabled }) {
       }
 
       const dark = document.body.classList.contains('dark');
-      const hue = dark ? 255 : 262;
-      const sat = dark ? 88 : 52;
-      const lit = dark ? 72 : 65;
+      const hue = dark ? 255 : 218;
+      const sat = dark ? 88 : 90;
+      const lit = dark ? 72 : 44;
 
       followerX += (targetX - followerX) * LERP;
       followerY += (targetY - followerY) * LERP;
