@@ -137,7 +137,8 @@ export default function SpotifyNowPlaying() {
 
   const pct = durationMs ? (liveProgress / durationMs) * 100 : 0;
 
-  // Extract dominant color from album art and broadcast it so Hero can tint the background
+  // Extract dominant color from album art and broadcast it so Hero can tint the background.
+  // Images are loaded through /api/imgproxy to avoid cross-origin canvas restrictions.
   useEffect(() => {
     if (!isPlaying || !albumImageUrl) {
       window.dispatchEvent(new CustomEvent('spotifycolor', { detail: null }));
@@ -146,7 +147,8 @@ export default function SpotifyNowPlaying() {
 
     let cancelled = false;
     const img = new Image();
-    img.crossOrigin = 'anonymous'; // must be set before .src
+    img.crossOrigin = 'anonymous';
+
     img.onload = () => {
       if (cancelled) return;
       try {
@@ -156,33 +158,46 @@ export default function SpotifyNowPlaying() {
         canvas.height = SIZE;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, SIZE, SIZE);
-        const { data } = ctx.getImageData(0, 0, SIZE, SIZE); // throws SecurityError if CORS fails
+        const { data } = ctx.getImageData(0, 0, SIZE, SIZE);
 
-        let r = 0, g = 0, b = 0, count = 0;
+        let r1 = 0, g1 = 0, b1 = 0, c1 = 0; // vibrant pass
+        let r2 = 0, g2 = 0, b2 = 0, c2 = 0; // all-visible fallback
+
         for (let i = 0; i < data.length; i += 4) {
           const pr = data[i], pg = data[i + 1], pb = data[i + 2];
           const max = Math.max(pr, pg, pb) / 255;
           const min = Math.min(pr, pg, pb) / 255;
           const l = (max + min) / 2;
           const s = max === min ? 0 : (max - min) / (1 - Math.abs(2 * l - 1));
-          // Keep only vibrant, visible pixels (skip near-black, near-white, near-gray)
-          if (s > 0.2 && l > 0.15 && l < 0.85) {
-            r += pr; g += pg; b += pb; count++;
+
+          if (l > 0.08 && l < 0.92) {           // any visible pixel
+            r2 += pr; g2 += pg; b2 += pb; c2++;
+            if (s > 0.12 && l > 0.12 && l < 0.88) { // vibrant subset
+              r1 += pr; g1 += pg; b1 += pb; c1++;
+            }
           }
         }
 
-        const color = count > 3
-          ? { r: Math.round(r / count), g: Math.round(g / count), b: Math.round(b / count) }
-          : null;
+        // Prefer vibrant average; fall back to overall average for monochromatic art
+        let color = null;
+        if (c1 > 3) {
+          color = { r: Math.round(r1 / c1), g: Math.round(g1 / c1), b: Math.round(b1 / c1) };
+        } else if (c2 > 3) {
+          color = { r: Math.round(r2 / c2), g: Math.round(g2 / c2), b: Math.round(b2 / c2) };
+        }
+
         if (!cancelled) window.dispatchEvent(new CustomEvent('spotifycolor', { detail: color }));
       } catch {
         if (!cancelled) window.dispatchEvent(new CustomEvent('spotifycolor', { detail: null }));
       }
     };
+
     img.onerror = () => {
       if (!cancelled) window.dispatchEvent(new CustomEvent('spotifycolor', { detail: null }));
     };
-    img.src = albumImageUrl;
+
+    // Route through local proxy to avoid cross-origin canvas restrictions
+    img.src = `/api/imgproxy?url=${encodeURIComponent(albumImageUrl)}`;
 
     return () => { cancelled = true; };
   }, [isPlaying, albumImageUrl]);
