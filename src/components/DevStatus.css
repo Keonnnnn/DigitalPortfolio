@@ -6,12 +6,11 @@
   padding: 20px;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  background: rgba(255,255,255,0.72);
-  border: 1px solid rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.48);
+  border: 1px solid rgba(255,255,255,0.7);
   box-shadow:
-    0 4px 24px rgba(100,116,139,0.13),
-    0 1px 4px rgba(100,116,139,0.08),
-    inset 0 1px 0 rgba(255,255,255,1);
+    0 4px 20px rgba(100,116,139,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.8);
   text-decoration: none;
   color: #111827;
   overflow: hidden;
