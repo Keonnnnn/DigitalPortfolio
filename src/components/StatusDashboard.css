@@ -1,4 +1,4 @@
-.sd-root { position: relative; width: 100%; min-width: 0; overflow: hidden; }
+.sd-root { position: relative; width: 100%; min-width: 0; }
 
 .sd-viewport {
   position: relative;
@@ -44,13 +44,20 @@
 /* Card fills its panel so both panels are always the same height */
 .sd-panel > * { flex: 1; }
 
-/* Strip card-level shadows — viewport provides the shadow */
-.sd-panel .np-card,
-.sd-panel .ds-card { box-shadow: none; }
+/* Strip card-level shadows/borders/radii — viewport provides shadow & clipping.
+   Use body prefix (030) to beat body.dark .np-card (020) regardless of load order. */
+body .sd-panel .np-card,
+body .sd-panel .ds-card {
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
 
 /* Strip card-level glow animations — viewport handles them via :has() */
-.sd-panel .np-card.playing,
-.sd-panel .ds-card--coding { animation: none; }
+body .sd-panel .np-card.playing,
+body .sd-panel .ds-card--coding { animation: none !important; }
 
 /* Arrow buttons — overlaid on card edges */
 .sd-arrow {
