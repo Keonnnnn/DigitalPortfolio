@@ -103,11 +103,17 @@ export default function GitHubActivity() {
     <div className="gh-card ds-card ds-card--github ds-card--window">
       <div className="gh-wrap">
 
-        {/* Title bar */}
+        {/* Title bar — streak lives here to save vertical space */}
         <div className="gh-bar">
           <TrafficLights />
           <GitHubIcon />
           <span className="gh-win-title">{GITHUB_USER}</span>
+          {!loading && streak > 0 && (
+            <span className="gh-bar-streak" aria-label={`${streak} day streak`}>
+              <span aria-hidden="true">{streak >= 7 ? '🔥' : '⚡'}</span>
+              <span>{streak}d streak</span>
+            </span>
+          )}
         </div>
 
         {loading ? (
@@ -117,16 +123,7 @@ export default function GitHubActivity() {
           </div>
         ) : (
           <>
-            {/* Streak banner */}
-            {streak > 0 && (
-              <div className="gh-streak">
-                <span className="gh-streak-fire" aria-hidden="true">{streak >= 7 ? '🔥' : '⚡'}</span>
-                <span className="gh-streak-count">{streak}</span>
-                <span className="gh-streak-label">day streak</span>
-              </div>
-            )}
-
-            {/* Commits */}
+            {/* Commits — padding-left clears the left nav arrow (10px + 30px wide) */}
             <div className="gh-commits">
               {commits.map((c, i) => (
                 <div key={i} className="gh-commit">
