@@ -92,7 +92,8 @@
 .gh-commit-time {
   color: #6c7086;
   font-size: 10px;
-  flex-shrink: 0;
+  padding-left: 12px;
+  margin-top: 2px;
 }
 
 .gh-commit-msg {

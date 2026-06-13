@@ -159,9 +159,9 @@ export default function GitHubActivity() {
                   <div className="gh-commit-top">
                     <span className="gh-commit-dot" aria-hidden="true" />
                     <span className="gh-commit-repo">{c.repo}</span>
-                    <span className="gh-commit-time">{ago(c.time)}</span>
                   </div>
                   <p className="gh-commit-msg">{c.message}</p>
+                  <span className="gh-commit-time">{ago(c.time)}</span>
                 </div>
               ))}
               {commits.length === 0 && (
