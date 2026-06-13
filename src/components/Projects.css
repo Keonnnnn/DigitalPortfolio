@@ -27,7 +27,8 @@
   border-color: #d1d5db;
 }
 
-.pr-filter-btn--active {
+.pr-filter-btn--active,
+.pr-filter-btn--active:hover {
   background: #111827;
   color: #f9fafb;
   border-color: #111827;
@@ -43,7 +44,8 @@ body.dark .pr-filter-btn:hover {
   background: rgba(255, 255, 255, 0.11);
 }
 
-body.dark .pr-filter-btn--active {
+body.dark .pr-filter-btn--active,
+body.dark .pr-filter-btn--active:hover {
   background: #f9fafb;
   color: #111827;
   border-color: #f9fafb;
