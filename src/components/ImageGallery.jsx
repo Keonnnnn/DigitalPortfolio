@@ -9,6 +9,27 @@ import p5 from "../assets/p5.jpeg";
 import p6 from "../assets/p6.jpeg";
 import insideoutGif from "../assets/insideout1.mp4";
 
+const ChevronLeft = () => (
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="15 18 9 12 15 6"/>
+  </svg>
+);
+
+const ChevronRight = () => (
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+);
+
 const ImageGallery = ({ closeGallery }) => {
   const images = [p1, p2, p3, p4, p5, p6];
 
@@ -152,7 +173,7 @@ const ImageGallery = ({ closeGallery }) => {
           onClick={handleClose}
           aria-label="Close Gallery"
         >
-          ✕
+          <CloseIcon />
         </button>
 
         <h1 className="gallery-title">Keon's Gallery</h1>
@@ -165,7 +186,7 @@ const ImageGallery = ({ closeGallery }) => {
               aria-label="Previous"
               disabled={isTransitioning}
             >
-              ❮
+              <ChevronLeft />
             </button>
 
             <div
@@ -187,7 +208,7 @@ const ImageGallery = ({ closeGallery }) => {
               aria-label="Next"
               disabled={isTransitioning}
             >
-              ❯
+              <ChevronRight />
             </button>
 
             <div className="image-counter">
