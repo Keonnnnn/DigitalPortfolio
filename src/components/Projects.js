@@ -1,4 +1,4 @@
-// src/components/Projects.js
+import React, { useState } from "react";
 import "./Projects.css";
 
 import RobotIcon from "../assets/robot.png";
@@ -152,6 +152,8 @@ const PROJECTS = [
   },
 ];
 
+const FILTERS = ["All", "Internship", "School Project", "Personal Project"];
+
 function onMove(e) {
   const card = e.currentTarget;
   const r = card.getBoundingClientRect();
@@ -173,12 +175,32 @@ function onLeave(e) {
 }
 
 export default function Projects() {
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filtered =
+    activeFilter === "All"
+      ? PROJECTS
+      : PROJECTS.filter((p) => p.category === activeFilter);
+
   return (
     <section id="projects" className="projects">
       <h2 className="pr-heading">My Projects</h2>
 
+      <div className="pr-filters" role="group" aria-label="Filter projects by category">
+        {FILTERS.map((f) => (
+          <button
+            key={f}
+            className={`pr-filter-btn${activeFilter === f ? " pr-filter-btn--active" : ""}`}
+            onClick={() => setActiveFilter(f)}
+            aria-pressed={activeFilter === f}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
       <div className="pr-grid" role="list">
-        {PROJECTS.map((p) => {
+        {filtered.map((p) => {
           const CardTag = p.url ? "a" : "div";
 
           let scale = 0.92;
@@ -283,12 +305,14 @@ export default function Projects() {
           );
         })}
 
-        <div className="pr-card coming-soon" role="listitem">
-          <div className="cs-content">
-            <span className="cs-emoji">✨</span>
-            <p className="cs-text">More exciting projects<br />coming soon…</p>
+        {activeFilter === "All" && (
+          <div className="pr-card coming-soon" role="listitem">
+            <div className="cs-content">
+              <span className="cs-emoji">✨</span>
+              <p className="cs-text">More exciting projects<br />coming soon…</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

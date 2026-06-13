@@ -10,6 +10,7 @@ import CursorTrail from "./components/CursorTrail";
 
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import NotFound from "./pages/NotFound";
 
 import "./App.css";
 
@@ -62,6 +63,7 @@ export default function App() {
           />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
         <ScrollToTop />
