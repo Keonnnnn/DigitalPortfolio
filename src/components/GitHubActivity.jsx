@@ -78,7 +78,7 @@ export default function GitHubActivity() {
               time: e.created_at,
             });
           }
-          if (recent.length >= 3) break;
+          if (recent.length >= 2) break;
         }
 
         setCommits(recent);
