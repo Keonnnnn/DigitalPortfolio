@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import SpotifyNowPlaying from './SpotifyNowPlaying';
 import DevStatus from './DevStatus';
+import GitHubActivity from './GitHubActivity';
 import './StatusDashboard.css';
 
-const PANELS = 2;
+const PANELS = 3;
 
 const ChevronLeft = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
@@ -31,6 +32,7 @@ export default function StatusDashboard() {
         >
           <div className="sd-panel"><SpotifyNowPlaying /></div>
           <div className="sd-panel"><DevStatus /></div>
+          <div className="sd-panel"><GitHubActivity /></div>
         </div>
 
         {active > 0 && (
@@ -48,7 +50,7 @@ export default function StatusDashboard() {
       </div>
 
       <div className="sd-dots" role="tablist" aria-label="Status panels">
-        {['Spotify', 'Dev status'].map((label, i) => (
+        {['Spotify', 'Dev status', 'GitHub'].map((label, i) => (
           <button
             key={i}
             className={`sd-dot${active === i ? ' sd-dot--active' : ''}`}

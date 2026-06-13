@@ -53,7 +53,8 @@
 /* Strip card-level shadows/borders/radii — viewport provides shadow & clipping.
    Use body prefix (030) to beat body.dark .np-card (020) regardless of load order. */
 body .sd-panel .np-card,
-body .sd-panel .ds-card {
+body .sd-panel .ds-card,
+body .sd-panel .gh-card {
   box-shadow: none !important;
   border: none !important;
   border-radius: 0 !important;
@@ -144,6 +145,22 @@ body.dark .sd-viewport:has(.ds-card--coding) {
 @keyframes sdGlowCodingDark {
   0%,100% { box-shadow: 0 12px 32px rgba(0,122,204,.25), inset 0 1px 0 rgba(255,255,255,.08); }
   50%     { box-shadow: 0 20px 48px rgba(0,122,204,.4),  inset 0 1px 0 rgba(255,255,255,.12); }
+}
+
+.sd-viewport:has(.ds-card--github) {
+  animation: sdGlowGitHub 3s ease-in-out infinite;
+}
+@keyframes sdGlowGitHub {
+  0%,100% { box-shadow: 0 8px 24px rgba(35,134,54,.22), inset 0 1px 0 rgba(255,255,255,.9); }
+  50%     { box-shadow: 0 18px 42px rgba(35,134,54,.38), inset 0 1px 0 rgba(255,255,255,.9); }
+}
+
+body.dark .sd-viewport:has(.ds-card--github) {
+  animation: sdGlowGitHubDark 3s ease-in-out infinite;
+}
+@keyframes sdGlowGitHubDark {
+  0%,100% { box-shadow: 0 12px 32px rgba(35,134,54,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+  50%     { box-shadow: 0 20px 48px rgba(35,134,54,.4),  inset 0 1px 0 rgba(255,255,255,.12); }
 }
 
 body.dark .sd-arrow {
