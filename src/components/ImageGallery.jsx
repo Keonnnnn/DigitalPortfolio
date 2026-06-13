@@ -200,6 +200,9 @@ const ImageGallery = ({ closeGallery }) => {
                 alt={`Gallery ${currentImageIndex + 1} of ${images.length}`}
                 className={`gallery-image ${slideDirection}`}
               />
+              <div className="image-counter">
+                {currentImageIndex + 1} / {images.length}
+              </div>
             </div>
 
             <button
@@ -210,10 +213,6 @@ const ImageGallery = ({ closeGallery }) => {
             >
               <ChevronRight />
             </button>
-
-            <div className="image-counter">
-              {currentImageIndex + 1} / {images.length}
-            </div>
 
             <div className="gallery-thumbnails">
               {images.map((image, index) => (
