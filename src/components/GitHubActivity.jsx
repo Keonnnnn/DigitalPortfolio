@@ -72,11 +72,13 @@ export default function GitHubActivity() {
           const repo = e.repo?.name?.replace(`${GITHUB_USER}/`, '') ?? '';
           if (!seen.has(repo)) {
             seen.add(repo);
-            recent.push({
-              repo,
-              message: e.payload?.commits?.[0]?.message?.split('\n')[0] ?? 'Pushed code',
-              time: e.created_at,
-            });
+            const allCommits = e.payload?.commits ?? [];
+            // GitHub sends commits oldest-first; take the newest one
+            const commit  = allCommits[allCommits.length - 1];
+            const message = commit?.message?.split('\n')[0]
+                         || (commit?.sha ? `#${commit.sha.slice(0, 7)}` : null)
+                         || `${allCommits.length || 1} commit(s) pushed`;
+            recent.push({ repo, message, time: e.created_at });
           }
           if (recent.length >= 2) break;
         }
