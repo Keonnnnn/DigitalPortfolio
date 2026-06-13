@@ -35,7 +35,7 @@ body.dark .ds-card--window {
   flex-direction: column;
   background: #1e1e2e; /* Catppuccin Mocha base — always dark */
   font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, monospace;
-  min-height: 160px;
+  min-height: 220px;
   overflow: hidden; /* prevent code lines from pushing width on mobile */
   width: 100%;
   min-width: 0;
