@@ -151,16 +151,16 @@ body.dark .sd-viewport:has(.ds-card--coding) {
   animation: sdGlowGitHub 3s ease-in-out infinite;
 }
 @keyframes sdGlowGitHub {
-  0%,100% { box-shadow: 0 8px 24px rgba(35,134,54,.22), inset 0 1px 0 rgba(255,255,255,.9); }
-  50%     { box-shadow: 0 18px 42px rgba(35,134,54,.38), inset 0 1px 0 rgba(255,255,255,.9); }
+  0%,100% { box-shadow: 0 8px 24px rgba(99,102,241,.22), inset 0 1px 0 rgba(255,255,255,.9); }
+  50%     { box-shadow: 0 18px 42px rgba(99,102,241,.38), inset 0 1px 0 rgba(255,255,255,.9); }
 }
 
 body.dark .sd-viewport:has(.ds-card--github) {
   animation: sdGlowGitHubDark 3s ease-in-out infinite;
 }
 @keyframes sdGlowGitHubDark {
-  0%,100% { box-shadow: 0 12px 32px rgba(35,134,54,.25), inset 0 1px 0 rgba(255,255,255,.08); }
-  50%     { box-shadow: 0 20px 48px rgba(35,134,54,.4),  inset 0 1px 0 rgba(255,255,255,.12); }
+  0%,100% { box-shadow: 0 12px 32px rgba(99,102,241,.25), inset 0 1px 0 rgba(255,255,255,.08); }
+  50%     { box-shadow: 0 20px 48px rgba(99,102,241,.4),  inset 0 1px 0 rgba(255,255,255,.12); }
 }
 
 body.dark .sd-arrow {
@@ -173,6 +173,11 @@ body.dark .sd-arrow:hover { background: rgba(30,41,59,0.95); }
 
 body.dark .sd-dot { background: rgba(255,255,255,0.22); }
 body.dark .sd-dot--active { background: #818cf8; }
+
+/* Desktop cap keeps all 3 panels the same height regardless of content */
+@media (min-width: 641px) {
+  .sd-viewport { height: 210px; }
+}
 
 @media (max-width: 640px) {
   .sd-viewport { height: 210px; }
