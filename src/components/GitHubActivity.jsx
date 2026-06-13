@@ -93,7 +93,7 @@ export default function GitHubActivity() {
             seen.add(repo);
             const allCommits = e.payload?.commits ?? [];
             const commit     = allCommits[allCommits.length - 1];
-            const afterSha   = e.payload?.after;
+            const afterSha   = e.payload?.after || e.payload?.head;
             const sha        = commit?.sha || (afterSha && afterSha !== NULL_SHA ? afterSha : null);
             const n          = e.payload?.size ?? allCommits.length;
             raw.push({ repo, sha, inlineMsg: commit?.message?.split('\n')[0] ?? null, size: n, time: e.created_at });
@@ -105,7 +105,7 @@ export default function GitHubActivity() {
         const recent = await Promise.all(raw.map(async (item) => {
           let message = item.inlineMsg;
           if (!message && item.sha) message = await fetchCommitMessage(item.repo, item.sha);
-          if (!message) message = item.size === 1 ? '1 commit pushed' : `${item.size} commits pushed`;
+          if (!message) message = item.size > 1 ? `${item.size} commits pushed` : 'commit pushed';
           return { repo: item.repo, message, time: item.time };
         }));
 
