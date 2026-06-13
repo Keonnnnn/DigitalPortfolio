@@ -36,6 +36,8 @@ function calcStreak(pushEvents) {
   return streak;
 }
 
+const NULL_SHA = '0000000000000000000000000000000000000000';
+
 const GitHubIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" className="gh-icon" aria-hidden="true">
     <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
@@ -52,10 +54,27 @@ export default function GitHubActivity() {
   const [commits, setCommits] = useState([]);
   const [streak, setStreak]   = useState(0);
   const [loading, setLoading] = useState(true);
-  const mounted = useRef(true);
+  const mounted     = useRef(true);
+  const commitCache = useRef({});
 
   useEffect(() => {
     mounted.current = true;
+
+    const fetchCommitMessage = async (repo, sha) => {
+      if (commitCache.current[sha]) return commitCache.current[sha];
+      try {
+        const res = await fetch(
+          `https://api.github.com/repos/${GITHUB_USER}/${repo}/commits/${sha}`
+        );
+        if (!res.ok) return null;
+        const json = await res.json();
+        const msg = json.commit?.message?.split('\n')[0] ?? null;
+        if (msg) commitCache.current[sha] = msg;
+        return msg;
+      } catch {
+        return null;
+      }
+    };
 
     const fetchActivity = async () => {
       try {
@@ -65,25 +84,32 @@ export default function GitHubActivity() {
 
         const pushEvents = events.filter(e => e.type === 'PushEvent');
 
-        // One entry per repo, most recent first
-        const seen   = new Set();
-        const recent = [];
+        // Collect one entry per repo, most recent first
+        const seen = new Set();
+        const raw  = [];
         for (const e of pushEvents) {
           const repo = e.repo?.name?.replace(`${GITHUB_USER}/`, '') ?? '';
           if (!seen.has(repo)) {
             seen.add(repo);
             const allCommits = e.payload?.commits ?? [];
-            // GitHub sends commits oldest-first; take the newest one
-            const commit  = allCommits[allCommits.length - 1];
-            const n       = e.payload?.size ?? allCommits.length ?? 1;
-            const message = commit?.message?.split('\n')[0]
-                         || (commit?.sha ? `#${commit.sha.slice(0, 7)}` : null)
-                         || (n === 1 ? '1 commit pushed' : `${n} commits pushed`);
-            recent.push({ repo, message, time: e.created_at });
+            const commit     = allCommits[allCommits.length - 1];
+            const afterSha   = e.payload?.after;
+            const sha        = commit?.sha || (afterSha && afterSha !== NULL_SHA ? afterSha : null);
+            const n          = e.payload?.size ?? allCommits.length;
+            raw.push({ repo, sha, inlineMsg: commit?.message?.split('\n')[0] ?? null, size: n, time: e.created_at });
           }
-          if (recent.length >= 2) break;
+          if (raw.length >= 2) break;
         }
 
+        // Resolve messages: inline commit → API fetch by SHA → count fallback
+        const recent = await Promise.all(raw.map(async (item) => {
+          let message = item.inlineMsg;
+          if (!message && item.sha) message = await fetchCommitMessage(item.repo, item.sha);
+          if (!message) message = item.size === 1 ? '1 commit pushed' : `${item.size} commits pushed`;
+          return { repo: item.repo, message, time: item.time };
+        }));
+
+        if (!mounted.current) return;
         setCommits(recent);
         setStreak(calcStreak(pushEvents));
       } catch {
