@@ -96,7 +96,7 @@
   margin-top: 2px;
 }
 
-.gh-commit-msg {
+.gh-wrap .gh-commit-msg {
   color: #ffffff;
   font-size: 10.5px;
   padding-left: 12px;
