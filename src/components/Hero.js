@@ -111,7 +111,7 @@ const Hero = ({ starsHidden, onToggleStars }) => {
       <Header />
       <ShootingStars count={20} hidden={starsHidden} />
 
-      <audio ref={audioRef} src="/audio/Ahsoka.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/audio/Bundle of Joy.mp3" loop preload="auto" />
 
       {/* Music toggle — fixed top-left, mirrors stars button */}
       <button
