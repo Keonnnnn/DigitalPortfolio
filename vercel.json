@@ -16,10 +16,10 @@
       "permanent": false
     },
     {
-      "source": "/telebot",
+      "source": "/split",
       "destination": "https://t.me/Keikie_Bot",
       "permanent": false
     }
   ],
-  "rewrites": [{ "source": "/((?!telebot|youtube|ig|github).*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!split|youtube|ig|github).*)", "destination": "/index.html" }]
 }

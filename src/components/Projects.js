@@ -6,9 +6,10 @@ import SingapuraIcon from "../assets/Singapura.png";
 import EcotureIcon from "../assets/ECOTURE.png";
 import IllumiaIcon from "../assets/illumia.png";
 import MakanLahIcon from "../assets/MakanLah.png";
-import TeleIcon from "../assets/tele.png";
+import TeleIcon from "../assets/tele.jpeg";
 import CollatorIcon from "../assets/Collator.png";
 import BlogIcon from "../assets/blog.png";
+import SplitIcon from "../assets/Split.png";
 
 const CATEGORY_CLASS = {
   'Internship':       'pr-card--intern',
@@ -17,6 +18,18 @@ const CATEGORY_CLASS = {
 };
 
 const PROJECTS = [
+  {
+    id: "p9",
+    title: "Split",
+    category: "Personal Project",
+    since: "2026",
+    builtAt: "keonshu.com",
+    description:
+      "I built a telegram bot that scans receipts and splits bills seamlessly.",
+    icon: SplitIcon,
+    stack: ["Gemini", "HTML5", "CSS", "JavaScript", "Vercel", "React"],
+    url: "/split",
+  },
   {
     id: "p1",
     title: "YCS Collaterals System",
