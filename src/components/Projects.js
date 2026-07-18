@@ -6,7 +6,7 @@ import SingapuraIcon from "../assets/Singapura.png";
 import EcotureIcon from "../assets/ECOTURE.png";
 import IllumiaIcon from "../assets/illumia.png";
 import MakanLahIcon from "../assets/MakanLah.png";
-import TeleIcon from "../assets/tele.jpeg";
+import TeleIcon from "../assets/tele.png";
 import CollatorIcon from "../assets/Collator.png";
 import BlogIcon from "../assets/blog.png";
 import SplitIcon from "../assets/Split.png";
@@ -26,6 +26,7 @@ const PROJECTS = [
     builtAt: "keonshu.com",
     description:
       "I built a telegram bot that scans receipts and splits bills seamlessly.",
+    status: "Active",
     icon: SplitIcon,
     stack: ["Gemini", "HTML5", "CSS", "JavaScript", "Vercel", "React"],
     url: "/split",
