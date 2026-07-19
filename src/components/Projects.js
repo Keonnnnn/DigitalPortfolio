@@ -125,7 +125,7 @@ const PROJECTS = [
       "Full Stack web app. Our very own version of a Community Club portal.",
     icon: SingapuraIcon,
     stack: ["HTML5", "CSS", "JavaScript", "MySQL"],
-    url: "https://github.com/Keonnnnn/singapura-cc-app",
+    url: "https://singapuracc.keonshu.com",
   },
   {
     id: "p3w",
