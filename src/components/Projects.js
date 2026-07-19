@@ -26,6 +26,7 @@ const PROJECTS = [
     builtAt: "keonshu.com",
     description:
       "I built a telegram bot that scans receipts and splits bills seamlessly.",
+    status: "Active",
     icon: SplitIcon,
     stack: ["Gemini", "HTML5", "CSS", "JavaScript", "Vercel", "React"],
     url: "/split",
