@@ -8,12 +8,21 @@
 
 .te-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   gap: 28px;
-  max-width: 1240px;
+  max-width: 600px;
   padding: 0 16px;
   margin: 0 auto;
   align-items: stretch;
+}
+
+/* Exactly 3 cards: jump straight from 1 to 3 columns so the grid
+   never strands a lone third card in a half-empty row. */
+@media (min-width: 960px) {
+  .te-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1240px;
+  }
 }
 
 /* ── Accent tokens (mirrors project category accents) ── */
@@ -100,7 +109,10 @@
 .te-read-more {
   align-self: flex-start;
   margin-top: 16px;
-  padding: 7px 14px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -162,7 +174,6 @@
 
 @media (max-width: 768px) {
   .te-heading { font-size: 2.2rem; }
-  .te-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
   .te-card { padding: 22px 20px 18px; border-radius: 18px; }
 }
 
@@ -231,10 +242,10 @@ body.dark .te-avatar {
 
 .te-modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 32px;
-  height: 32px;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid #e5e7eb;
   background: #f3f4f6;
@@ -254,7 +265,7 @@ body.dark .te-avatar {
   align-items: center;
   gap: 14px;
   margin-bottom: 20px;
-  padding-right: 32px;
+  padding-right: 44px;
 }
 
 .te-avatar--lg {
