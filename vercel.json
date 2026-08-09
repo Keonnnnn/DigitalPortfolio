@@ -19,7 +19,12 @@
       "source": "/split",
       "destination": "https://t.me/Keikie_Bot",
       "permanent": false
+    },
+    {
+      "source": "/savenoms",
+      "destination": "https://t.me/SaveNomsBot",
+      "permanent": false
     }
   ],
-  "rewrites": [{ "source": "/((?!split|youtube|ig|github).*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!split|savenoms|youtube|ig|github).*)", "destination": "/index.html" }]
 }
