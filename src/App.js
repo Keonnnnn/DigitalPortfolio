@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
+import Testimonials from "./components/Testimonials";
 import ImageGallery from "./components/ImageGallery";
 import ScrollToTop from "./components/ScrollToTop";
 import CursorTrail from "./components/CursorTrail";
@@ -39,6 +40,7 @@ function Home({ animationsEnabled, onToggleAnimations }) {
         onToggleStars={onToggleAnimations}
       />
       <Projects />
+      <Testimonials />
 
       {isModalOpen && <ImageGallery closeGallery={closeGallery} />}
     </>
