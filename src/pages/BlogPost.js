@@ -45,12 +45,6 @@ export default function BlogPost() {
 
   return (
     <section className="blog-post">
-      {post.cover && (
-        <div className="blog-post-banner">
-          <img src={post.cover} alt={post.title} />
-        </div>
-      )}
-
       <header className="blog-post-header">
         <Link to="/blog" className="blog-back-link">
           <span className="back-arrow">←</span> Back to Blog
