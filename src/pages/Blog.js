@@ -65,7 +65,7 @@ export default function Blog() {
               key={post.slug}
             >
               <div className="blog-card-image">
-                <img src={DarumaPhoto} alt={post.title} />
+                <img src={post.cover || DarumaPhoto} alt={post.title} />
               </div>
 
               <div className="blog-card-content">

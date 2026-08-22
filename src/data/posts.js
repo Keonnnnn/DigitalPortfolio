@@ -1,7 +1,33 @@
 import j1 from "../assets/j1.jpeg";
 import j2 from "../assets/j2.jpeg";
+import sg1 from "../assets/sg1.jpeg";
 
 export const posts = [
+  {
+    slug: "ns-bmt-phase-1-kranji-school-5",
+    title: "NS BMT Phase 1 in Kranji School 5",
+    date: "2026-08-22",
+    excerpt: "A reflection on the beginning of my NS life.",
+    cover: sg1,
+    content: `
+A few days before I enlisted on 7 July 2026, I was feeling extremely downbeat. It was the first time I cried in a long time. I'm someone that loves my freedom. Having that taken away from me felt like everything.
+
+On enlisting day, I realised that I'm not alone in this new journey. 16,000 other males across Singapore will experience this with me. And through the challenges, it is where I will make new and stronger bonds.
+
+Would you believe it if I told you, before the end of BMT Phase 1 when I had to leave School 5, I nearly cried too? But this time it was for such a different reason. I am so blessed to have met such amazing people during my time there. Most of them got posted to vocations which did not require them to move to a new camp for training. But on 30 July 2026 when I got posted out and had to leave. That very morning all of the guys helped me carry my stuff down to the bus and sent me off. Maybe to others it is just a small and kind gesture. But to me it meant a lot. That feeling felt so warm, it genuinely felt like family. And in many ways I do feel like that's what they've become.
+
+4 weeks earlier we were just a bunch of strangers that were forced to live together. But 4 weeks of struggling and finding solutions together brought us closer and closer everyday. We played so many games together: Brawl Stars, Clash Royale, Exploding Kittens, Uno and i could go on and on. Even now I remember that never ending Uno game that went on for nearly an hour and we had to renew the drawing pile like 4 times!
+
+This was a period of my life which I thought would be very difficult for me. But as with any situation, it is always the people you are surrounded with that make it so much better. I owe everything to these guys for helping me and accompanying me through BMT. I'm glad that we continue to keep in touch and I hope that we continue to stay close because I truly treasure the new people that have come into my life at such a vital point.
+    `,
+    blocks: [
+      { type: "text", value: "A few days before I enlisted on 7 July 2026, I was feeling extremely downbeat. It was the first time I cried in a long time. I'm someone that loves my freedom. Having that taken away from me felt like everything." },
+      { type: "text", value: "On enlisting day, I realised that I'm not alone in this new journey. 16,000 other males across Singapore will experience this with me. And through the challenges, it is where I will make new and stronger bonds." },
+      { type: "text", value: "Would you believe it if I told you, before the end of BMT Phase 1 when I had to leave School 5, I nearly cried too? But this time it was for such a different reason. I am so blessed to have met such amazing people during my time there. Most of them got posted to vocations which did not require them to move to a new camp for training. But on 30 July 2026 when I got posted out and had to leave. That very morning all of the guys helped me carry my stuff down to the bus and sent me off. Maybe to others it is just a small and kind gesture. But to me it meant a lot. That feeling felt so warm, it genuinely felt like family. And in many ways I do feel like that's what they've become." },
+      { type: "text", value: "4 weeks earlier we were just a bunch of strangers that were forced to live together. But 4 weeks of struggling and finding solutions together brought us closer and closer everyday. We played so many games together: Brawl Stars, Clash Royale, Exploding Kittens, Uno and i could go on and on. Even now I remember that never ending Uno game that went on for nearly an hour and we had to renew the drawing pile like 4 times!" },
+      { type: "text", value: "This was a period of my life which I thought would be very difficult for me. But as with any situation, it is always the people you are surrounded with that make it so much better. I owe everything to these guys for helping me and accompanying me through BMT. I'm glad that we continue to keep in touch and I hope that we continue to stay close because I truly treasure the new people that have come into my life at such a vital point." },
+    ],
+  },
   {
     slug: "graduation-trip-mono-no-aware",
     title: "Graduation Trip — 物の哀れ",

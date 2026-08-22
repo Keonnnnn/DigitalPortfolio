@@ -24,6 +24,40 @@
   margin-bottom: 36px;
 }
 
+/* =========================
+   BANNER
+========================= */
+
+.blog-post-banner {
+  width: min(900px, 100%);
+  margin: 0 auto 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #e7e2da;
+}
+
+.blog-post-banner img {
+  width: 100%;
+  aspect-ratio: 16 / 6;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .blog-post-banner {
+    aspect-ratio: 16 / 10;
+    border-radius: 14px;
+  }
+
+  .blog-post-banner img {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+body.dark .blog-post-banner {
+  border-color: #1e293b;
+}
+
 /* Back link */
 .blog-back-link {
   display: inline-flex;
