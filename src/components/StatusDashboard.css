@@ -43,6 +43,11 @@
   /* flex: 0 0 100% is the robust cross-browser carousel approach;
      min-width: 100% can mis-resolve on iOS Safari */
   flex: 0 0 100%;
+  /* Without this, flex items default to min-width:auto, so a long
+     unbreakable word (filename, commit message) can force the panel
+     itself wider than 100% and bleed into the next slide. */
+  min-width: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
