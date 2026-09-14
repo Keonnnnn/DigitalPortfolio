@@ -3,8 +3,38 @@ import j2 from "../assets/j2.jpeg";
 import sg1 from "../assets/sg1.jpeg";
 import ns1 from "../assets/ns1.jpg";
 import ns2 from "../assets/ns2.jpg";
+import ns3 from "../assets/ns3.jpeg";
+import ns4 from "../assets/ns4.jpeg";
+import ns5 from "../assets/ns5.jpeg";
 
 export const posts = [
+  {
+    slug: "ns-bmt-phase-2-in-plc-dis",
+    title: "NS BMT Phase 2 in PLC (DIS)",
+    date: "2026-09-05",
+    excerpt: "A reflection of the beginning of my DIS life.",
+    cover: ns4,
+    content: `
+BMT Phase 2 under DIS at Pasir Laba Camp taught me discipline, and it taught me to look out for the people around me. Compared to Phase 1, the training was stricter and more regimented, and it sharpened us: our marching, timeliness and how attentive we were to each other.
+
+Honestly, the four weeks in PLC felt monotonous, mostly because of how repetitive the daily schedule was. What kept the days enjoyable were the new friends I made along the way, and I'm still grateful for that.
+
+Over the five weeks under DIS, I got multiple chances to build my leadership skills, first as Platoon IC and later as Course IC. Those roles gave me more confidence and sharpened how I lead. They also taught me something else: when you're standing up there with all your weaknesses on display, you find out fast who actually has your back and who's just waiting for you to slip. I had to deal with people who were immature, who complained constantly, and who seemed to look for problems. I got through it by learning when to walk away from an argument — some fights aren't worth having, and staying quiet through the mockery said more about me than responding ever would.
+
+Week 5 brought us back to Kranji Camp for POP prep, and it felt like coming home. Seeing familiar faces again — my old bunkmates, buddies, and sergeants from Phase 1, was genuinely warm. At the same time, I got closer to my Phase 2 buddies as we shared a bunk. It didn't last long, but I still think fondly of grabbing snacks from ChefGenie and the vending machine together.
+
+Looking back, it's the people I met that made this journey worthwhile. NS gave me more than I expected, and I'm grateful for everyone in it — I hope we stay in touch.
+    `,
+    blocks: [
+      { type: "text", value: "BMT Phase 2 under DIS at Pasir Laba Camp taught me discipline, and it taught me to look out for the people around me. Compared to Phase 1, the training was stricter and more regimented, and it sharpened us: our marching, timeliness and how attentive we were to each other." },
+      { type: "image", src: ns3, alt: "Group photo with fellow trainees" },
+      { type: "text", value: "Honestly, the four weeks in PLC felt monotonous, mostly because of how repetitive the daily schedule was. What kept the days enjoyable were the new friends I made along the way, and I'm still grateful for that." },
+      { type: "text", value: "Over the five weeks under DIS, I got multiple chances to build my leadership skills, first as Platoon IC and later as Course IC. Those roles gave me more confidence and sharpened how I lead. They also taught me something else: when you're standing up there with all your weaknesses on display, you find out fast who actually has your back and who's just waiting for you to slip. I had to deal with people who were immature, who complained constantly, and who seemed to look for problems. I got through it by learning when to walk away from an argument — some fights aren't worth having, and staying quiet through the mockery said more about me than responding ever would." },
+      { type: "image", src: ns5, alt: "Group photo with fellow trainees" },
+      { type: "text", value: "Week 5 brought us back to Kranji Camp for POP prep, and it felt like coming home. Seeing familiar faces again — my old bunkmates, buddies, and sergeants from Phase 1, was genuinely warm. At the same time, I got closer to my Phase 2 buddies as we shared a bunk. It didn't last long, but I still think fondly of grabbing snacks from ChefGenie and the vending machine together." },
+      { type: "text", value: "Looking back, it's the people I met that made this journey worthwhile. NS gave me more than I expected, and I'm grateful for everyone in it — I hope we stay in touch." },
+    ],
+  },
   {
     slug: "ns-bmt-phase-1-kranji-school-5",
     title: "NS BMT Phase 1 in Kranji School 5",
