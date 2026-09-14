@@ -6,6 +6,7 @@ import ns2 from "../assets/ns2.jpg";
 import ns3 from "../assets/ns3.jpeg";
 import ns4 from "../assets/ns4.jpeg";
 import ns5 from "../assets/ns5.jpeg";
+import ns6 from "../assets/ns6.jpeg";
 
 export const posts = [
   {
@@ -13,7 +14,7 @@ export const posts = [
     title: "NS BMT Phase 2 in PLC (DIS)",
     date: "2026-09-05",
     excerpt: "A reflection of the beginning of my DIS life.",
-    cover: ns4,
+    cover: ns6,
     content: `
 BMT Phase 2 under DIS at Pasir Laba Camp taught me discipline, and it taught me to look out for the people around me. Compared to Phase 1, the training was stricter and more regimented, and it sharpened us: our marching, timeliness and how attentive we were to each other.
 
@@ -26,6 +27,7 @@ Week 5 brought us back to Kranji Camp for POP prep, and it felt like coming home
 Looking back, it's the people I met that made this journey worthwhile. NS gave me more than I expected, and I'm grateful for everyone in it — I hope we stay in touch.
     `,
     blocks: [
+      { type: "image", src: ns4, alt: "At Pasir Laba Camp" },
       { type: "text", value: "BMT Phase 2 under DIS at Pasir Laba Camp taught me discipline, and it taught me to look out for the people around me. Compared to Phase 1, the training was stricter and more regimented, and it sharpened us: our marching, timeliness and how attentive we were to each other." },
       { type: "image", src: ns3, alt: "Group photo with fellow trainees" },
       { type: "text", value: "Honestly, the four weeks in PLC felt monotonous, mostly because of how repetitive the daily schedule was. What kept the days enjoyable were the new friends I made along the way, and I'm still grateful for that." },
