@@ -38,8 +38,9 @@ const PROJECTS = [
     title: "Poly Memories",
     category: "Personal Project",
     since: "2026",
+    builtAt: "Collaboration",
     description:
-      "I built a photo-sharing web app for my class to relive our memories together, with face recognition search, emoji reactions, and scheduled Telegram photo deliveries.",
+      "A photo-sharing web app with face recognition search, built with Jackie Soon so my class can relive our memories together.",
     status: "Active",
     icon: MemoryIcon,
     stack: ["Next.js", "Tailwind CSS", "PostgreSQL", "Drizzle ORM", "NextAuth", "face-api.js"],
@@ -250,7 +251,7 @@ export default function Projects() {
           if (p.id === "p7") scale = 0.75;
           if (p.id === "p8") scale = 0.7;
           if (p.id === "p10") scale = 0.65;
-          if (p.id === "p11") scale = 1.15;
+          if (p.id === "p11") scale = 1.4;
 
           const metaChips = [
             p.since,
