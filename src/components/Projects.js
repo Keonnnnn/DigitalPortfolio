@@ -251,7 +251,7 @@ export default function Projects() {
           if (p.id === "p7") scale = 0.75;
           if (p.id === "p8") scale = 0.7;
           if (p.id === "p10") scale = 0.65;
-          if (p.id === "p11") scale = 1.4;
+          if (p.id === "p11") scale = 1.7;
 
           const metaChips = [
             p.since,
