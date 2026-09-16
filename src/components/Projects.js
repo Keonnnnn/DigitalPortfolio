@@ -11,7 +11,7 @@ import CollatorIcon from "../assets/Collator.png";
 import BlogIcon from "../assets/blog.png";
 import SplitIcon from "../assets/Split.png";
 import MemoryIcon from "../assets/memorylogo.png";
-import SaveNomsIcon from "../assets/savenoms.png";
+import SaveNomsIcon from "../assets/noms.png";
 
 const CATEGORY_CLASS = {
   'Internship':       'pr-card--intern',
