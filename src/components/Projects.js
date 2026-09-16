@@ -10,6 +10,8 @@ import TeleIcon from "../assets/tele.png";
 import CollatorIcon from "../assets/Collator.png";
 import BlogIcon from "../assets/blog.png";
 import SplitIcon from "../assets/Split.png";
+import MemoryIcon from "../assets/memorylogo.png";
+import SaveNomsIcon from "../assets/savenoms.png";
 
 const CATEGORY_CLASS = {
   'Internship':       'pr-card--intern',
@@ -30,6 +32,31 @@ const PROJECTS = [
     icon: SplitIcon,
     stack: ["Gemini", "HTML5", "CSS", "JavaScript", "Vercel", "React"],
     url: "/split",
+  },
+  {
+    id: "p10",
+    title: "Poly Memories",
+    category: "Personal Project",
+    since: "2026",
+    description:
+      "I built a photo-sharing web app for my class to relive our memories together, with face recognition search, emoji reactions, and scheduled Telegram photo deliveries.",
+    status: "Active",
+    icon: MemoryIcon,
+    stack: ["Next.js", "Tailwind CSS", "PostgreSQL", "Drizzle ORM", "NextAuth", "face-api.js"],
+    url: "https://it2305.jactbb.com/",
+  },
+  {
+    id: "p11",
+    title: "SaveNoms",
+    category: "Personal Project",
+    since: "2026",
+    builtAt: "keonshu.com",
+    description:
+      "I built a Telegram bot that analyzes photos of leftover meals to estimate food waste and give personalized tips for better portion ordering.",
+    status: "Active",
+    icon: SaveNomsIcon,
+    stack: ["Python", "FastAPI", "Gemini 2.5 Flash", "Vercel"],
+    url: "/savenoms",
   },
   {
     id: "p1",
@@ -222,6 +249,8 @@ export default function Projects() {
           if (p.id === "p2" || p.id === "p3" || p.id.endsWith("w")) scale = 1.02;
           if (p.id === "p7") scale = 0.75;
           if (p.id === "p8") scale = 0.7;
+          if (p.id === "p10") scale = 0.65;
+          if (p.id === "p11") scale = 1.15;
 
           const metaChips = [
             p.since,
